@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_LostInSpace.GameLogic;
+using WPF_LostInSpace.HelperClasses;
 
 namespace WPF_LostInSpace
 {
@@ -34,6 +35,8 @@ namespace WPF_LostInSpace
         {
             logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
             MessageBox.Show(new Size(grid.ActualWidth, grid.ActualHeight)+"");
+
+
         }
     }
 }
