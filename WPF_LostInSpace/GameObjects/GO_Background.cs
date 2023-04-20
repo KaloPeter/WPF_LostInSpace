@@ -13,7 +13,7 @@ namespace WPF_LostInSpace.GameObjects
     public class GO_Background
     {
         public Point BackgroundPoint { get; set; }//x,y
-                                                  //  public int Speed { get; set; } = 1;
+      //  public int Speed { get; set; } = 1;
         public Size BackgroundSize { get; set; }
 
 
@@ -23,7 +23,7 @@ namespace WPF_LostInSpace.GameObjects
         {
             get
             {
-                return new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "space_1.png"), UriKind.RelativeOrAbsolute)));//800x1920
+                return new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images","Backgrounds", "space_1.png"), UriKind.RelativeOrAbsolute)));//800x1920
             }
         }
 
