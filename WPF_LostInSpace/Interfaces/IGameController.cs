@@ -8,5 +8,6 @@ namespace WPF_LostInSpace.Interfaces
 {
     public interface IGameController
     {
+
     }
 }

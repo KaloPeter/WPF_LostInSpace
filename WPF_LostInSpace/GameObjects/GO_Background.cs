@@ -13,7 +13,7 @@ namespace WPF_LostInSpace.GameObjects
 {
     public class GO_Background
     {
-        public Point BackgroundPoint { get; set; } //x,y
+        public Point BackgroundPoint { get; set; }//x,y
         public int Speed { get; set; } = 1;
         public Size BackgroundSize { get; set; }
 

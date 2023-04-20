@@ -69,8 +69,8 @@ namespace WPF_LostInSpace.GameLogic
                 }
             }
 
-            //   GO_Player.Distance += 0.001;
-            //  GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
+            //GO_Player.Distance += 0.001;
+            //GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
             EventUpdateRender?.Invoke(this, null);
         }
     }
