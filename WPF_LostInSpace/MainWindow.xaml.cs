@@ -13,27 +13,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_LostInSpace.GameLogic;
 
 namespace WPF_LostInSpace
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    //ctrl+k+d
     public partial class MainWindow : Window
     {
+        private Logic logic;
+
         public MainWindow()
         {
             InitializeComponent();
 
+            logic = new Logic();
 
-            string testMessage = "Hello world";
-        
-            MessageBox.Show(testMessage);
+        }
 
-            MessageBox.Show("Asd");
-            Trace.WriteLine("asd");
-
-
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
+            MessageBox.Show(new Size(grid.ActualWidth, grid.ActualHeight)+"");
         }
     }
 }

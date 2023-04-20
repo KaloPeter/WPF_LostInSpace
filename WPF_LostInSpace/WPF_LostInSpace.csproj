@@ -7,4 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\Backgrounds\space_1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Backgrounds\space_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
