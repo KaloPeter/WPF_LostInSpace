@@ -25,6 +25,11 @@ namespace WPF_LostInSpace
         {
             InitializeComponent();
 
+
+            string testMessage = "Hello world";
+        
+            MessageBox.Show(testMessage);
+
             MessageBox.Show("Asd");
             Trace.WriteLine("asd");
 
