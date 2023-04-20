@@ -23,6 +23,8 @@ namespace WPF_LostInSpace
         public MainWindow()
         {
             InitializeComponent();
+
+            MessageBox.Show("Asd");
         }
     }
 }
