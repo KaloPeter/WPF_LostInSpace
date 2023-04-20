@@ -23,6 +23,11 @@ namespace WPF_LostInSpace
         public MainWindow()
         {
             InitializeComponent();
+
+
+            string testMessage = "Hello world";
+        
+            MessageBox.Show(testMessage);
         }
     }
 }
