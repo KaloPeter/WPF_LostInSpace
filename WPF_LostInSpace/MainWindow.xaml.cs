@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,9 @@ namespace WPF_LostInSpace
             InitializeComponent();
 
             MessageBox.Show("Asd");
+            Trace.WriteLine("asd");
+
+
         }
     }
 }
