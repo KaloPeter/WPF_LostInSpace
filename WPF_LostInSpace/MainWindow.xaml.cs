@@ -47,7 +47,7 @@ namespace WPF_LostInSpace
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-         
+            //logic.SetUpPanels(); //logic konstruktorban hívva létrejön, különben később jönne létre a lista betöltése, a display elszáll
             logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
             logic.SetUpBackground();
             

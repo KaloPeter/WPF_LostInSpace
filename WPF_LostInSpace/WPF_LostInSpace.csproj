@@ -17,6 +17,10 @@
     <None Remove="Images\Backgrounds\space_4.png" />
     <None Remove="Images\Backgrounds\space_earth_1 másolata.png" />
     <None Remove="Images\Backgrounds\space_earth_1.png" />
+    <None Remove="Images\Panels\controlPanel_Distance.png" />
+    <None Remove="Images\Panels\controlPanel_Empty_L.png" />
+    <None Remove="Images\Panels\controlPanel_Empty_R.png" />
+    <None Remove="Images\Panels\controlPanel_Health.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +46,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Backgrounds\space_earth_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Panels\controlPanel_Distance.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Panels\controlPanel_Empty_L.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Panels\controlPanel_Empty_R.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Panels\controlPanel_Health.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

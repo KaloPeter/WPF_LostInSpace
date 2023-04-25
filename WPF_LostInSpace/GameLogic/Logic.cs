@@ -18,12 +18,14 @@ namespace WPF_LostInSpace.GameLogic
         public event EventHandler EventUpdateRender;
 
         public List<GO_Background> GO_Backgrounds { get; set; }
+        public List<GO_ControlPanel> GO_ControlPanels { get; set; }
 
         public Logic()
         {
             GO_Backgrounds = new List<GO_Background>();
+            GO_ControlPanels = new List<GO_ControlPanel>();
             GO_Background.LoadBackgrounds();
-
+            SetUpPanels();
 
 
 
@@ -71,6 +73,18 @@ namespace WPF_LostInSpace.GameLogic
 
             //GO_Player.Distance += 0.001;
             //GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
+            EventUpdateRender?.Invoke(this, null);
+        }
+        public void SetUpPanels()
+        {
+            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Health.png"));
+            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Distance.png"));
+            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_L.png"));
+            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_R.png"));
+
+            GO_ControlPanels[0].ControlPanelPoint = new Point(0, 0);
+            GO_ControlPanels[0].ControlPanelSize = new Size(25, 25);
+
             EventUpdateRender?.Invoke(this, null);
         }
     }
