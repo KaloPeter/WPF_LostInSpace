@@ -23,20 +23,21 @@ namespace WPF_LostInSpace
     public partial class MainWindow : Window
     {
         private Logic logic;
-
         private DispatcherTimer timer_backgroundMove;
 
 
         public MainWindow()
         {
-           
+
+
             InitializeComponent();
+
 
             logic = new Logic();
             display.SetUpLogic(logic);
             timer_backgroundMove = new DispatcherTimer();
 
-            timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(0);
+            timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(100);
             timer_backgroundMove.Tick += (sender, eventArgs) =>
             {
                 logic.BackgroundMove();
@@ -47,12 +48,9 @@ namespace WPF_LostInSpace
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //logic.SetUpPanels(); //logic konstruktorban hívva létrejön, különben később jönne létre a lista betöltése, a display elszáll
             logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
             logic.SetUpBackground();
-            
-            
-
+            logic.SetUpPanels();
             timer_backgroundMove.Start();
 
         }
