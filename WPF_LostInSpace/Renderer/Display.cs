@@ -34,6 +34,24 @@ namespace WPF_LostInSpace.Renderer
                     );
             }
 
+
+            for (int i = 0; i < logic.GO_Items.Count; i++)
+            {
+                drawingContext.DrawRectangle(
+                logic.GO_Items[i].ItemBrush,
+                null,
+                new Rect(logic.GO_Items[i].ItemPoint.X, logic.GO_Items[i].ItemPoint.Y,
+                logic.GO_Items[i].ItemSize.Width, logic.GO_Items[i].ItemSize.Height)
+                );
+            }
+
+
+
+
+
+
+
+
             for (int i = 0; i < logic.GO_ControlPanels.Count; i++)
             {
                 drawingContext.DrawRectangle(
