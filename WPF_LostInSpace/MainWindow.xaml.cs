@@ -25,22 +25,63 @@ namespace WPF_LostInSpace
         private Logic logic;
         private DispatcherTimer timer_backgroundMove;
 
+        private DispatcherTimer timer_itemMove;
+        private DispatcherTimer timer_generateAsteroid;
+        private DispatcherTimer timer_generateSatellite;
+        private DispatcherTimer timer_generateCrystal;
+        private DispatcherTimer timer_generateHealth;
 
         public MainWindow()
         {
-
-
             InitializeComponent();
-
 
             logic = new Logic();
             display.SetUpLogic(logic);
-            timer_backgroundMove = new DispatcherTimer();
 
-            timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(100);
+            timer_backgroundMove = new DispatcherTimer();
+            timer_itemMove = new DispatcherTimer();
+            timer_generateAsteroid = new DispatcherTimer();
+            timer_generateSatellite = new DispatcherTimer();
+            timer_generateCrystal = new DispatcherTimer();
+            timer_generateHealth = new DispatcherTimer();
+
+
+            //IDŐZÍTÉS
+
+            timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
             timer_backgroundMove.Tick += (sender, eventArgs) =>
             {
                 logic.BackgroundMove();
+            };
+
+            timer_itemMove.Interval = TimeSpan.FromMilliseconds(10);
+            timer_itemMove.Tick += (sender, eventArgs) =>
+            {
+                logic.itemMove();
+            };
+
+            timer_generateAsteroid.Interval = TimeSpan.FromMilliseconds(500);
+            timer_generateAsteroid.Tick += (sender, eventArgs) =>
+            {
+                logic.generateAsteroid();
+            };
+
+            timer_generateSatellite.Interval = TimeSpan.FromMilliseconds(6000);
+            timer_generateSatellite.Tick += (sender, eventArgs) =>
+            {
+                logic.generateSatellite();
+            };
+
+            timer_generateCrystal.Interval = TimeSpan.FromMilliseconds(3000);
+            timer_generateCrystal.Tick += (sender, eventArgs) =>
+            {
+                logic.generateCrystal();
+            };
+
+            timer_generateHealth.Interval = TimeSpan.FromMilliseconds(4000);
+            timer_generateHealth.Tick += (sender, eventArgs) =>
+            {
+                logic.generateHealth();
             };
 
 
@@ -52,6 +93,12 @@ namespace WPF_LostInSpace
             logic.SetUpBackground();
             logic.SetUpPanels();
             timer_backgroundMove.Start();
+
+            timer_generateAsteroid.Start();
+            timer_generateCrystal.Start();
+            timer_itemMove.Start();
+            timer_generateHealth.Start();
+            timer_generateSatellite.Start();
 
         }
     }
