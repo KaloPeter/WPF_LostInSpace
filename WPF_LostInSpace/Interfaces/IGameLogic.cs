@@ -13,5 +13,7 @@ namespace WPF_LostInSpace.Interfaces
         public List<GO_ControlPanel> GO_ControlPanels { get; set; }
 
         event EventHandler EventUpdateRender;//to update the view, after new posotion was set.
+
+        public List<GO_Item> GO_Items { get; set; }
     }
 }
