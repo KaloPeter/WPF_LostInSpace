@@ -57,31 +57,31 @@ namespace WPF_LostInSpace
             timer_itemMove.Interval = TimeSpan.FromMilliseconds(10);
             timer_itemMove.Tick += (sender, eventArgs) =>
             {
-                logic.itemMove();
+                logic.ItemMove();
             };
 
             timer_generateAsteroid.Interval = TimeSpan.FromMilliseconds(500);
             timer_generateAsteroid.Tick += (sender, eventArgs) =>
             {
-                logic.generateAsteroid();
+                logic.GenerateAsteroid();
             };
 
             timer_generateSatellite.Interval = TimeSpan.FromMilliseconds(6000);
             timer_generateSatellite.Tick += (sender, eventArgs) =>
             {
-                logic.generateSatellite();
+                logic.GenerateSatellite();
             };
 
             timer_generateCrystal.Interval = TimeSpan.FromMilliseconds(3000);
             timer_generateCrystal.Tick += (sender, eventArgs) =>
             {
-                logic.generateCrystal();
+                logic.GenerateCrystal();
             };
 
             timer_generateHealth.Interval = TimeSpan.FromMilliseconds(4000);
             timer_generateHealth.Tick += (sender, eventArgs) =>
             {
-                logic.generateHealth();
+                logic.GenerateHealth();
             };
 
 

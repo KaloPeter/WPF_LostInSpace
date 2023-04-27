@@ -26,7 +26,7 @@ namespace WPF_LostInSpace.GameObjects
 
         public GO_Background()
         {
-            //First 2 bacgrounds are empty space(not the colorful space),after the 2, random space backgrounds can be set.
+            //First 2 bacgrounds are empty space(not the colorful space), after the 2nd, random space backgrounds can be set.
             if (indexForFirstTwoBackgrunds <= 1)
             {
                 backgroundBrush = images[indexForFirstTwoBackgrunds];
@@ -38,10 +38,6 @@ namespace WPF_LostInSpace.GameObjects
             }
 
         }
-
-
-
-
 
         public static void LoadBackgrounds()
         {
@@ -57,22 +53,18 @@ namespace WPF_LostInSpace.GameObjects
         public bool Move(Size playArea)
         {
             Point newPoint = new Point(BackgroundPoint.X, BackgroundPoint.Y - Speed);
-            Point bottomLeftOfBackground = new Point(BackgroundPoint.X, BackgroundPoint.Y + BackgroundSize.Height);//bottom left corner (+40 was here), but it works with it(while background can be seen).
+            Point bottomLeftOfBackground = new Point(BackgroundPoint.X, BackgroundPoint.Y + BackgroundSize.Height);//bottom left corner (+40 was here), but it works with it (while background can be seen)
 
-            if (bottomLeftOfBackground.Y >= 0/*playArea.Height*/)//there is still uncovered imagepart
+            if (bottomLeftOfBackground.Y >= 0/*playArea.Height*/)//there is still uncovered image part
             {
                 this.BackgroundPoint = newPoint;
                 return true;
             }
             else
             {
-                return false;//If background stops, then stop the ticker that is responsible fo moving it.
+                return false;//If background stops, then stop the ticker that is responsible for moving it
             }
         }
-
-
-
-
 
         public Brush BackgroundBrush
         {

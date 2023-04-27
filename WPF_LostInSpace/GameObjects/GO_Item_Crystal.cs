@@ -20,15 +20,13 @@ namespace WPF_LostInSpace.GameObjects
         public static void LoadCrystalImages()
         {
             crystals = new List<Brush>();
-            //  crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "crystal_0.png"), UriKind.RelativeOrAbsolute))));//0
-            // crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "crystal_1.png"), UriKind.RelativeOrAbsolute))));//1
-
+            //crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "crystal_0.png"), UriKind.RelativeOrAbsolute))));//0
+            //crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "crystal_1.png"), UriKind.RelativeOrAbsolute))));//1
 
             for (int i = 0; i < 7; i++)
             {
                 crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", $"crystal_{i}.png"), UriKind.RelativeOrAbsolute))));
             }
-
         }
 
         public GO_Item_Crystal(int value)
@@ -65,10 +63,6 @@ namespace WPF_LostInSpace.GameObjects
                     break;
                 default: break;
             }
-
-
-
-
 
         }
     }

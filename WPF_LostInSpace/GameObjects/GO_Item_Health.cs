@@ -25,7 +25,8 @@ namespace WPF_LostInSpace.GameObjects
         public override void SetBrushWithImage()
         {
             int randomHealthIndex = Utils.rnd.Next(0, healths.Count);
-            // int randomHealthSizeHeight = Utils.rnd.Next(55, 65);
+
+            //int randomHealthSizeHeight = Utils.rnd.Next(55, 65);
             //switch (randomHealthIndex)
             //{
             //    case 0:
@@ -47,9 +48,6 @@ namespace WPF_LostInSpace.GameObjects
                     break;
                 default: break;
             }
-
-
-
 
             this.ItemBrush = healths[randomHealthIndex];
         }

@@ -13,7 +13,6 @@ namespace WPF_LostInSpace.Renderer
     {
         private IGameLogic logic;
 
-
         public void SetUpLogic(IGameLogic logic)
         {
             this.logic = logic;
@@ -44,13 +43,6 @@ namespace WPF_LostInSpace.Renderer
                 logic.GO_Items[i].ItemSize.Width, logic.GO_Items[i].ItemSize.Height)
                 );
             }
-
-
-
-
-
-
-
 
             for (int i = 0; i < logic.GO_ControlPanels.Count; i++)
             {

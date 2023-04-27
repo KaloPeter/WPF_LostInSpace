@@ -21,7 +21,6 @@ namespace WPF_LostInSpace.GameObjects
             asteroids.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "ast_1_T.png"), UriKind.RelativeOrAbsolute))));//0
             asteroids.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "ast_2_T.png"), UriKind.RelativeOrAbsolute))));//1
             asteroids.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "ast_3_T.png"), UriKind.RelativeOrAbsolute))));//2
-
         }
 
         public override void SetBrushWithImage()

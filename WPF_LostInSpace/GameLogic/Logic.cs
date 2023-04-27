@@ -101,9 +101,8 @@ namespace WPF_LostInSpace.GameLogic
 
             //health panel starts from top left corner, and the width of it is the start of the background, which is the axis X
             GO_ControlPanels[1].ControlPanelPoint = new Point(0, 0);
-            //first one starts from 0,0, so the width of this panel is equelas with the axis X of background(bg starts here->this is how wide panel we need)
+            //first one starts from 0,0, so the width of this panel is equals with the axis X of background(bg starts here->this is how wide panel we need)
             GO_ControlPanels[1].ControlPanelSize = new Size(GO_Backgrounds[0].BackgroundPoint.X, 200);
-
 
             //distance panel starts at the end of the background of x-axis(top right corner)
             GO_ControlPanels[0].ControlPanelPoint = new Point(GO_Backgrounds[0].BackgroundPoint.X + GO_Backgrounds[0].BackgroundSize.Width, 0);
@@ -111,49 +110,39 @@ namespace WPF_LostInSpace.GameLogic
             //windows width-from (0,0) to axis X - background size =>difference between right side of the windows and the right side of the background
             GO_ControlPanels[0].ControlPanelSize = new Size(playArea.Width - GO_Backgrounds[0].BackgroundPoint.X - GO_Backgrounds[0].BackgroundSize.Width, 200);
 
-
             GO_ControlPanels[2].ControlPanelPoint = new Point(0, GO_ControlPanels[0].ControlPanelSize.Height);
             GO_ControlPanels[2].ControlPanelSize = new Size(GO_Backgrounds[0].BackgroundPoint.X, playArea.Height - GO_ControlPanels[0].ControlPanelSize.Height);
 
             GO_ControlPanels[3].ControlPanelPoint = new Point(GO_ControlPanels[0].ControlPanelSize.Width + GO_Backgrounds[0].BackgroundSize.Width, GO_ControlPanels[1].ControlPanelSize.Height);
             GO_ControlPanels[3].ControlPanelSize = new Size(playArea.Width - GO_ControlPanels[0].ControlPanelSize.Width - GO_Backgrounds[0].BackgroundSize.Width, playArea.Height - GO_ControlPanels[1].ControlPanelSize.Height);
 
-
-
-
-
-
-
             EventUpdateRender?.Invoke(this, null);
         }
 
         //GENERATE GO_Items
 
-        public void generateAsteroid()
+        public void GenerateAsteroid()
         {
-            GO_Item_Asteroid goia = new GO_Item_Asteroid();//game object item asteroid=goia
+            GO_Item_Asteroid goia = new GO_Item_Asteroid();//goia=game object item asteroid
             CreateNewGO_Item_ByParameter(goia);
         }
 
-        public void generateHealth()
+        public void GenerateHealth()
         {
             GO_Item_Health goih = new GO_Item_Health();//goih=game object item health
             CreateNewGO_Item_ByParameter(goih);
         }
 
-        public void generateSatellite()
+        public void GenerateSatellite()
         {
             GO_Item_Satellite gois = new GO_Item_Satellite();//gois=game object item satellite
             CreateNewGO_Item_ByParameter(gois);
         }
 
-        public void generateCrystal()
+        public void GenerateCrystal()
         {
             GO_Item_Crystal choosenCrystal = GO_Item_Crystals[Utils.rnd.Next(0, GO_Item_Crystals.Count)];//goic=game object item crystals
-
             GO_Item_Crystal goic = new GO_Item_Crystal(choosenCrystal.Value);
-
-
             CreateNewGO_Item_ByParameter(goic);
         }
 
@@ -166,16 +155,16 @@ namespace WPF_LostInSpace.GameLogic
             int to = (int)(GO_Backgrounds[0].BackgroundPoint.X + GO_Backgrounds[0].BackgroundSize.Width - goItem.ItemSize.Width);
 
             goItem.ItemPoint = new Point(Utils.rnd.Next(from, to), playArea.Height);
-            //put down this object from bg left side to bg righ side on random pos(within background=bg) 
+            //put down this object from bg left side to bg right side on random pos(within background=bg) 
             //PlayArea.Height->the object gonna be outside of layer view, to see how generating works, say: PlayArea.Height-100
             GO_Items.Add(goItem);
 
             EventUpdateRender?.Invoke(this, null);//refresh display
         }
 
-        public void itemMove()
+        public void ItemMove()
         {
-            //we are acalling it every 1 millisec, and if the object out of map, we remove it->Move() can return true if moveable, false if out of bounds
+            //we are calling it every 1 millisec, and if the object out of map, we remove it->Move() can return true if moveable, false if out of bounds
             for (int i = 0; i < GO_Items.Count; i++)
             {
                 bool withinBoundary = GO_Items[i].Move();
@@ -187,9 +176,6 @@ namespace WPF_LostInSpace.GameLogic
             }
 
             EventUpdateRender?.Invoke(this, null);
-
-
-
         }
 
         //GENERATE GO_Items

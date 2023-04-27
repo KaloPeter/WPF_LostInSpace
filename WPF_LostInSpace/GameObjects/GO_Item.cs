@@ -25,7 +25,7 @@ namespace WPF_LostInSpace.GameObjects
         {
             Point nPoint = new Point(ItemPoint.X, ItemPoint.Y - Speed);
 
-            if (nPoint.Y >= 0 - ItemSize.Height)//dissapiers when out of bounds "-" is good, "+" can be seen how they dissappier
+            if (nPoint.Y >= 0 - ItemSize.Height)//disappears when out of bounds "-" is good, "+" can be seen how they disappear
             {
                 ItemPoint = nPoint;
 

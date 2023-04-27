@@ -43,7 +43,6 @@ namespace WPF_LostInSpace.GameObjects
             }
 
             this.ItemBrush = satelites[randomSatelliteIndex];
-
         }
     }
 }
