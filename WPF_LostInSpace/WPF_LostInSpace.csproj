@@ -20,6 +20,13 @@
     <None Remove="Images\Items\ast_1_T.png" />
     <None Remove="Images\Items\ast_2_T.png" />
     <None Remove="Images\Items\ast_3_T.png" />
+    <None Remove="Images\Items\crystal_0.png" />
+    <None Remove="Images\Items\crystal_1.png" />
+    <None Remove="Images\Items\crystal_2.png" />
+    <None Remove="Images\Items\crystal_3.png" />
+    <None Remove="Images\Items\crystal_4.png" />
+    <None Remove="Images\Items\crystal_5.png" />
+    <None Remove="Images\Items\crystal_6.png" />
     <None Remove="Images\Items\oxygen_1_T.png" />
     <None Remove="Images\Items\oxygen_2_T.png" />
     <None Remove="Images\Items\sat_1_T.png" />
@@ -63,6 +70,27 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Items\ast_3_T.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Items\crystal_6.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Items\oxygen_1_T.png">
