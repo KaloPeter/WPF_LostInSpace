@@ -15,5 +15,7 @@ namespace WPF_LostInSpace.Interfaces
         event EventHandler EventUpdateRender;//to update the view, after new position was set
 
         public List<GO_Item> GO_Items { get; set; }
+
+        public GO_Player GO_Player { get; set; }
     }
 }
