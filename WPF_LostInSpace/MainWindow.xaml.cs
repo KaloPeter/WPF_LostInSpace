@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WPF_LostInSpace.GameController;
 using WPF_LostInSpace.GameLogic;
 using WPF_LostInSpace.HelperClasses;
 
@@ -23,6 +24,9 @@ namespace WPF_LostInSpace
     public partial class MainWindow : Window
     {
         private Logic logic;
+        private Controller controller;
+
+
 
         private List<DispatcherTimer> dispatcherTimers;
 
@@ -33,24 +37,27 @@ namespace WPF_LostInSpace
         //private DispatcherTimer timer_generateSatellite;
         //private DispatcherTimer timer_generateCrystal;
         //private DispatcherTimer timer_generateHealth;
+        //private DispatcherTimer timer_playerMovement;
 
         public MainWindow()
         {
             InitializeComponent();
 
             logic = new Logic();
+            controller = new Controller(logic);
             display.SetUpLogic(logic);
 
             dispatcherTimers = new List<DispatcherTimer>();
 
             int[] timerMilliseconds = new int[]
                 { 
-                    1,//timer_backgroundMove
-                    10,//timer_itemMove
-                    500,//timer_generateAsteroid
-                    6000,//timer_generateSatellite
-                    3000,//timer_generateCrystal
-                    4000,//timer_generateHealth
+                    1,//0 timer_backgroundMove
+                    10,//1 timer_itemMove
+                    500,//2 timer_generateAsteroid
+                    6000,//3 timer_generateSatellite
+                    3000,//4 timer_generateCrystal
+                    4000,//5 timer_generateHealth
+                    10,//6 timer_playerMovement
                 };
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -65,11 +72,9 @@ namespace WPF_LostInSpace
             //timer_generateSatellite = new DispatcherTimer();
             //timer_generateCrystal = new DispatcherTimer();
             //timer_generateHealth = new DispatcherTimer();
-
+            //timer_playerMovement = new DispatcherTimer();
 
             //IDŐZÍTÉS
-
-            //dps[0].Tick += (sender, args) => { gl.BackgroundMove(); };//Moving background
 
             dispatcherTimers[0].Tick += (sender, args) => { logic.BackgroundMove(); };
             dispatcherTimers[1].Tick += (sender, args) => { logic.ItemMove(); };
@@ -77,6 +82,7 @@ namespace WPF_LostInSpace
             dispatcherTimers[3].Tick += (sender, args) => { logic.GenerateSatellite(); };
             dispatcherTimers[4].Tick += (sender, args) => { logic.GenerateCrystal(); };
             dispatcherTimers[5].Tick += (sender, args) => { logic.GenerateHealth(); };
+            dispatcherTimers[6].Tick += (sender, args) => { controller.DecideMoveDirection(); };
 
             //timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
             //timer_backgroundMove.Tick += (sender, eventArgs) =>
@@ -113,7 +119,12 @@ namespace WPF_LostInSpace
             //{
             //    logic.GenerateHealth();
             //};
-
+            /////////////////////////////////////////////////////////
+            //timer_playerMovement.Interval = TimeSpan.FromMilliseconds(10);
+            //timer_playerMovement.Tick += (sender, eventArgs) =>
+            //{
+            //    controller.DecideMoveDirection();
+            //};
 
         }
 
@@ -122,6 +133,8 @@ namespace WPF_LostInSpace
             logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
             logic.SetUpBackground();
             logic.SetUpPanels();
+
+            logic.SetUpPlayer();
 
             foreach (var item in dispatcherTimers)
             {
@@ -135,7 +148,18 @@ namespace WPF_LostInSpace
             //timer_itemMove.Start();
             //timer_generateHealth.Start();
             //timer_generateSatellite.Start();
+            //timer_playerMovement.Start();
 
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            controller.KeyDown(e.Key);
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            controller.KeyUp(e.Key);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace WPF_LostInSpace.GameObjects
             Point newPoint = new Point(BackgroundPoint.X, BackgroundPoint.Y - Speed);
             Point bottomLeftOfBackground = new Point(BackgroundPoint.X, BackgroundPoint.Y + BackgroundSize.Height);//bottom left corner (+40 was here), but it works with it (while background can be seen)
 
-            if (bottomLeftOfBackground.Y >= 0/*playArea.Height*/)//there is still uncovered image part
+            if (bottomLeftOfBackground.Y >= 0)//there is still uncovered image part
             {
                 this.BackgroundPoint = newPoint;
                 return true;

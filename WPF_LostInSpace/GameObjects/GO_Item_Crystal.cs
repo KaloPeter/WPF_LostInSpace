@@ -21,9 +21,7 @@ namespace WPF_LostInSpace.GameObjects
         {
             crystals = new List<Brush>();
             //crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "crystal_0.png"), UriKind.RelativeOrAbsolute))));//0
-            //crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "crystal_1.png"), UriKind.RelativeOrAbsolute))));//1
-
-            for (int i = 0; i < 7; i++)
+            for (int i = 1; i <= 6; i++)
             {
                 crystals.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", $"crystal_{i}.png"), UriKind.RelativeOrAbsolute))));
             }
@@ -36,7 +34,7 @@ namespace WPF_LostInSpace.GameObjects
 
         public override void SetBrushWithImage()
         {
-            ItemSize = new Size(30, 30);
+            ItemSize = new Size(20, 20);
 
             switch (Value)
             {
@@ -55,11 +53,8 @@ namespace WPF_LostInSpace.GameObjects
                 case 50:
                     ItemBrush = crystals[4];
                     break;
-                case 60:
-                    ItemBrush = crystals[5];
-                    break;
                 case 100:
-                    ItemBrush = crystals[6];
+                    ItemBrush = crystals[5];
                     break;
                 default: break;
             }

@@ -21,8 +21,13 @@ namespace WPF_LostInSpace.GameLogic
         public List<GO_Background> GO_Backgrounds { get; set; }
         public List<GO_ControlPanel> GO_ControlPanels { get; set; }
         public List<GO_Item> GO_Items { get; set; }
+        public GO_Player GO_Player { get; set; }
 
         private List<GO_Item_Crystal> GO_Item_Crystals;
+
+        //***********************************************************************************
+        //***********************************************************************************
+
         public Logic()
         {
             GO_Backgrounds = new List<GO_Background>();
@@ -34,7 +39,6 @@ namespace WPF_LostInSpace.GameLogic
             GO_Item_Crystals.Add(new GO_Item_Crystal(30));
             GO_Item_Crystals.Add(new GO_Item_Crystal(40));
             GO_Item_Crystals.Add(new GO_Item_Crystal(50));
-            GO_Item_Crystals.Add(new GO_Item_Crystal(60));
             GO_Item_Crystals.Add(new GO_Item_Crystal(100));
 
             GO_Background.LoadBackgrounds();
@@ -54,7 +58,13 @@ namespace WPF_LostInSpace.GameLogic
             GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Distance.png"));
             GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_L.png"));
             GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_R.png"));
+
+
+            GO_Player = new GO_Player();
+
         }
+
+        ///////////////////////////setUp methods
 
         public void SetUpPlayArea(Size playArea)
         {
@@ -67,34 +77,13 @@ namespace WPF_LostInSpace.GameLogic
             GO_Backgrounds[0].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), 0);
 
             GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
-            GO_Backgrounds[1].BackgroundPoint = new Point(GO_Backgrounds[0].BackgroundPoint.X, GO_Backgrounds[0].BackgroundSize.Height-1);
+            GO_Backgrounds[1].BackgroundPoint = new Point(GO_Backgrounds[0].BackgroundPoint.X, GO_Backgrounds[0].BackgroundSize.Height - 1);
             //-1=> két background közöti fehér vonal
 
             /*(int)((PlayArea.Width / 2) - (GO_Background.BackgroundSize.Width / 2)),/*(int)(playArea.Height / 2)*/
             EventUpdateRender?.Invoke(this, null);
         }
 
-        public void BackgroundMove()
-        {
-
-            for (int i = 0; i < GO_Backgrounds.Count; i++)
-            {
-                bool isBackgroundIn = GO_Backgrounds[i].Move(playArea);
-
-                if (!isBackgroundIn)
-                {
-                    GO_Backgrounds.RemoveAt(i);
-                    GO_Backgrounds.Add(new GO_Background());
-
-                    GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
-                    GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height-1);
-                }
-            }
-
-            //GO_Player.Distance += 0.001;
-            //GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
-            EventUpdateRender?.Invoke(this, null);
-        }
         public void SetUpPanels()
         {
             //Panel order int collection: health, distance, empty_L, empty_R
@@ -119,7 +108,16 @@ namespace WPF_LostInSpace.GameLogic
             EventUpdateRender?.Invoke(this, null);
         }
 
-        //GENERATE GO_Items
+        public void SetUpPlayer()
+        {
+            GO_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));//50-25 ___ 100-50__GO_Player.PlayerSize = new Size((PlayArea.Width / 8), (PlayArea.Height / 16));
+            GO_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
+        }
+        ///////////////////////////setUp methods
+
+
+
+        ///////////////////////////GENERATE GO_Items
 
         public void GenerateAsteroid()
         {
@@ -146,7 +144,6 @@ namespace WPF_LostInSpace.GameLogic
             CreateNewGO_Item_ByParameter(goic);
         }
 
-
         private void CreateNewGO_Item_ByParameter(GO_Item goItem)
         {
             goItem.SetBrushWithImage();//choose random image, set it's object brush to it
@@ -162,6 +159,31 @@ namespace WPF_LostInSpace.GameLogic
             EventUpdateRender?.Invoke(this, null);//refresh display
         }
 
+        ///////////////////////////GENERATE GO_Items
+
+        public void BackgroundMove()
+        {
+
+            for (int i = 0; i < GO_Backgrounds.Count; i++)
+            {
+                bool isBackgroundIn = GO_Backgrounds[i].Move(playArea);
+
+                if (!isBackgroundIn)
+                {
+                    GO_Backgrounds.RemoveAt(i);
+                    GO_Backgrounds.Add(new GO_Background());
+
+                    GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
+                    GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height - 1);
+                }
+            }
+        //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
+
+            //GO_Player.Distance += 0.001;
+            //GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
+            EventUpdateRender?.Invoke(this, null);
+        }
+
         public void ItemMove()
         {
             //we are calling it every 1 millisec, and if the object out of map, we remove it->Move() can return true if moveable, false if out of bounds
@@ -174,11 +196,36 @@ namespace WPF_LostInSpace.GameLogic
                     GO_Items.RemoveAt(i);
                 }
             }
-
+        
             EventUpdateRender?.Invoke(this, null);
         }
 
-        //GENERATE GO_Items
+        public void MovePlayer(PlayerController pc)
+        {
+            ////Player cant leave background
+            ////if boundary was crossed we throw the player back with 1 pixel
+
+            ////Idea is if player leaves background(it can), then we +-5 to it's position X, and ends up at the last position where it can move freely->happens fast,cannot be seen. 
+
+            if (GO_Player.PlayerPoint.X < GO_Backgrounds[0].BackgroundPoint.X)
+            {
+                GO_Player.PlayerPoint = new Point(GO_Player.PlayerPoint.X + 5, GO_Player.PlayerPoint.Y);                                                                                                     //eg: if I write 1, then the player could go to the left with 4.
+            }
+
+            ////We are comparing the right top corner of player to the right top corner of background/gamearea
+
+            if (GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width > GO_Backgrounds[0].BackgroundPoint.X + GO_Backgrounds[0].BackgroundSize.Width)
+            {
+                GO_Player.PlayerPoint = new Point(GO_Player.PlayerPoint.X - 5, GO_Player.PlayerPoint.Y);
+            }
+
+            ////Trace.WriteLine("Move: " + GO_Player.PlayerPoint.X);
+
+            GO_Player.Move(pc);
+            EventUpdateRender?.Invoke(this, null);
+
+        }
+
 
 
     }

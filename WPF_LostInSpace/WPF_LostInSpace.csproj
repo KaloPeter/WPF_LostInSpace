@@ -72,9 +72,6 @@
     <Content Include="Images\Items\ast_3_T.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Items\crystal_0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Images\Items\crystal_1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
