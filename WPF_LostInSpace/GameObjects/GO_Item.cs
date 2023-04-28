@@ -17,7 +17,7 @@ namespace WPF_LostInSpace.GameObjects
 
         public int Speed { get; set; } = 2;
 
-       // protected static Random rnd = new Random();
+   //     protected static Random rnd = new Random();
 
         public abstract void SetBrushWithImage();
 
