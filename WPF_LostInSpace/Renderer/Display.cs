@@ -23,32 +23,45 @@ namespace WPF_LostInSpace.Renderer
         {
             base.OnRender(drawingContext);
 
+            //Background
             for (int i = 0; i < logic.GO_Backgrounds.Count; i++)
             {
                 drawingContext.DrawRectangle(
                     logic.GO_Backgrounds[i].BackgroundBrush,
-                    null,
+                    new Pen(Brushes.Red, 2),
                     new Rect(logic.GO_Backgrounds[i].BackgroundPoint.X, logic.GO_Backgrounds[i].BackgroundPoint.Y,
                     logic.GO_Backgrounds[i].BackgroundSize.Width, logic.GO_Backgrounds[i].BackgroundSize.Height)
                     );
             }
 
 
+
+            drawingContext.DrawRectangle(
+                logic.GO_Player.PlayerBrush,
+                new Pen(Brushes.Red, 2),
+                new Rect(logic.GO_Player.PlayerPoint.X, logic.GO_Player.PlayerPoint.Y, logic.GO_Player.PlayerSize.Width, logic.GO_Player.PlayerSize.Height)
+                );
+
+
+            //GO_Items
             for (int i = 0; i < logic.GO_Items.Count; i++)
             {
                 drawingContext.DrawRectangle(
                 logic.GO_Items[i].ItemBrush,
-                null,
+                new Pen(Brushes.Red,2),
                 new Rect(logic.GO_Items[i].ItemPoint.X, logic.GO_Items[i].ItemPoint.Y,
                 logic.GO_Items[i].ItemSize.Width, logic.GO_Items[i].ItemSize.Height)
                 );
             }
 
+
+
+            //GO_Panels
             for (int i = 0; i < logic.GO_ControlPanels.Count; i++)
             {
                 drawingContext.DrawRectangle(
                     logic.GO_ControlPanels[i].ControlPanelBrush,
-                    null,
+                    new Pen(Brushes.Red, 2),
                     new Rect(logic.GO_ControlPanels[i].ControlPanelPoint.X, logic.GO_ControlPanels[i].ControlPanelPoint.Y,
                     logic.GO_ControlPanels[i].ControlPanelSize.Width, logic.GO_ControlPanels[i].ControlPanelSize.Height)
                     );
