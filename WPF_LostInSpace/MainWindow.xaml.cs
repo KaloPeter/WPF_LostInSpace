@@ -23,13 +23,16 @@ namespace WPF_LostInSpace
     public partial class MainWindow : Window
     {
         private Logic logic;
-        private DispatcherTimer timer_backgroundMove;
 
-        private DispatcherTimer timer_itemMove;
-        private DispatcherTimer timer_generateAsteroid;
-        private DispatcherTimer timer_generateSatellite;
-        private DispatcherTimer timer_generateCrystal;
-        private DispatcherTimer timer_generateHealth;
+        private List<DispatcherTimer> dispatcherTimers;
+
+        //private DispatcherTimer timer_backgroundMove;
+
+        //private DispatcherTimer timer_itemMove;
+        //private DispatcherTimer timer_generateAsteroid;
+        //private DispatcherTimer timer_generateSatellite;
+        //private DispatcherTimer timer_generateCrystal;
+        //private DispatcherTimer timer_generateHealth;
 
         public MainWindow()
         {
@@ -38,51 +41,78 @@ namespace WPF_LostInSpace
             logic = new Logic();
             display.SetUpLogic(logic);
 
-            timer_backgroundMove = new DispatcherTimer();
-            timer_itemMove = new DispatcherTimer();
-            timer_generateAsteroid = new DispatcherTimer();
-            timer_generateSatellite = new DispatcherTimer();
-            timer_generateCrystal = new DispatcherTimer();
-            timer_generateHealth = new DispatcherTimer();
+            dispatcherTimers = new List<DispatcherTimer>();
+
+            int[] timerMilliseconds = new int[]
+                { 
+                    1,//timer_backgroundMove
+                    10,//timer_itemMove
+                    500,//timer_generateAsteroid
+                    6000,//timer_generateSatellite
+                    3000,//timer_generateCrystal
+                    4000,//timer_generateHealth
+                };
+
+            for (int i = 0; i < timerMilliseconds.Length; i++)
+            {
+                dispatcherTimers.Add(new DispatcherTimer());
+                dispatcherTimers[i].Interval = TimeSpan.FromMilliseconds(timerMilliseconds[i]);
+            }
+
+            //timer_backgroundMove = new DispatcherTimer();
+            //timer_itemMove = new DispatcherTimer();
+            //timer_generateAsteroid = new DispatcherTimer();
+            //timer_generateSatellite = new DispatcherTimer();
+            //timer_generateCrystal = new DispatcherTimer();
+            //timer_generateHealth = new DispatcherTimer();
 
 
             //IDŐZÍTÉS
 
-            timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
-            timer_backgroundMove.Tick += (sender, eventArgs) =>
-            {
-                logic.BackgroundMove();
-            };
+            //dps[0].Tick += (sender, args) => { gl.BackgroundMove(); };//Moving background
 
-            timer_itemMove.Interval = TimeSpan.FromMilliseconds(10);
-            timer_itemMove.Tick += (sender, eventArgs) =>
-            {
-                logic.ItemMove();
-            };
+            dispatcherTimers[0].Tick += (sender, args) => { logic.BackgroundMove(); };
+            dispatcherTimers[1].Tick += (sender, args) => { logic.ItemMove(); };
+            dispatcherTimers[2].Tick += (sender, args) => { logic.GenerateAsteroid(); };
+            dispatcherTimers[3].Tick += (sender, args) => { logic.GenerateSatellite(); };
+            dispatcherTimers[4].Tick += (sender, args) => { logic.GenerateCrystal(); };
+            dispatcherTimers[5].Tick += (sender, args) => { logic.GenerateHealth(); };
 
-            timer_generateAsteroid.Interval = TimeSpan.FromMilliseconds(500);
-            timer_generateAsteroid.Tick += (sender, eventArgs) =>
-            {
-                logic.GenerateAsteroid();
-            };
+            //timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
+            //timer_backgroundMove.Tick += (sender, eventArgs) =>
+            //{
+            //    logic.BackgroundMove();
+            //};
 
-            timer_generateSatellite.Interval = TimeSpan.FromMilliseconds(6000);
-            timer_generateSatellite.Tick += (sender, eventArgs) =>
-            {
-                logic.GenerateSatellite();
-            };
+            //timer_itemMove.Interval = TimeSpan.FromMilliseconds(10);
+            //timer_itemMove.Tick += (sender, eventArgs) =>
+            //{
+            //    logic.ItemMove();
+            //};
 
-            timer_generateCrystal.Interval = TimeSpan.FromMilliseconds(3000);
-            timer_generateCrystal.Tick += (sender, eventArgs) =>
-            {
-                logic.GenerateCrystal();
-            };
+            //timer_generateAsteroid.Interval = TimeSpan.FromMilliseconds(500);
+            //timer_generateAsteroid.Tick += (sender, eventArgs) =>
+            //{
+            //    logic.GenerateAsteroid();
+            //};
 
-            timer_generateHealth.Interval = TimeSpan.FromMilliseconds(4000);
-            timer_generateHealth.Tick += (sender, eventArgs) =>
-            {
-                logic.GenerateHealth();
-            };
+            //timer_generateSatellite.Interval = TimeSpan.FromMilliseconds(6000);
+            //timer_generateSatellite.Tick += (sender, eventArgs) =>
+            //{
+            //    logic.GenerateSatellite();
+            //};
+
+            //timer_generateCrystal.Interval = TimeSpan.FromMilliseconds(3000);
+            //timer_generateCrystal.Tick += (sender, eventArgs) =>
+            //{
+            //    logic.GenerateCrystal();
+            //};
+
+            //timer_generateHealth.Interval = TimeSpan.FromMilliseconds(4000);
+            //timer_generateHealth.Tick += (sender, eventArgs) =>
+            //{
+            //    logic.GenerateHealth();
+            //};
 
 
         }
@@ -92,13 +122,19 @@ namespace WPF_LostInSpace
             logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
             logic.SetUpBackground();
             logic.SetUpPanels();
-            timer_backgroundMove.Start();
 
-            timer_generateAsteroid.Start();
-            timer_generateCrystal.Start();
-            timer_itemMove.Start();
-            timer_generateHealth.Start();
-            timer_generateSatellite.Start();
+            foreach (var item in dispatcherTimers)
+            {
+                item.Start();
+            }
+
+            //timer_backgroundMove.Start();
+
+            //timer_generateAsteroid.Start();
+            //timer_generateCrystal.Start();
+            //timer_itemMove.Start();
+            //timer_generateHealth.Start();
+            //timer_generateSatellite.Start();
 
         }
     }
