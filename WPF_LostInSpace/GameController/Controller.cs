@@ -15,7 +15,7 @@ namespace WPF_LostInSpace.GameController
 
         private bool goLeft = false;
         private bool goRight = false;
-
+        private bool shoot = false;
 
         public Controller(IGameController logic)
         {
@@ -78,6 +78,22 @@ namespace WPF_LostInSpace.GameController
             }
         }
 
+        public void SpaceDown(Key key)
+        {
+            if (key == Key.Space && !shoot)
+            {
+                logic.ShootLaser();
+                shoot = true;
+            }
+        }
 
+        public void SpaceUp(Key key)
+        {
+            if (key == Key.Space && shoot)
+            {
+                shoot = false;
+
+            }
+        }
     }
 }
