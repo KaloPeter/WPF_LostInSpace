@@ -10,5 +10,7 @@ namespace WPF_LostInSpace.Interfaces
     public interface IGameController
     {
         void MovePlayer(PlayerController pc);
+
+        void ShootLaser();
     }
 }
