@@ -26,8 +26,6 @@ namespace WPF_LostInSpace
         private Logic logic;
         private Controller controller;
 
-
-
         private List<DispatcherTimer> dispatcherTimers;
 
         //private DispatcherTimer timer_backgroundMove;
@@ -50,7 +48,7 @@ namespace WPF_LostInSpace
             dispatcherTimers = new List<DispatcherTimer>();
 
             int[] timerMilliseconds = new int[]
-                { 
+                {
                     1,//0 timer_backgroundMove
                     10,//1 timer_itemMove
                     500,//2 timer_generateAsteroid
@@ -58,6 +56,8 @@ namespace WPF_LostInSpace
                     3000,//4 timer_generateCrystal
                     4000,//5 timer_generateHealth
                     10,//6 timer_playerMovement
+                    0,//7 timer_moveLaser
+                    10//8 timer_laserItemDetection
                 };
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -83,6 +83,8 @@ namespace WPF_LostInSpace
             dispatcherTimers[4].Tick += (sender, args) => { logic.GenerateCrystal(); };
             dispatcherTimers[5].Tick += (sender, args) => { logic.GenerateHealth(); };
             dispatcherTimers[6].Tick += (sender, args) => { controller.DecideMoveDirection(); };
+            dispatcherTimers[7].Tick += (sender, args) => { logic.MoveLaser(); };
+            dispatcherTimers[8].Tick += (sender, args) => { logic.CheckLaserItemDetection(); };
 
             //timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
             //timer_backgroundMove.Tick += (sender, eventArgs) =>
@@ -155,11 +157,17 @@ namespace WPF_LostInSpace
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             controller.KeyDown(e.Key);
+
+            controller.SpaceDown(e.Key);
+
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             controller.KeyUp(e.Key);
+
+            controller.SpaceUp(e.Key);
+
         }
     }
 }
