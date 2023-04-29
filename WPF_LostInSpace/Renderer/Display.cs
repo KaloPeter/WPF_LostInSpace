@@ -35,7 +35,7 @@ namespace WPF_LostInSpace.Renderer
             }
 
 
-
+            //Player
             drawingContext.DrawRectangle(
                 logic.GO_Player.PlayerBrush,
                 new Pen(Brushes.Red, 2),
@@ -53,6 +53,19 @@ namespace WPF_LostInSpace.Renderer
                 logic.GO_Items[i].ItemSize.Width, logic.GO_Items[i].ItemSize.Height)
                 );
             }
+
+            //Laser
+            for (int i = 0; i < logic.GO_Lasers.Count; i++)
+            {
+                drawingContext.DrawRectangle(
+                    logic.GO_Lasers[i].LaserBrush,
+                    new Pen(Brushes.Yellow,2),
+                    new Rect(logic.GO_Lasers[i].LaserPoint.X, logic.GO_Lasers[i].LaserPoint.Y,
+                    logic.GO_Lasers[i].LaserSize.Width, logic.GO_Lasers[i].LaserSize.Height)
+                    );
+            }
+
+
 
 
 
