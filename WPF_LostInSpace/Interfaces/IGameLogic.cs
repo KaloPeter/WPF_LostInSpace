@@ -16,6 +16,10 @@ namespace WPF_LostInSpace.Interfaces
 
         public List<GO_Item> GO_Items { get; set; }
 
+        public List<GO_Laser> GO_Lasers { get; set; }
+
         public GO_Player GO_Player { get; set; }
+
+        public List<byte[]> Cooldown_RGB { get; set; }
     }
 }
