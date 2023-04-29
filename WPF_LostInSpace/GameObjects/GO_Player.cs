@@ -9,8 +9,8 @@ namespace WPF_LostInSpace.GameObjects
     public class GO_Player
     {
         private Brush playerBrush;
-        private static Brush playerBrushLeft;
-        private static Brush playerBrushRight;
+        private  Brush playerBrushLeft;
+        private  Brush playerBrushRight;
 
         public string Name { get; set; }
 
