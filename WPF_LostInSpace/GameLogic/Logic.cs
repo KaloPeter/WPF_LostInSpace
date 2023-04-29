@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.HelperClasses;
 using WPF_LostInSpace.Interfaces;
@@ -21,9 +22,21 @@ namespace WPF_LostInSpace.GameLogic
         public List<GO_Background> GO_Backgrounds { get; set; }
         public List<GO_ControlPanel> GO_ControlPanels { get; set; }
         public List<GO_Item> GO_Items { get; set; }
+
+        public List<GO_Laser> GO_Lasers { get; set; }
+
         public GO_Player GO_Player { get; set; }
 
         private List<GO_Item_Crystal> GO_Item_Crystals;
+
+        //LATER IMPLEMENTATIONS--Dispatcher not calling reduceCooldown method, ShootLaset not calling enlargeCooldown method,display not rendering Cooldown_RGB colors in window.
+        private List<byte[]> colors;
+
+        public List<byte[]> Cooldown_RGB { get; set; }
+
+        private bool isCooldown = false;
+        //LATER IMPLEMENTATIONS
+
 
         //***********************************************************************************
         //***********************************************************************************
@@ -33,6 +46,7 @@ namespace WPF_LostInSpace.GameLogic
             GO_Backgrounds = new List<GO_Background>();
             GO_Items = new List<GO_Item>();
             GO_Item_Crystals = new List<GO_Item_Crystal>();
+            GO_Lasers = new List<GO_Laser>();
 
             GO_Item_Crystals.Add(new GO_Item_Crystal(10));
             GO_Item_Crystals.Add(new GO_Item_Crystal(20));
@@ -177,7 +191,7 @@ namespace WPF_LostInSpace.GameLogic
                     GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height - 1);
                 }
             }
-        //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
+            //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
 
             //GO_Player.Distance += 0.001;
             //GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
@@ -196,9 +210,12 @@ namespace WPF_LostInSpace.GameLogic
                     GO_Items.RemoveAt(i);
                 }
             }
-        
+
             EventUpdateRender?.Invoke(this, null);
         }
+
+
+        ///////////////////////////Methods for Player/Laser
 
         public void MovePlayer(PlayerController pc)
         {
@@ -226,7 +243,161 @@ namespace WPF_LostInSpace.GameLogic
 
         }
 
+        public void ShootLaser()//Create Laser object__Cooldown/Music might come here later
+        {
+            GO_Laser gol = new GO_Laser();
+
+            gol.LaserPoint = new Point(GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width / 2, GO_Player.PlayerPoint.Y + 50);//CHANGE IT
+            gol.LaserSize = new Size(10, 50);
+            GO_Lasers.Add(gol);
+            // enlargeLaserCooldown();
+            EventUpdateRender?.Invoke(this, null);//refresh display
+        }
+
+        public void MoveLaser()
+        {
+            //if laser hits asteroid or satellite
+
+            for (int i = 0; i < GO_Lasers.Count; i++)
+            {
+                if (GO_Lasers[i].LaserPoint.Y >= playArea.Height)
+                {
+                    GO_Lasers.Remove(GO_Lasers[i]);
+                }
+                else
+                {
+                    GO_Lasers[i].MoveLaser();
+                }
+            }
+
+            EventUpdateRender?.Invoke(this, null);
+
+        }
+
+        public void CheckLaserItemDetection()
+        {
+
+            for (int i = 0; i < GO_Items.Count; i++)
+            {
+                for (int j = 0; j < GO_Lasers.Count; j++)
+                {
+
+                    if (i < GO_Items.Count)
+                    {
+                        Rect laserRect = new Rect(GO_Lasers[j].LaserPoint.X, GO_Lasers[j].LaserPoint.Y, GO_Lasers[j].LaserSize.Width, GO_Lasers[j].LaserSize.Height);
+                        Rect itemRect = new Rect(GO_Items[i].ItemPoint.X, GO_Items[i].ItemPoint.Y, GO_Items[i].ItemSize.Width, GO_Items[i].ItemSize.Height);
+
+                        bool isLaserItemDet = laserRect.IntersectsWith(itemRect);
+
+                        if (isLaserItemDet)
+                        {
+                            GO_Items.RemoveAt(i);
+                            GO_Lasers.RemoveAt(j);
+
+                            //media_asteroidDest.IsMuted = false;
+                            //media_asteroidDest.Stop();
+                            //media_asteroidDest.Play();
+                            //different sounds for asteroid, satellite, then check items list element here
 
 
+                        }
+                    }
+                    else
+                    {
+                        ;//for debugging
+                    }
+                }
+            }
+
+            /*
+            There is a bug which is now being avoided by using the: if(i < Items.Count){...}.
+            The bug/problem: When we shoot a laser, and a collision happens, we remove the laser and the item as well.
+            But when we remove an item in the deepest part of the loops, the outer loop(which iterates on items), is not updated, so
+            because of the  "Rect itemRect = new Rect(Items[i]...." gonna try to refer to
+            an item in the list, that does not exist. So the i can be equal to Items.Count, and if our collection's count is 10, it's gonna
+            try to refer to the Items[10], but that does not exist(we can index it only from 0 to 9)
+            There might be a connection, when an Item leaves the play area, and another one is destroyed by a laser.
+
+            It mighr depend on timing(faster asteroids, slower laser vice versa....)
+
+            */
+        }
+
+        ///////////////////////////Methods for Player
+
+
+        ///LATER IMPLEMENTATION
+        public void ReduceLaserCooldown()//public, because Dispatcher will call this.
+        {
+            if (Cooldown_RGB.Count > 1)
+            {
+                int a = Cooldown_RGB.Count - 1;
+
+                Cooldown_RGB.RemoveAt(a);
+
+
+                EventUpdateRender?.Invoke(this, null);
+            }
+
+
+            if (Cooldown_RGB.Count == 1)
+            {
+                if (isCooldown == true)
+                {
+                    //media_cooldown[0].IsMuted = false;
+                    //media_cooldown[0].Stop();
+                    //media_cooldown[0].Play();
+                }
+                isCooldown = false;
+
+            }
+
+
+
+        }
+
+        private void EnlargeLaserCooldown()//private, because in logic every time we shoot, according to current alg. 3 squares being added to crgbs list.
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                if (Cooldown_RGB.Count - 1 + i < colors.Count)
+                {
+                    Cooldown_RGB.Add(colors[Cooldown_RGB.Count - 1 + i]);
+                }
+            }
+
+            if (Cooldown_RGB.Count >= 18)
+            {
+                //media_cooldown[1].IsMuted = false;
+                //media_cooldown[1].Stop();
+                //media_cooldown[1].Play();
+                isCooldown = true;
+            }
+
+
+        }
+
+        private void setUpColorsForLaser()
+        {
+            byte r = 0;
+            byte g = 255;
+            byte b = 0;
+
+            for (int i = 0; i < 20; i++)
+            {
+                colors.Add(new byte[] { r, g, b });
+
+                if (r < 255)
+                {
+                    r += 51;
+                }
+                else if (r == 255 && g > 0)
+                {
+                    g -= 15;
+                }
+            }
+
+        }
+        ///LATER IMPLEMENTATION
     }
 }
