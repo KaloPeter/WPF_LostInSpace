@@ -11,6 +11,7 @@
     <None Remove="Images\Astronaut\astronaut_L.png" />
     <None Remove="Images\Astronaut\astronaut_O.png" />
     <None Remove="Images\Astronaut\astronaut_R.png" />
+    <None Remove="Images\Astronaut\laser_Red.png" />
     <None Remove="Images\Backgrounds\space_1.png" />
     <None Remove="Images\Backgrounds\space_2.png" />
     <None Remove="Images\Backgrounds\space_3.png" />
@@ -46,6 +47,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Astronaut\astronaut_R.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Astronaut\laser_Red.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Backgrounds\space_1.png">
