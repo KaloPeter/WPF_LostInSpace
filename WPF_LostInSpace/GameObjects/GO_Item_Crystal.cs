@@ -34,7 +34,7 @@ namespace WPF_LostInSpace.GameObjects
 
         public override void SetBrushWithImage()
         {
-            ItemSize = new Size(20, 20);
+            ItemSize = new Size(25, 25);
 
             switch (Value)
             {
