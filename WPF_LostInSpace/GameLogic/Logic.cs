@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.HelperClasses;
 using WPF_LostInSpace.Interfaces;
@@ -28,6 +29,12 @@ namespace WPF_LostInSpace.GameLogic
         public GO_Player GO_Player { get; set; }
 
         private List<GO_Item_Crystal> GO_Item_Crystals;
+
+
+        private int sec = 0;
+
+        private bool isHitHappend = false;
+
 
         //LATER IMPLEMENTATIONS--Dispatcher not calling reduceCooldown method, ShootLaset not calling enlargeCooldown method,display not rendering Cooldown_RGB colors in window.
         private List<byte[]> colors;
@@ -75,8 +82,14 @@ namespace WPF_LostInSpace.GameLogic
 
 
             GO_Player = new GO_Player();
-
         }
+
+
+
+
+
+
+
 
         ///////////////////////////setUp methods
 
@@ -102,16 +115,23 @@ namespace WPF_LostInSpace.GameLogic
         {
             //Panel order int collection: health, distance, empty_L, empty_R
 
-            //health panel starts from top left corner, and the width of it is the start of the background, which is the axis X
-            GO_ControlPanels[1].ControlPanelPoint = new Point(0, 0);
-            //first one starts from 0,0, so the width of this panel is equals with the axis X of background(bg starts here->this is how wide panel we need)
-            GO_ControlPanels[1].ControlPanelSize = new Size(GO_Backgrounds[0].BackgroundPoint.X, 200);
 
             //distance panel starts at the end of the background of x-axis(top right corner)
             GO_ControlPanels[0].ControlPanelPoint = new Point(GO_Backgrounds[0].BackgroundPoint.X + GO_Backgrounds[0].BackgroundSize.Width, 0);
             //distance panel starts from the end of the bg(top right corner), and goes to the end of the window->
             //windows width-from (0,0) to axis X - background size =>difference between right side of the windows and the right side of the background
             GO_ControlPanels[0].ControlPanelSize = new Size(playArea.Width - GO_Backgrounds[0].BackgroundPoint.X - GO_Backgrounds[0].BackgroundSize.Width, 200);
+
+
+
+
+
+            //health panel starts from top left corner, and the width of it is the start of the background, which is the axis X
+            GO_ControlPanels[1].ControlPanelPoint = new Point(0, 0);
+            //first one starts from 0,0, so the width of this panel is equals with the axis X of background(bg starts here->this is how wide panel we need)
+            GO_ControlPanels[1].ControlPanelSize = new Size(GO_Backgrounds[0].BackgroundPoint.X, 200);
+
+
 
             GO_ControlPanels[2].ControlPanelPoint = new Point(0, GO_ControlPanels[0].ControlPanelSize.Height);
             GO_ControlPanels[2].ControlPanelSize = new Size(GO_Backgrounds[0].BackgroundPoint.X, playArea.Height - GO_ControlPanels[0].ControlPanelSize.Height);
@@ -193,8 +213,8 @@ namespace WPF_LostInSpace.GameLogic
             }
             //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
 
-            //GO_Player.Distance += 0.001;
-            //GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
+            GO_Player.Distance += 0.001;
+            GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
             EventUpdateRender?.Invoke(this, null);
         }
 
@@ -322,6 +342,109 @@ namespace WPF_LostInSpace.GameLogic
 
             */
         }
+
+
+        const int health = 5;
+
+        public void CheckPlayerItemDetection()
+        {
+            Rect pRect = new Rect(GO_Player.PlayerPoint.X, GO_Player.PlayerPoint.Y, GO_Player.PlayerSize.Width, GO_Player.PlayerSize.Height);
+
+            for (int i = 0; i < GO_Items.Count; i++)
+            {
+                Rect iRect = new Rect(GO_Items[i].ItemPoint.X, GO_Items[i].ItemPoint.Y, GO_Items[i].ItemSize.Width, GO_Items[i].ItemSize.Height);
+
+                bool hit = pRect.IntersectsWith(iRect);
+
+                if (hit)
+                {
+                    isHitHappend = true;
+                    if (sec >= 1)
+                    {
+                        switch (GO_Items[i])
+                        {
+                            case GO_Item_Asteroid:
+                                reduceHealth((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width);
+                                if (GO_Player.Money > 0)
+                                {
+                                    GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width - 30);
+                                }
+
+                                break;
+                            case GO_Item_Health:
+
+                                if (GO_Player.Health < 100)
+                                {
+                                    GO_Player.Health += health;
+                                }
+                                break;
+                            case GO_Item_Satellite:
+                                reduceHealth((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 19);
+                                if (GO_Player.Money > 0)
+                                {
+                                    GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30);//legjobb esetben:20, legrosszabb esetben 35-öt veszit
+                                }
+
+                                break;
+                            case GO_Item_Crystal:
+                                GO_Player.Money += (GO_Items[i] as GO_Item_Crystal).Value;
+                                break;
+                            default:
+                                break;
+                        }
+                        isHitHappend = false;
+                        GO_Items.RemoveAt(i);
+                        sec = 0;
+
+                    }
+
+
+
+                    //if (GO_Player.Health <= 0)
+                    //{
+                    //    stopDisp?.Invoke(null, null);
+                    //}
+
+
+                }
+            }
+
+            EventUpdateRender?.Invoke(this, null);
+
+        }
+
+        public void PlayerItemDetectionDelay()
+        {
+            if (isHitHappend)
+            {
+                sec++;
+            }
+        }
+
+        private void reduceHealth(double value)//goi=game object item
+        {
+            int amount = (int)value;
+
+            if (GO_Player.Health > 0)
+            {
+                if (GO_Player.Health - (amount - 19) <= 0)
+                {
+                    GO_Player.Health = 0;
+                }
+                else
+                {
+                    GO_Player.Health -= (amount - 19);
+                }
+
+                //if (GO_Player.Health <= 10 && GO_Player.Health > 0)
+                //{
+                //    media_lowHealth.IsMuted = false;
+                //    media_lowHealth.Stop();
+                //    media_lowHealth.Play();
+                //}
+            }
+        }
+
 
         ///////////////////////////Methods for Player
 
