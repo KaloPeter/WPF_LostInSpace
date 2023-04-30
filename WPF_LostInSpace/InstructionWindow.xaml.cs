@@ -20,15 +20,20 @@ namespace WPF_LostInSpace
     /// </summary>
     public partial class InstructionWindow : Window
     {
-        public InstructionWindow()
+        MainWindow mainWindow;
+        public InstructionWindow(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
+            mainWindow.isInstructionWindowOpen = true;
+            mainWindow.isPaused = true;
+            mainWindow.StopDispatcherTimers();
 
             GameInstructionsGrid.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
         }
         private void bt_Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Window_Closed(sender, e);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -41,6 +46,14 @@ namespace WPF_LostInSpace
             //lb_instructionsText.Content = File.ReadAllText(System.IO.Path.Combine("Others", "Instruction.txt"));
             string instructions = "Player movement:left and right arrow keys.\r\nAvoid asteroids and satellites.\r\nOxigen gives you health.\r\nTraver as far as you can.\r\nHave fun.";
             lb_instructionsText.Content = instructions;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            mainWindow.isInstructionWindowOpen = false;
+            mainWindow.isPaused = false;
+            mainWindow.StartDispatcherTimers();
+            this.Close();
         }
     }
 }

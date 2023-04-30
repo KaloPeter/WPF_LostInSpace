@@ -29,7 +29,8 @@ namespace WPF_LostInSpace
         private List<DispatcherTimer> dispatcherTimers;
 
         //private bool firstTimeStart = false;
-        //private bool isPaused = false;
+        public bool isPaused = false;
+        public bool isInstructionWindowOpen = false;
 
         //private DispatcherTimer timer_backgroundMove;
 
@@ -167,48 +168,53 @@ namespace WPF_LostInSpace
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            controller.KeyDown(e.Key);
+            if (!isPaused)
+            {
+                controller.KeyDown(e.Key);
 
-            controller.SpaceDown(e.Key);
+                controller.SpaceDown(e.Key);
+            }
 
-            //if (e.Key == Key.P)
-            //{
-            //    isPaused = !isPaused;
-            //    firstTimeStart = !firstTimeStart;
-            //    if (isPaused)
-            //    {
-            //        StopDispatcherTimers();
-            //        InstructionWindow instructionWindow = new InstructionWindow();
-            //        instructionWindow.Show();
-            //    }
-            //    else
-            //    {
-            //        StartDispatcherTimers();
-            //    }
-            //}
+            if (e.Key == Key.P)
+            {
+                isPaused = !isPaused;
+                //firstTimeStart = !firstTimeStart;
+                if (isPaused)
+                {
+                    StopDispatcherTimers();
+                    //InstructionWindow instructionWindow = new InstructionWindow();
+                    //instructionWindow.Show();
+                }
+                else
+                {
+                    StartDispatcherTimers();
+                }
+            }
 
-            //if (e.Key == Key.I)
-            //{
-            //    StopDispatcherTimers();
-            //    InstructionWindow instructionWindow = new InstructionWindow();
-            //    instructionWindow.Show();
-            //}
+            if (e.Key == Key.I && !isInstructionWindowOpen)
+            {
+                //StopDispatcherTimers();
+                InstructionWindow instructionWindow = new InstructionWindow(this);
+                instructionWindow.Show();
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            controller.KeyUp(e.Key);
+            if (!isPaused)
+            {
+                controller.KeyUp(e.Key);
 
-            controller.SpaceUp(e.Key);
-
+                controller.SpaceUp(e.Key);
+            }
         }
 
-        private void StartDispatcherTimers()
+        public void StartDispatcherTimers()
         {
             dispatcherTimers.ForEach(t => t.Start());
         }
 
-        private void StopDispatcherTimers()
+        public void StopDispatcherTimers()
         {
             dispatcherTimers.ForEach(t => t.Stop());
         }
