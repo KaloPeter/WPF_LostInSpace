@@ -27,7 +27,7 @@ namespace WPF_LostInSpace.GameObjects
         {
             int randomAsteroidIndex = Utils.rnd.Next(0, asteroids.Count);
 
-            int randomAsteroidSize =  Utils.rnd.Next(20, 30);
+            int randomAsteroidSize =  Utils.rnd.Next(20, 50);
 
 
             switch (randomAsteroidIndex)
