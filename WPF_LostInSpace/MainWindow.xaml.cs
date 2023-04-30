@@ -57,7 +57,9 @@ namespace WPF_LostInSpace
                     4000,//5 timer_generateHealth
                     10,//6 timer_playerMovement
                     0,//7 timer_moveLaser
-                    10//8 timer_laserItemDetection
+                    10,//8 timer_laserItemDetection
+                    10,//9 timer_playerItemDetection
+                    200,//10 timer_playerItemDetectionDelay
                 };
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -85,6 +87,8 @@ namespace WPF_LostInSpace
             dispatcherTimers[6].Tick += (sender, args) => { controller.DecideMoveDirection(); };
             dispatcherTimers[7].Tick += (sender, args) => { logic.MoveLaser(); };
             dispatcherTimers[8].Tick += (sender, args) => { logic.CheckLaserItemDetection(); };
+            dispatcherTimers[9].Tick += (sender, args) => { logic.CheckPlayerItemDetection(); };
+            dispatcherTimers[10].Tick += (sender, args) => { logic.PlayerItemDetectionDelay(); };
 
             //timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
             //timer_backgroundMove.Tick += (sender, eventArgs) =>
