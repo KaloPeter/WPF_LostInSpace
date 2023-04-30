@@ -156,6 +156,8 @@ namespace WPF_LostInSpace
             //timer_generateSatellite.Start();
             //timer_playerMovement.Start();
 
+            //InstructionWindow instructionWindow = new InstructionWindow();
+            //instructionWindow.Show();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
