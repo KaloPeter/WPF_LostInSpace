@@ -28,6 +28,9 @@ namespace WPF_LostInSpace
 
         private List<DispatcherTimer> dispatcherTimers;
 
+        //private bool firstTimeStart = false;
+        //private bool isPaused = false;
+
         //private DispatcherTimer timer_backgroundMove;
 
         //private DispatcherTimer timer_itemMove;
@@ -142,10 +145,12 @@ namespace WPF_LostInSpace
 
             logic.SetUpPlayer();
 
-            foreach (var item in dispatcherTimers)
-            {
-                item.Start();
-            }
+            //foreach (var item in dispatcherTimers)
+            //{
+            //    item.Start();
+            //}
+
+            StartDispatcherTimers();
 
             //timer_backgroundMove.Start();
 
@@ -166,6 +171,28 @@ namespace WPF_LostInSpace
 
             controller.SpaceDown(e.Key);
 
+            //if (e.Key == Key.P)
+            //{
+            //    isPaused = !isPaused;
+            //    firstTimeStart = !firstTimeStart;
+            //    if (isPaused)
+            //    {
+            //        StopDispatcherTimers();
+            //        InstructionWindow instructionWindow = new InstructionWindow();
+            //        instructionWindow.Show();
+            //    }
+            //    else
+            //    {
+            //        StartDispatcherTimers();
+            //    }
+            //}
+
+            //if (e.Key == Key.I)
+            //{
+            //    StopDispatcherTimers();
+            //    InstructionWindow instructionWindow = new InstructionWindow();
+            //    instructionWindow.Show();
+            //}
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -175,5 +202,16 @@ namespace WPF_LostInSpace
             controller.SpaceUp(e.Key);
 
         }
+
+        private void StartDispatcherTimers()
+        {
+            dispatcherTimers.ForEach(t => t.Start());
+        }
+
+        private void StopDispatcherTimers()
+        {
+            dispatcherTimers.ForEach(t => t.Stop());
+        }
+
     }
 }
