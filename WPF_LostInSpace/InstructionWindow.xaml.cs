@@ -21,39 +21,27 @@ namespace WPF_LostInSpace
     public partial class InstructionWindow : Window
     {
         MainWindow mainWindow;
+
+        private static ImageBrush instruction_background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
+
+
         public InstructionWindow(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            mainWindow.isInstructionWindowOpen = true;
-            mainWindow.isPaused = true;
-            mainWindow.StopDispatcherTimers();
-
-            GameInstructionsGrid.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
         }
         private void bt_Close_Click(object sender, RoutedEventArgs e)
         {
-            Window_Closed(sender, e);
+            this.Close();
+            mainWindow.Show();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadInstructions();
-        }
-
-        private void LoadInstructions()
-        {
-            //lb_instructionsText.Content = File.ReadAllText(System.IO.Path.Combine("Others", "Instruction.txt"));
+            //lb_instructionsText.Content = File.ReadAllText(System.IO.Path.Combine("Others", "Instruction.txt"));//If we read from file, static variable to read from it only once
             string instructions = "Player movement:left and right arrow keys.\r\nAvoid asteroids and satellites.\r\nOxigen gives you health.\r\nTraver as far as you can.\r\nHave fun.";
             lb_instructionsText.Content = instructions;
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            mainWindow.isInstructionWindowOpen = false;
-            mainWindow.isPaused = false;
-            mainWindow.StartDispatcherTimers();
-            this.Close();
+            GameInstructionsGrid.Background = instruction_background;
         }
     }
 }
