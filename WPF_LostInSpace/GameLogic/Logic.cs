@@ -36,13 +36,12 @@ namespace WPF_LostInSpace.GameLogic
         private bool isHitHappend = false;
 
 
-        //LATER IMPLEMENTATIONS--Dispatcher not calling reduceCooldown method, ShootLaset not calling enlargeCooldown method,display not rendering Cooldown_RGB colors in window.
         private List<byte[]> colors;
 
         public List<byte[]> Cooldown_RGB { get; set; }
 
         private bool isCooldown = false;
-        //LATER IMPLEMENTATIONS
+
 
 
         //***********************************************************************************
@@ -54,6 +53,11 @@ namespace WPF_LostInSpace.GameLogic
             GO_Items = new List<GO_Item>();
             GO_Item_Crystals = new List<GO_Item_Crystal>();
             GO_Lasers = new List<GO_Laser>();
+
+            colors = new List<byte[]>();
+            Cooldown_RGB = new List<byte[]>();
+
+
 
             GO_Item_Crystals.Add(new GO_Item_Crystal(10));
             GO_Item_Crystals.Add(new GO_Item_Crystal(20));
@@ -80,16 +84,11 @@ namespace WPF_LostInSpace.GameLogic
             GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_L.png"));
             GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_R.png"));
 
+            SetUpColorsForLaser();
+            Cooldown_RGB.Add(colors[0]);
 
             GO_Player = new GO_Player();
         }
-
-
-
-
-
-
-
 
         ///////////////////////////setUp methods
 
@@ -265,13 +264,15 @@ namespace WPF_LostInSpace.GameLogic
 
         public void ShootLaser()//Create Laser object__Cooldown/Music might come here later
         {
-            GO_Laser gol = new GO_Laser();
-
-            gol.LaserPoint = new Point(GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width / 2, GO_Player.PlayerPoint.Y + 50);//CHANGE IT
-            gol.LaserSize = new Size(10, 50);
-            GO_Lasers.Add(gol);
-            // enlargeLaserCooldown();
-            EventUpdateRender?.Invoke(this, null);//refresh display
+            if (!isCooldown)
+            {
+                GO_Laser gol = new GO_Laser();
+                gol.LaserPoint = new Point(GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width / 2, GO_Player.PlayerPoint.Y + 50);//CHANGE IT
+                gol.LaserSize = new Size(10, 50);
+                GO_Lasers.Add(gol);
+                EnlargeLaserCooldown();
+                EventUpdateRender?.Invoke(this, null);//refresh display
+            }
         }
 
         public void MoveLaser()
@@ -280,7 +281,7 @@ namespace WPF_LostInSpace.GameLogic
 
             for (int i = 0; i < GO_Lasers.Count; i++)
             {
-                if (GO_Lasers[i].LaserPoint.Y >= playArea.Height-100)
+                if (GO_Lasers[i].LaserPoint.Y >= playArea.Height - 100)
                 {
                     GO_Lasers.Remove(GO_Lasers[i]);
                 }
@@ -344,7 +345,7 @@ namespace WPF_LostInSpace.GameLogic
         }
 
 
-        const int health = 5;
+        const int HEALTH = 5;
 
         public void CheckPlayerItemDetection()
         {
@@ -375,7 +376,15 @@ namespace WPF_LostInSpace.GameLogic
 
                                 if (GO_Player.Health < 100)
                                 {
-                                    GO_Player.Health += health;
+
+                                    if (GO_Player.Health + HEALTH < 100)
+                                    {
+                                        GO_Player.Health += HEALTH;
+                                    }
+                                    else
+                                    {
+                                        GO_Player.Health = 100;
+                                    }
                                 }
                                 break;
                             case GO_Item_Satellite:
@@ -448,8 +457,6 @@ namespace WPF_LostInSpace.GameLogic
 
         ///////////////////////////Methods for Player
 
-
-        ///LATER IMPLEMENTATION
         public void ReduceLaserCooldown()//public, because Dispatcher will call this.
         {
             if (Cooldown_RGB.Count > 1)
@@ -500,7 +507,7 @@ namespace WPF_LostInSpace.GameLogic
 
         }
 
-        private void setUpColorsForLaser()
+        private void SetUpColorsForLaser()
         {
             byte r = 0;
             byte g = 255;
@@ -521,6 +528,6 @@ namespace WPF_LostInSpace.GameLogic
             }
 
         }
-        ///LATER IMPLEMENTATION
+
     }
 }
