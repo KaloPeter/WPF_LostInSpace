@@ -8,7 +8,7 @@
         Title="Game Instrucions" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded"
-        Closed="Window_Closed">
+        >
     <Grid x:Name="GameInstructionsGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
 
             <!--<Button Grid.Row="5" Grid.Column="0" Content="Close" FontSize="24" Foreground="White" Background="Black" Opacity="0.3">-->
-            <Button x:Name="bt_Close" Grid.Row="5" Grid.Column="0" Content="Close" Click="bt_Close_Click">
+            <Button x:Name="bt_Close" Grid.Row="5" Grid.Column="0" Content="Main Menu" Click="bt_Close_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
