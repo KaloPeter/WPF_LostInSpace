@@ -46,10 +46,10 @@ namespace WPF_LostInSpace
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.I)
-            {
-                Window_Closed(sender, e);
-            }
+            //if (e.Key == Key.I)
+            //{
+            //    Window_Closed(sender, e);
+            //}
         }
     }
 }
