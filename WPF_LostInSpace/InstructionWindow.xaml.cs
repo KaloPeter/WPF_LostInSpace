@@ -55,5 +55,13 @@ namespace WPF_LostInSpace
             mainWindow.StartDispatcherTimers();
             this.Close();
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.I)
+            {
+                Window_Closed(sender, e);
+            }
+        }
     }
 }
