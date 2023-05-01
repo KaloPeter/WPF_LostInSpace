@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WPF_LostInSpace"
         xmlns:renderer="clr-namespace:WPF_LostInSpace.Renderer"
         mc:Ignorable="d"
-        Title="Lost in Space" Height="720" Width="1200" Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"> 
+        Title="Lost in Space" Height="720" Width="1200" Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
+       > 
     <Grid x:Name="grid">
         <renderer:Display x:Name="display"/>
     </Grid>
