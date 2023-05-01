@@ -34,12 +34,13 @@ namespace WPF_LostInSpace
 
         private Button[] bs_MainMenu;//Actual buttons
         private string[] bs_MainMenuText;//text of buttons
-        private InstructionWindow instructionWindow;
+   
+        //private InstructionWindow instructionWindow;
 
         public MainWindow()
         {
             InitializeComponent();
-            instructionWindow = new InstructionWindow(this);
+          //  instructionWindow = new InstructionWindow(this);
 
             logic = new Logic();
             controller = new Controller(logic);
@@ -60,6 +61,7 @@ namespace WPF_LostInSpace
                     10,//8 timer_laserItemDetection
                     10,//9 timer_playerItemDetection
                     200,//10 timer_playerItemDetectionDelay
+                    250,//11 timer_cooldownReduce
                 };
 
             //We will have 3 buttons: play, instructions,exit
@@ -86,6 +88,7 @@ namespace WPF_LostInSpace
             dispatcherTimers[8].Tick += (sender, args) => { logic.CheckLaserItemDetection(); };
             dispatcherTimers[9].Tick += (sender, args) => { logic.CheckPlayerItemDetection(); };
             dispatcherTimers[10].Tick += (sender, args) => { logic.PlayerItemDetectionDelay(); };
+            dispatcherTimers[11].Tick += (sender, args) => { logic.ReduceLaserCooldown(); };
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -126,8 +129,9 @@ namespace WPF_LostInSpace
 
         private void OpenInstructionWindow(object sender, RoutedEventArgs e)
         {
-            instructionWindow.Show();
-            this.Hide();
+            //instructionWindow.Show();
+            //this.Hide();
+            //Later
         }
 
 
