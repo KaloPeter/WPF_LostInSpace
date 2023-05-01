@@ -34,14 +34,10 @@ namespace WPF_LostInSpace
 
         private Button[] bs_MainMenu;//Actual buttons
         private string[] bs_MainMenuText;//text of buttons
-   
-        //private InstructionWindow instructionWindow;
 
         public MainWindow()
         {
             InitializeComponent();
-          //  instructionWindow = new InstructionWindow(this);
-
             logic = new Logic();
             controller = new Controller(logic);
             display.SetUpLogic(logic);
@@ -127,13 +123,29 @@ namespace WPF_LostInSpace
             bs_MainMenu[2].Click += (sender, e) => { Application.Current.Shutdown(); };
         }
 
+
+
         private void OpenInstructionWindow(object sender, RoutedEventArgs e)
         {
-            //instructionWindow.Show();
-            //this.Hide();
-            //Later
+            InstructionWindow instructionWindow = new InstructionWindow(this);
+            instructionWindow.Show();
+            EnableDisableMainMenuButtons(false);
         }
 
+        public void EnableDisableMainMenuButtons(bool isEnable)//true:enable___false:disable
+        {
+            for (int i = 0; i < bs_MainMenu.Length; i++)
+            {
+                if (isEnable)
+                {
+                    bs_MainMenu[i].IsEnabled = isEnable;
+                }
+                else
+                {
+                    bs_MainMenu[i].IsEnabled = isEnable;
+                }
+            }
+        }
 
         private void OpenMainWindow_MainMenu(object sender, RoutedEventArgs e)
         {
@@ -255,7 +267,6 @@ namespace WPF_LostInSpace
                 }
             }
         }
-
 
     }
 }
