@@ -28,18 +28,15 @@ namespace WPF_LostInSpace
 
         private List<DispatcherTimer> dispatcherTimers;
 
-        //private bool firstTimeStart = false;
+        private bool firstTimeStart = false;
+
         public bool isPaused = false;
+
         public bool isInstructionWindowOpen = false;
 
-        //private DispatcherTimer timer_backgroundMove;
+        private Button[] bs_MainMenu;//Actual buttons
+        private string[] bs_MainMenuText;//text of buttons
 
-        //private DispatcherTimer timer_itemMove;
-        //private DispatcherTimer timer_generateAsteroid;
-        //private DispatcherTimer timer_generateSatellite;
-        //private DispatcherTimer timer_generateCrystal;
-        //private DispatcherTimer timer_generateHealth;
-        //private DispatcherTimer timer_playerMovement;
 
         public MainWindow()
         {
@@ -66,21 +63,18 @@ namespace WPF_LostInSpace
                     200,//10 timer_playerItemDetectionDelay
                 };
 
+            //We will have 3 buttons: play, instructions,exit
+            const int NUMBER_OF_BUTTONS = 3;
+            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button() };
+            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Exit" };
+
+
             for (int i = 0; i < timerMilliseconds.Length; i++)
             {
                 dispatcherTimers.Add(new DispatcherTimer());
                 dispatcherTimers[i].Interval = TimeSpan.FromMilliseconds(timerMilliseconds[i]);
             }
 
-            //timer_backgroundMove = new DispatcherTimer();
-            //timer_itemMove = new DispatcherTimer();
-            //timer_generateAsteroid = new DispatcherTimer();
-            //timer_generateSatellite = new DispatcherTimer();
-            //timer_generateCrystal = new DispatcherTimer();
-            //timer_generateHealth = new DispatcherTimer();
-            //timer_playerMovement = new DispatcherTimer();
-
-            //IDŐZÍTÉS
 
             dispatcherTimers[0].Tick += (sender, args) => { logic.BackgroundMove(); };
             dispatcherTimers[1].Tick += (sender, args) => { logic.ItemMove(); };
@@ -93,109 +87,85 @@ namespace WPF_LostInSpace
             dispatcherTimers[8].Tick += (sender, args) => { logic.CheckLaserItemDetection(); };
             dispatcherTimers[9].Tick += (sender, args) => { logic.CheckPlayerItemDetection(); };
             dispatcherTimers[10].Tick += (sender, args) => { logic.PlayerItemDetectionDelay(); };
-
-            //timer_backgroundMove.Interval = TimeSpan.FromMilliseconds(1);
-            //timer_backgroundMove.Tick += (sender, eventArgs) =>
-            //{
-            //    logic.BackgroundMove();
-            //};
-
-            //timer_itemMove.Interval = TimeSpan.FromMilliseconds(10);
-            //timer_itemMove.Tick += (sender, eventArgs) =>
-            //{
-            //    logic.ItemMove();
-            //};
-
-            //timer_generateAsteroid.Interval = TimeSpan.FromMilliseconds(500);
-            //timer_generateAsteroid.Tick += (sender, eventArgs) =>
-            //{
-            //    logic.GenerateAsteroid();
-            //};
-
-            //timer_generateSatellite.Interval = TimeSpan.FromMilliseconds(6000);
-            //timer_generateSatellite.Tick += (sender, eventArgs) =>
-            //{
-            //    logic.GenerateSatellite();
-            //};
-
-            //timer_generateCrystal.Interval = TimeSpan.FromMilliseconds(3000);
-            //timer_generateCrystal.Tick += (sender, eventArgs) =>
-            //{
-            //    logic.GenerateCrystal();
-            //};
-
-            //timer_generateHealth.Interval = TimeSpan.FromMilliseconds(4000);
-            //timer_generateHealth.Tick += (sender, eventArgs) =>
-            //{
-            //    logic.GenerateHealth();
-            //};
-            /////////////////////////////////////////////////////////
-            //timer_playerMovement.Interval = TimeSpan.FromMilliseconds(10);
-            //timer_playerMovement.Tick += (sender, eventArgs) =>
-            //{
-            //    controller.DecideMoveDirection();
-            //};
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //When window loaded, we create a grid, and generate buttons on it. 
+            CreateGrid();
+            GenerateButtonsOnGrid();
+
             logic.SetUpPlayArea(new Size(grid.ActualWidth, grid.ActualHeight));
             logic.SetUpBackground();
             logic.SetUpPanels();
 
             logic.SetUpPlayer();
 
-            //foreach (var item in dispatcherTimers)
-            //{
-            //    item.Start();
-            //}
+            //When play button pressed, we remove very event from second button(can be Instructions and MainMenu button)->bs_MainMenu[1],
+            //then we remove the buttons from grid, we start the game(.start() for DisptachetTimers)
+            //IPause, is false because we started game
+            //firtTimeStarted is true, because we might want to pause the game, but when we want to continue, only resume button is allowed to start dispatcher timers.
+            bs_MainMenu[0].Click += (sender, e) =>
+            {
+                bs_MainMenu[1].Click -= OpenInstructionWindow;
 
-            StartDispatcherTimers();
+                bs_MainMenu[1].Click -= OpenMainWindow_MainMenu;//if player presses resume button, it is not gonna be removed, that's why we have to call this here too.
 
-            //timer_backgroundMove.Start();
+                RemoveButtonsFromGrid();
 
-            //timer_generateAsteroid.Start();
-            //timer_generateCrystal.Start();
-            //timer_itemMove.Start();
-            //timer_generateHealth.Start();
-            //timer_generateSatellite.Start();
-            //timer_playerMovement.Start();
+                StartStopDispatcherTimer(true);
+                isPaused = false;
+                firstTimeStart = true;
 
-            //InstructionWindow instructionWindow = new InstructionWindow();
-            //instructionWindow.Show();
+            };
+
+            bs_MainMenu[1].Click += OpenInstructionWindow;
+
+
+            bs_MainMenu[2].Click += (sender, e) => { Application.Current.Shutdown(); };
+        }
+
+        private void OpenInstructionWindow(object sender, RoutedEventArgs e)
+        {
+            //    InstructionWindow instructionWindow = new InstructionWindow(this);
+            //  instructionWindow.Show();
+            MessageBox.Show("Instructions BLA BLA BLA");
+        }
+
+
+        private void OpenMainWindow_MainMenu(object sender, RoutedEventArgs e)
+        {
+            MainWindow mw = new MainWindow();
+            mw.Show();
+            this.Close();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!isPaused)
+            if (firstTimeStart)//Game can be started only when Play/Resume button pressed___firstTimeStart name might be not the correct variable name
             {
-                controller.KeyDown(e.Key);
 
-                controller.SpaceDown(e.Key);
-            }
+                controller.KeyDown(e.Key);//Movement
+                controller.SpaceDown(e.Key);//shoot
 
-            if (e.Key == Key.P)
-            {
-                isPaused = !isPaused;
-                //firstTimeStart = !firstTimeStart;
+                if (e.Key == Key.P)
+                {
+                    isPaused = !isPaused;
+                    firstTimeStart = !firstTimeStart;
+                }
+
                 if (isPaused)
                 {
-                    StopDispatcherTimers();
-                    //InstructionWindow instructionWindow = new InstructionWindow();
-                    //instructionWindow.Show();
-                }
-                else
-                {
-                    StartDispatcherTimers();
-                }
-            }
+                    StartStopDispatcherTimer(false);
 
-            if (e.Key == Key.I && !isInstructionWindowOpen)
-            {
-                //StopDispatcherTimers();
-                InstructionWindow instructionWindow = new InstructionWindow(this);
-                instructionWindow.Show();
+                    bs_MainMenuText[0] = "Resume";
+                    bs_MainMenuText[1] = "MainMenu";
+
+                    GenerateButtonsOnGrid();
+
+                    bs_MainMenu[1].Click += OpenMainWindow_MainMenu;//The problem is here, when a I pause app, the instruction event added to Click
+
+                }
             }
         }
 
@@ -209,15 +179,81 @@ namespace WPF_LostInSpace
             }
         }
 
-        public void StartDispatcherTimers()
+        public void StartStopDispatcherTimer(bool isStart)
         {
-            dispatcherTimers.ForEach(t => t.Start());
+            for (int i = 0; i < dispatcherTimers.Count; i++)
+            {
+                if (isStart)
+                {
+                    dispatcherTimers[i].Start();
+                }
+                else
+                {
+                    dispatcherTimers[i].Stop();
+                }
+            }
+        }//true->start___false:stop
+
+
+        private void CreateGrid()
+        {
+
+            List<RowDefinition> rds = new List<RowDefinition>();
+            for (int i = 0; i < 6; i++)
+            {
+                rds.Add(new RowDefinition());
+                if (i == 0 || i == 5)
+                {
+                    rds[i].Height = new GridLength(3, GridUnitType.Star);//1*;
+                }
+                else
+                {
+                    rds[i].Height = new GridLength(1, GridUnitType.Star);//1*;
+                }
+                grid.RowDefinitions.Add(rds[i]);
+            }
+
+            List<ColumnDefinition> cls = new List<ColumnDefinition>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                cls.Add(new ColumnDefinition());
+                cls[i].Width = new GridLength(1, GridUnitType.Star);
+                grid.ColumnDefinitions.Add(cls[i]);
+            }
+
+        }//Creates the grids
+
+        private void GenerateButtonsOnGrid()
+        {
+            for (int i = 0; i < bs_MainMenu.Length; i++)
+            {
+                bs_MainMenu[i].Content = bs_MainMenuText[i];
+                bs_MainMenu[i].Width = 150;
+                bs_MainMenu[i].Height = 50;
+                //bs_MainMenu[i].Margin = new Thickness(10);
+                bs_MainMenu[i].FontSize = 25;
+
+                bs_MainMenu[i].Background = Brushes.LightBlue;
+                bs_MainMenu[i].Opacity = 0.7;
+
+                Grid.SetColumn(bs_MainMenu[i], 1);
+                Grid.SetRow(bs_MainMenu[i], i + 1);
+                grid.Children.Add(bs_MainMenu[i]);
+            }
+        }//Generates buttons on the grid
+
+        private void RemoveButtonsFromGrid()
+        {
+            for (int i = grid.Children.Count - 1; i >= 0; i--)
+            {
+                if (grid.Children[i] is Button)
+                {
+                    grid.Children.Remove(grid.Children[i]);
+                }
+            }
         }
 
-        public void StopDispatcherTimers()
-        {
-            dispatcherTimers.ForEach(t => t.Stop());
-        }
 
     }
 }
