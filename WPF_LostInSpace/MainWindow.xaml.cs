@@ -30,17 +30,16 @@ namespace WPF_LostInSpace
 
         private bool firstTimeStart = false;
 
-        public bool isPaused = false;
-
-        public bool isInstructionWindowOpen = false;
+        private bool isPaused = false;
 
         private Button[] bs_MainMenu;//Actual buttons
         private string[] bs_MainMenuText;//text of buttons
-
+        private InstructionWindow instructionWindow;
 
         public MainWindow()
         {
             InitializeComponent();
+            instructionWindow = new InstructionWindow(this);
 
             logic = new Logic();
             controller = new Controller(logic);
@@ -127,9 +126,8 @@ namespace WPF_LostInSpace
 
         private void OpenInstructionWindow(object sender, RoutedEventArgs e)
         {
-            //    InstructionWindow instructionWindow = new InstructionWindow(this);
-            //  instructionWindow.Show();
-            MessageBox.Show("Instructions BLA BLA BLA");
+            instructionWindow.Show();
+            this.Hide();
         }
 
 
