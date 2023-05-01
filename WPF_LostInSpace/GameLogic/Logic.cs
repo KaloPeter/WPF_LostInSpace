@@ -280,7 +280,7 @@ namespace WPF_LostInSpace.GameLogic
 
             for (int i = 0; i < GO_Lasers.Count; i++)
             {
-                if (GO_Lasers[i].LaserPoint.Y >= playArea.Height)
+                if (GO_Lasers[i].LaserPoint.Y >= playArea.Height-100)
                 {
                     GO_Lasers.Remove(GO_Lasers[i]);
                 }
