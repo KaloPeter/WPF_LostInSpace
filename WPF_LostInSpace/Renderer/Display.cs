@@ -81,13 +81,32 @@ namespace WPF_LostInSpace.Renderer
                     );
             }
 
+
+            //Cooldown
+            for (int i = 0; i < logic.Cooldown_RGB.Count; i++)
+            {
+                drawingContext.DrawRectangle(
+                            new SolidColorBrush(Color.FromRgb(logic.Cooldown_RGB[i][0], logic.Cooldown_RGB[i][1], logic.Cooldown_RGB[i][2])),
+                             null,//new Pen(Brushes.Black, 1),
+                             new Rect(logic.GO_ControlPanels[2].ControlPanelPoint.X + logic.GO_ControlPanels[2].ControlPanelSize.Width / 2+50,         //X
+                             (logic.GO_ControlPanels[2].ControlPanelPoint.Y + logic.GO_ControlPanels[2].ControlPanelSize.Height - 50) - (23 * i),   //Y
+                             23,                                                                                                                    //Width
+                             23)                                                                                                                    //Height
+                             );
+            }
+
+
+            //  new Rect(playArea.Width/8, (playArea.Height/2)+((playArea.Height / 3)) - (15 * i), 20, 20)
+
+
+
             FormattedText ft_distance = new FormattedText($"Distance: {logic.GO_Player.Distance} km", System.Globalization.CultureInfo.CurrentCulture,
               FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
               FontWeights.Normal, FontStretches.Normal
               ), 20, Brushes.Yellow, 10);
 
 
-            drawingContext.DrawText(ft_distance, new Point(logic.GO_ControlPanels[1].ControlPanelPoint.X+25, 120));
+            drawingContext.DrawText(ft_distance, new Point(logic.GO_ControlPanels[1].ControlPanelPoint.X + 25, 120));
 
 
 
