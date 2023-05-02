@@ -40,7 +40,7 @@ namespace WPF_LostInSpace
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
-
+            Icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
         }
         private void bt_Close_Click(object sender, RoutedEventArgs e)
         {

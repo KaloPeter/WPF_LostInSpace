@@ -38,6 +38,9 @@ namespace WPF_LostInSpace
         public MainWindow()
         {
             InitializeComponent();
+
+            Icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
+
             logic = new Logic();
             controller = new Controller(logic);
             display.SetUpLogic(logic);

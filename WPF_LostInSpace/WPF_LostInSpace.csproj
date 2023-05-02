@@ -19,6 +19,7 @@
     <None Remove="Images\Backgrounds\space_4.png" />
     <None Remove="Images\Backgrounds\space_earth_1 másolata.png" />
     <None Remove="Images\Backgrounds\space_earth_1.png" />
+    <None Remove="Images\Icons\MainWindowIcon.ico" />
     <None Remove="Images\Items\ast_1_T.png" />
     <None Remove="Images\Items\ast_2_T.png" />
     <None Remove="Images\Items\ast_3_T.png" />
@@ -69,6 +70,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Backgrounds\space_earth_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Icons\MainWindowIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Items\ast_1_T.png">
