@@ -146,6 +146,29 @@ namespace WPF_LostInSpace.GameLogic
             GO_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));//50-25 ___ 100-50__GO_Player.PlayerSize = new Size((PlayArea.Width / 8), (PlayArea.Height / 16));
             GO_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
         }
+
+        private void SetUpColorsForLaser()
+        {
+            byte r = 0;
+            byte g = 255;
+            byte b = 0;
+
+            for (int i = 0; i < 20; i++)
+            {
+                colors.Add(new byte[] { r, g, b });
+
+                if (r < 255)
+                {
+                    r += 51;
+                }
+                else if (r == 255 && g > 0)
+                {
+                    g -= 15;
+                }
+            }
+
+        }
+
         ///////////////////////////setUp methods
 
 
@@ -192,31 +215,6 @@ namespace WPF_LostInSpace.GameLogic
             EventUpdateRender?.Invoke(this, null);//refresh display
         }
 
-        ///////////////////////////GENERATE GO_Items
-
-        public void BackgroundMove()
-        {
-
-            for (int i = 0; i < GO_Backgrounds.Count; i++)
-            {
-                bool isBackgroundIn = GO_Backgrounds[i].Move(playArea);
-
-                if (!isBackgroundIn)
-                {
-                    GO_Backgrounds.RemoveAt(i);
-                    GO_Backgrounds.Add(new GO_Background());
-
-                    GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
-                    GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height - 1);
-                }
-            }
-            //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
-
-            GO_Player.Distance += 0.001;
-            GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
-            EventUpdateRender?.Invoke(this, null);
-        }
-
         public void ItemMove()
         {
             //we are calling it every 1 millisec, and if the object out of map, we remove it->Move() can return true if moveable, false if out of bounds
@@ -234,8 +232,10 @@ namespace WPF_LostInSpace.GameLogic
         }
 
 
-        ///////////////////////////Methods for Player/Laser
+        ///////////////////////////GENERATE GO_Items
 
+
+        ///////////////////////////Methods for Player/Laser
         public void MovePlayer(PlayerController pc)
         {
             ////Player cant leave background
@@ -343,7 +343,6 @@ namespace WPF_LostInSpace.GameLogic
 
             */
         }
-
 
         const int HEALTH = 5;
 
@@ -453,10 +452,10 @@ namespace WPF_LostInSpace.GameLogic
                 //}
             }
         }
-
-
         ///////////////////////////Methods for Player
 
+
+        ///////////////////////////Methods for Cooldown
         public void ReduceLaserCooldown()//public, because Dispatcher will call this.
         {
             if (Cooldown_RGB.Count > 1)
@@ -506,28 +505,71 @@ namespace WPF_LostInSpace.GameLogic
 
 
         }
+        ///////////////////////////Methods for Cooldown
 
-        private void SetUpColorsForLaser()
+
+        public void ResetGame()
         {
-            byte r = 0;
-            byte g = 255;
-            byte b = 0;
+            //Lasers/Items
+            GO_Lasers.Clear();
+            GO_Items.Clear();
+            //Lasers/Items
 
-            for (int i = 0; i < 20; i++)
-            {
-                colors.Add(new byte[] { r, g, b });
 
-                if (r < 255)
-                {
-                    r += 51;
-                }
-                else if (r == 255 && g > 0)
-                {
-                    g -= 15;
-                }
-            }
+            //Cooldown
+            Cooldown_RGB.Clear();
+            Cooldown_RGB.Add(colors[0]);
+            //Cooldown
+
+            //Player
+            SetUpPlayer();
+            GO_Player.Distance = 0;
+            //Player
+
+            //Background
+            GO_Backgrounds.Clear();
+            GO_Background.IndexForFirstTwoBackgrunds = 0;
+            GO_Backgrounds.Add(new GO_Background());//empty space
+            GO_Backgrounds.Add(new GO_Background());//empty space with earth and moon
+            SetUpBackground();
+            //Background
+
+            EventUpdateRender?.Invoke(this, null);
 
         }
+
+        public void BackgroundMove()
+        {
+
+            for (int i = 0; i < GO_Backgrounds.Count; i++)
+            {
+                bool isBackgroundIn = GO_Backgrounds[i].Move(playArea);
+
+                if (!isBackgroundIn)
+                {
+                    GO_Backgrounds.RemoveAt(i);
+                    GO_Backgrounds.Add(new GO_Background());
+
+                    GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
+                    GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height - 1);
+                }
+            }
+            //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
+
+            GO_Player.Distance += 0.001;
+            GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
+            EventUpdateRender?.Invoke(this, null);
+        }
+
+
+        public void LOG_OBJ_PROP_VALS()
+        {
+            Trace.WriteLine("GO_Backgrounds: " + GO_Backgrounds.Count());
+            Trace.WriteLine("GO_Items: " + GO_Items.Count());
+            Trace.WriteLine("GO_Lasers: " + GO_Lasers.Count());
+            Trace.WriteLine("GO_Cooldown: " + Cooldown_RGB.Count());
+        }
+
 
     }
 }
