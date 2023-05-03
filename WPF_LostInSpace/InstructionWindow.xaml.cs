@@ -26,16 +26,6 @@ namespace WPF_LostInSpace
         private static string instructions = "Player movement:left and right arrow keys.\r\nAvoid asteroids and satellites.\r\nOxigen gives you health.\r\nTraver as far as you can.\r\nHave fun.";
         private MainWindow mainWindow;
 
-        //********************************************************* Removes closing button and icon(left side)
-        private const int GWL_STYLE = -16;
-        private const int WS_SYSMENU = 0x80000;
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-        //*********************************************************
-
-
         public InstructionWindow(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
@@ -51,11 +41,6 @@ namespace WPF_LostInSpace
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //lb_instructionsText.Content = File.ReadAllText(System.IO.Path.Combine("Others", "Instruction.txt"));//If we read from file, static variable to read from it only once
-
-            //********************************************************* Removes closing button and icon(left side)
-            var hwnd = new WindowInteropHelper(this).Handle;
-            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
-            //********************************************************* Removes closing button and icon(left side)
 
 
             lb_instructionsText.Content = instructions;
