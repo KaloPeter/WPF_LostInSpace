@@ -35,6 +35,11 @@ namespace WPF_LostInSpace
         private Button[] bs_MainMenu;//Actual buttons
         private string[] bs_MainMenuText;//text of buttons
 
+        //**************
+
+        private DispatcherTimer timer_LOGGER;
+        //**************
+
         public MainWindow()
         {
             InitializeComponent();
@@ -88,6 +93,13 @@ namespace WPF_LostInSpace
             dispatcherTimers[9].Tick += (sender, args) => { logic.CheckPlayerItemDetection(); };
             dispatcherTimers[10].Tick += (sender, args) => { logic.PlayerItemDetectionDelay(); };
             dispatcherTimers[11].Tick += (sender, args) => { logic.ReduceLaserCooldown(); };
+
+
+            //*******
+            timer_LOGGER = new DispatcherTimer();
+            timer_LOGGER.Interval = TimeSpan.FromSeconds(100);
+            timer_LOGGER.Tick += (sender, args) => { logic.LOG_OBJ_PROP_VALS(); };
+            //*******
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -124,9 +136,11 @@ namespace WPF_LostInSpace
 
 
             bs_MainMenu[2].Click += (sender, e) => { Application.Current.Shutdown(); };
+
+            //******
+           // timer_LOGGER.Start();
+            //******
         }
-
-
 
         private void OpenInstructionWindow(object sender, RoutedEventArgs e)
         {
@@ -152,9 +166,26 @@ namespace WPF_LostInSpace
 
         private void OpenMainWindow_MainMenu(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
-            mw.Show();
-            this.Close();
+            //MainWindow mw = new MainWindow();
+            //mw.Show();
+            //this.Close();
+
+
+            RemoveButtonsFromGrid();
+
+
+            bs_MainMenuText[0] = "Start";
+            bs_MainMenuText[1] = "Instructions";
+            bs_MainMenu[1].Click -= OpenMainWindow_MainMenu;
+            bs_MainMenu[1].Click += OpenInstructionWindow;
+            GenerateButtonsOnGrid();
+
+
+            logic.ResetGame();
+
+
+
+
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -271,5 +302,9 @@ namespace WPF_LostInSpace
             }
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
