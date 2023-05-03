@@ -21,16 +21,15 @@ namespace WPF_LostInSpace.GameObjects
 
         private Brush backgroundBrush;
 
-
-        private static int indexForFirstTwoBackgrunds = 0;
+        public static int IndexForFirstTwoBackgrunds { get; set; } = 0;
 
         public GO_Background()
         {
             //First 2 bacgrounds are empty space(not the colorful space), after the 2nd, random space backgrounds can be set.
-            if (indexForFirstTwoBackgrunds <= 1)
+            if (IndexForFirstTwoBackgrunds <= 1)
             {
-                backgroundBrush = images[indexForFirstTwoBackgrunds];
-                indexForFirstTwoBackgrunds++;
+                backgroundBrush = images[IndexForFirstTwoBackgrunds];
+                IndexForFirstTwoBackgrunds++;
             }
             else
             {
@@ -42,7 +41,6 @@ namespace WPF_LostInSpace.GameObjects
         public static void LoadBackgrounds()
         {
             images = new List<ImageBrush>();
-            indexForFirstTwoBackgrunds = 0;
             images.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "space_1.png"), UriKind.RelativeOrAbsolute))));
             images.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "space_earth_1.png"), UriKind.RelativeOrAbsolute))));
             images.Add(new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "space_2.png"), UriKind.RelativeOrAbsolute))));
