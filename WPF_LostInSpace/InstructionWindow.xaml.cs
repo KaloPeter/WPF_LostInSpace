@@ -23,6 +23,7 @@ namespace WPF_LostInSpace
     public partial class InstructionWindow : Window
     {
         private static ImageBrush instruction_background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
+        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
         private static string instructions = "Player movement:left and right arrow keys.\r\nAvoid asteroids and satellites.\r\nOxigen gives you health.\r\nTraver as far as you can.\r\nHave fun.";
         private MainWindow mainWindow;
 
@@ -30,7 +31,9 @@ namespace WPF_LostInSpace
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
-            Icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
+
+            Icon = icon;
+            //Icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
         }
         private void bt_Close_Click(object sender, RoutedEventArgs e)
         {
