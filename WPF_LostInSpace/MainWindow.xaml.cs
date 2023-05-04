@@ -140,6 +140,10 @@ namespace WPF_LostInSpace
             //******
             // timer_LOGGER.Start();
             //******
+
+            //UserManagementWindow userManagementWindow = new UserManagementWindow();
+            //userManagementWindow.Show();
+
         }
 
         private void OpenInstructionWindow(object sender, RoutedEventArgs e)

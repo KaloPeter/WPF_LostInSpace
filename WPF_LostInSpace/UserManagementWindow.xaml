@@ -1,0 +1,203 @@
+﻿<Window x:Class="WPF_LostInSpace.UserManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_LostInSpace"
+        mc:Ignorable="d"
+        Title="Manage Users" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        ResizeMode="NoResize">
+    <Grid x:Name="UserManagementGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--<Label x:Name="lb_instructionsText" Grid.Row="0" Grid.Column="0" Content="" FontSize="24" Foreground="White" Margin="50"></Label>-->
+        
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="lb_selectUserProfile" Grid.Row="0" Grid.Column="1" Content="Select Profile" FontSize="24" Background="LightBlue" Foreground="White" Opacity="0.75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+            <ComboBox x:Name="cb_userProfiles" Grid.Row="1" Grid.Column="1" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <ComboBoxItem Content="user0"></ComboBoxItem>
+                <ComboBoxItem Content="user1"></ComboBoxItem>
+                <ComboBoxItem Content="user2"></ComboBoxItem>
+            </ComboBox>
+            <TextBox x:Name="tb_usernameEditor" Grid.Row="2" Grid.Column="1" FontSize="24" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <!--<RowDefinition Height="1*"></RowDefinition>-->
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--<Label x:Name="lbt_username" Grid.Row="0" Grid.Column="0" Content="Username:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>-->
+                <Label x:Name="lbt_money" Grid.Row="0" Grid.Column="0" Content="Money:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
+                <Label x:Name="lbt_bestScore" Grid.Row="1" Grid.Column="0" Content="Best score:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
+                <Label x:Name="lbt_totalDistance" Grid.Row="2" Grid.Column="0" Content="Total distance:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
+                <!--<Label x:Name="lb_username" Grid.Row="0" Grid.Column="1" Content="User0" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>-->
+                <Label x:Name="lb_money" Grid.Row="0" Grid.Column="1" Content="100" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
+                <Label x:Name="lb_bestScore" Grid.Row="1" Grid.Column="1" Content="500" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
+                <Label x:Name="lb_totalDistance" Grid.Row="2" Grid.Column="1" Content="1000" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
+                
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1" x:Name="ButtonsGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!--<Button Grid.Row="5" Grid.Column="0" Content="Close" FontSize="24" Foreground="White" Background="Black" Opacity="0.3">-->
+            <Button x:Name="bt_Close0" Grid.Row="0" Grid.Column="0" Content="Create" Click="bt_Close_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="bt_Close1" Grid.Row="1" Grid.Column="0" Content="Edit" Click="bt_Close_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="bt_Close2" Grid.Row="2" Grid.Column="0" Content="Delete" Click="bt_Close_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="bt_Close3" Grid.Row="3" Grid.Column="0" Content="Main Menu" Click="bt_Close_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            
+            <Button x:Name="bt_Close" Grid.Row="5" Grid.Column="0" Content="Main Menu" Click="bt_Close_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
