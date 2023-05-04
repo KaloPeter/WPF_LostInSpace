@@ -88,7 +88,7 @@ namespace WPF_LostInSpace.Renderer
                 drawingContext.DrawRectangle(
                             new SolidColorBrush(Color.FromRgb(logic.Cooldown_RGB[i][0], logic.Cooldown_RGB[i][1], logic.Cooldown_RGB[i][2])),
                              null,//new Pen(Brushes.Black, 1),
-                             new Rect(logic.GO_ControlPanels[2].ControlPanelPoint.X + logic.GO_ControlPanels[2].ControlPanelSize.Width / 2+50,         //X
+                             new Rect(logic.GO_ControlPanels[2].ControlPanelPoint.X + logic.GO_ControlPanels[2].ControlPanelSize.Width / 2 + 50,         //X
                              (logic.GO_ControlPanels[2].ControlPanelPoint.Y + logic.GO_ControlPanels[2].ControlPanelSize.Height - 50) - (23 * i),   //Y
                              23,                                                                                                                    //Width
                              23)                                                                                                                    //Height

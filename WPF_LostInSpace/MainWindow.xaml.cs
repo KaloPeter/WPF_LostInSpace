@@ -138,7 +138,7 @@ namespace WPF_LostInSpace
             bs_MainMenu[2].Click += (sender, e) => { Application.Current.Shutdown(); };
 
             //******
-           // timer_LOGGER.Start();
+            // timer_LOGGER.Start();
             //******
         }
 

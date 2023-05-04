@@ -364,7 +364,7 @@ namespace WPF_LostInSpace.GameLogic
                         switch (GO_Items[i])
                         {
                             case GO_Item_Asteroid:
-                                reduceHealth((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width);
+                                ReduceHealth((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width);
                                 if (GO_Player.Money > 0)
                                 {
                                     GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width - 30);
@@ -387,7 +387,7 @@ namespace WPF_LostInSpace.GameLogic
                                 }
                                 break;
                             case GO_Item_Satellite:
-                                reduceHealth((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 19);
+                                ReduceHealth((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 19);
                                 if (GO_Player.Money > 0)
                                 {
                                     GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30);//legjobb esetben:20, legrosszabb esetben 35-öt veszit
@@ -429,7 +429,7 @@ namespace WPF_LostInSpace.GameLogic
             }
         }
 
-        private void reduceHealth(double value)//goi=game object item
+        private void ReduceHealth(double value)//goi=game object item
         {
             int amount = (int)value;
 
