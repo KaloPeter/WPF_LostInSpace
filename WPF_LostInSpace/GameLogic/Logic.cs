@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using System.Windows.Threading;
 using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.HelperClasses;
 using WPF_LostInSpace.Interfaces;
+using WPF_LostInSpace.Userdata;
 
 namespace WPF_LostInSpace.GameLogic
 {
@@ -42,7 +45,7 @@ namespace WPF_LostInSpace.GameLogic
 
         private bool isCooldown = false;
 
-
+        public List<User> Users;
 
         //***********************************************************************************
         //***********************************************************************************
@@ -570,6 +573,24 @@ namespace WPF_LostInSpace.GameLogic
             Trace.WriteLine("GO_Cooldown: " + Cooldown_RGB.Count());
         }
 
-
+        public void SaveUsersToJson()
+        {
+            File.WriteAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString(), JsonConvert.SerializeObject(Users, Formatting.Indented));
+        }
+        public void LoadUsersFromJson()
+        {
+            Users = new List<User>();
+            Users = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString()));
+        }
+        public GO_Player SetUpPlayerFromJson()
+        {
+            GO_Player go_Player = new GO_Player();
+            User user = Users.FirstOrDefault();
+            go_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));
+            go_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
+            go_Player.Name = user.Username;
+            go_Player.Money = user.Money;
+            return go_Player;
+        }
     }
 }
