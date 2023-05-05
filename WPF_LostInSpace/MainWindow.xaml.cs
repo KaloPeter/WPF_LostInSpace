@@ -122,7 +122,7 @@ namespace WPF_LostInSpace
             {
                 bs_MainMenu[1].Click -= OpenInstructionWindow;
 
-                bs_MainMenu[1].Click -= OpenMainWindow_MainMenu;//if player presses resume button, it is not gonna be removed, that's why we have to call this here too.
+                bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;//if player presses resume button, it is not gonna be removed, that's why we have to call this here too.
 
                 RemoveButtonsFromGrid();
 
@@ -168,27 +168,23 @@ namespace WPF_LostInSpace
             }
         }
 
-        private void OpenMainWindow_MainMenu(object sender, RoutedEventArgs e)
+        private void BackToMainMenu_ResetPropValues(object sender, RoutedEventArgs e)
         {
-            //MainWindow mw = new MainWindow();
-            //mw.Show();
-            //this.Close();
+
+            QuestionWindow qw = new QuestionWindow("Are you sure you want to go back to the MainMenu?", "Back to MainMenu");
+
+            if (qw.ShowDialog() == true)
+            {
+                RemoveButtonsFromGrid();
 
 
-            RemoveButtonsFromGrid();
-
-
-            bs_MainMenuText[0] = "Start";
-            bs_MainMenuText[1] = "Instructions";
-            bs_MainMenu[1].Click -= OpenMainWindow_MainMenu;
-            bs_MainMenu[1].Click += OpenInstructionWindow;
-            GenerateButtonsOnGrid();
-
-
-            logic.ResetGame();
-
-
-
+                bs_MainMenuText[0] = "Start";
+                bs_MainMenuText[1] = "Instructions";
+                bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;
+                bs_MainMenu[1].Click += OpenInstructionWindow;
+                GenerateButtonsOnGrid();
+                logic.ResetGame();
+            }
 
         }
 
@@ -215,7 +211,7 @@ namespace WPF_LostInSpace
 
                     GenerateButtonsOnGrid();
 
-                    bs_MainMenu[1].Click += OpenMainWindow_MainMenu;//The problem is here, when a I pause app, the instruction event added to Click
+                    bs_MainMenu[1].Click += BackToMainMenu_ResetPropValues;//The problem is here, when a I pause app, the instruction event added to Click
 
                 }
             }
@@ -245,7 +241,6 @@ namespace WPF_LostInSpace
                 }
             }
         }//true->start___false:stop
-
 
         private void CreateGrid()
         {
