@@ -35,6 +35,7 @@ namespace WPF_LostInSpace
         {
             GameQuestionsGrid.Background = instruction_background;
             txQuestion.Text = question;
+            this.Title = title;
         }
 
         private void bt_Yes_Click(object sender, RoutedEventArgs e)
