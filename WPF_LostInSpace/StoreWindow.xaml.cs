@@ -24,21 +24,22 @@ namespace WPF_LostInSpace
         private GO_Player goPlayer;
         private MainWindow mw;
 
+        public List<SpaceSuit> SpaceSuits { get; set; }
+
         public StoreWindow(GO_Player goPlayer, MainWindow mw)
         {
             this.goPlayer = goPlayer;
             this.mw = mw;
 
-            List<SpaceSuit> spaceSuits = new List<SpaceSuit>();
-            spaceSuits.Add(new SpaceSuit(1, 2, 100, "astronaut_1", 0));
-            spaceSuits.Add(new SpaceSuit(2, 3, 150, "astronaut_2", 50000));
-            spaceSuits.Add(new SpaceSuit(3, 3, 500, "astronaut_3", 100000));
-            spaceSuits.Add(new SpaceSuit(4, 5, 170, "astronaut_4", 300000));
+            SpaceSuits = new List<SpaceSuit>();
+            SpaceSuits.Add(new SpaceSuit(1, 2, 100, "astronaut_1", 0));
+            SpaceSuits.Add(new SpaceSuit(2, 3, 150, "astronaut_2", 50000));
+            SpaceSuits.Add(new SpaceSuit(3, 3, 500, "astronaut_3", 100000));
+            SpaceSuits.Add(new SpaceSuit(4, 5, 170, "astronaut_4", 300000));
 
             InitializeComponent();
 
-            lbPurchaseableItems.ItemsSource = spaceSuits;
-
+            lbPurchaseableItems.ItemsSource = SpaceSuits;
         }
 
         private SpaceSuit selectedSuit;
@@ -84,28 +85,26 @@ namespace WPF_LostInSpace
         {
             if (selectedSuit != null)
             {
-                QuestionWindow qw = new QuestionWindow("Are you sure you want to purchase the choosen suit?","Purchase confirm");
+                QuestionWindow qw = new QuestionWindow("Are you sure you want to purchase the choosen suit?", "Purchase confirm");
 
                 if (qw.ShowDialog() == true)
                 {
+
+                    goPlayer.OwnedSpaceSuits.Add(selectedSuit);
+
+
                     //minus player money
                     //Add suit suit to players inventory by ID, remove suit price from store
                     //make suit active?? 
                     //owned property for spacesuit
                     //activate button for owned suits
                 }
-                
+
             }
             else
             {
                 MessageBox.Show("Choose spaceSuit!");
             }
-
-
-
-            
-
-
         }
     }
 }
