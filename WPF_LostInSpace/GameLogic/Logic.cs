@@ -592,5 +592,11 @@ namespace WPF_LostInSpace.GameLogic
             go_Player.Money = user.Money;
             return go_Player;
         }
+
+        public void OpenStore(MainWindow mw)
+        {
+            StoreWindow sw = new StoreWindow(GO_Player,mw);
+            sw.Show();
+        }
     }
 }
