@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_LostInSpace.Store;
 
 namespace WPF_LostInSpace.GameObjects
 {
@@ -16,6 +19,8 @@ namespace WPF_LostInSpace.GameObjects
         public Point PlayerPoint { get; set; }
         public Size PlayerSize { get; set; }
 
+        public List<SpaceSuit> OwnedSpaceSuits { get; set; }
+
         public int Money { get; set; }
         public int Speed { get; set; } = 2;
         public int Health { get; set; } = 100;
@@ -27,6 +32,7 @@ namespace WPF_LostInSpace.GameObjects
 
         public GO_Player()
         {
+            OwnedSpaceSuits = new List<SpaceSuit>();
             //playerBrush = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_L.png"), UriKind.RelativeOrAbsolute)));
             playerBrushLeft = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_1_L.png"), UriKind.RelativeOrAbsolute)));
             playerBrushRight = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_1_R.png"), UriKind.RelativeOrAbsolute)));
