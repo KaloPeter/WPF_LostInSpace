@@ -28,8 +28,8 @@ namespace WPF_LostInSpace.GameObjects
         public GO_Player()
         {
             //playerBrush = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_L.png"), UriKind.RelativeOrAbsolute)));
-            playerBrushLeft = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_L.png"), UriKind.RelativeOrAbsolute)));
-            playerBrushRight = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_R.png"), UriKind.RelativeOrAbsolute)));
+            playerBrushLeft = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_1_L.png"), UriKind.RelativeOrAbsolute)));
+            playerBrushRight = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "astronaut_1_R.png"), UriKind.RelativeOrAbsolute)));
             playerBrush = playerBrushLeft;
         }
 
@@ -52,28 +52,6 @@ namespace WPF_LostInSpace.GameObjects
 
             this.PlayerPoint = newPoint;
         }
-
-        //public Brush PlayerBrushLeft
-        //{
-        //    get
-        //    {
-        //        Uri uri = new Uri(Path.Combine("Images", "Astronaut", "astronaut_L.png"), UriKind.RelativeOrAbsolute);
-        //        BitmapImage bitmImg = new BitmapImage(uri);
-
-        //        return new ImageBrush(bitmImg);
-        //    }
-        //}
-
-        //public Brush PlayerBrushRight
-        //{
-        //    get
-        //    {
-        //        Uri uri = new Uri(Path.Combine("Images", "Astronaut", "astronaut_R.png"), UriKind.RelativeOrAbsolute);
-        //        BitmapImage bitmImg = new BitmapImage(uri);
-
-        //        return new ImageBrush(bitmImg);
-        //    }
-        //}
 
     }
 }
