@@ -69,9 +69,9 @@ namespace WPF_LostInSpace
                 };
 
             //We will have 3 buttons: play, instructions,exit
-            const int NUMBER_OF_BUTTONS = 3;
-            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button() };
-            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Exit" };
+            const int NUMBER_OF_BUTTONS = 4;
+            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button() };
+            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Store", "Exit" };
 
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -134,8 +134,9 @@ namespace WPF_LostInSpace
 
             bs_MainMenu[1].Click += OpenInstructionWindow;
 
+            bs_MainMenu[2].Click += (sender,e)=>{ logic.OpenStore(this); EnableDisableMainMenuButtons(false); };
 
-            bs_MainMenu[2].Click += (sender, e) => { Application.Current.Shutdown(); };
+            bs_MainMenu[3].Click += (sender, e) => { Application.Current.Shutdown(); };
 
             //******
             // timer_LOGGER.Start();
