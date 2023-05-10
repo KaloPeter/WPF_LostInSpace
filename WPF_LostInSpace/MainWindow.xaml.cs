@@ -124,6 +124,8 @@ namespace WPF_LostInSpace
 
                 bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;//if player presses resume button, it is not gonna be removed, that's why we have to call this here too.
 
+                bs_MainMenu[2].IsEnabled = false;
+
                 RemoveButtonsFromGrid();
 
                 StartStopDispatcherTimer(true);
@@ -134,7 +136,7 @@ namespace WPF_LostInSpace
 
             bs_MainMenu[1].Click += OpenInstructionWindow;
 
-            bs_MainMenu[2].Click += (sender,e)=>{ logic.OpenStore(this); EnableDisableMainMenuButtons(false); };
+            bs_MainMenu[2].Click += (sender, e) => { logic.OpenStore(this); EnableDisableMainMenuButtons(false); };
 
             bs_MainMenu[3].Click += (sender, e) => { Application.Current.Shutdown(); };
 
@@ -183,6 +185,7 @@ namespace WPF_LostInSpace
                 bs_MainMenuText[1] = "Instructions";
                 bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;
                 bs_MainMenu[1].Click += OpenInstructionWindow;
+                bs_MainMenu[2].IsEnabled = true;
                 GenerateButtonsOnGrid();
                 logic.ResetGame();
             }
