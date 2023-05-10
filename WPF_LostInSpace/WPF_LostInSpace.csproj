@@ -8,10 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Astronaut\astronaut_1_L.png" />
+    <None Remove="Images\Astronaut\astronaut_1_R.png" />
+    <None Remove="Images\Astronaut\astronaut_2_L.png" />
+    <None Remove="Images\Astronaut\astronaut_2_R.png" />
+    <None Remove="Images\Astronaut\astronaut_3_L.png" />
+    <None Remove="Images\Astronaut\astronaut_3_R.png" />
+    <None Remove="Images\Astronaut\astronaut_4_L.png" />
+    <None Remove="Images\Astronaut\astronaut_4_R.png" />
     <None Remove="Images\Astronaut\astronaut_L.png" />
-    <None Remove="Images\Astronaut\astronaut_O.png" />
     <None Remove="Images\Astronaut\astronaut_R.png" />
     <None Remove="Images\Astronaut\laser_Red.png" />
+    <None Remove="Images\Astronaut_Res\astronaut_1_R.png" />
+    <None Remove="Images\Astronaut_Res\astronaut_2_R.png" />
+    <None Remove="Images\Astronaut_Res\astronaut_3_R.png" />
+    <None Remove="Images\Astronaut_Res\astronaut_4_R.png" />
     <None Remove="Images\Backgrounds\InstructionsWindowBackground.jpg" />
     <None Remove="Images\Backgrounds\space_1.png" />
     <None Remove="Images\Backgrounds\space_2.png" />
@@ -42,13 +53,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\Astronaut\astronaut_L.png">
+    <Content Include="Images\Astronaut\astronaut_1_L.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Astronaut\astronaut_O.png">
+    <Content Include="Images\Astronaut\astronaut_1_R.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Astronaut\astronaut_R.png">
+    <Content Include="Images\Astronaut\astronaut_2_L.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Astronaut\astronaut_2_R.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Astronaut\astronaut_3_L.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Astronaut\astronaut_3_R.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Astronaut\astronaut_4_L.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Astronaut\astronaut_4_R.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Astronaut\laser_Red.png">
@@ -133,6 +159,19 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Astronaut_Res\astronaut_1_R.png" />
+    <Resource Include="Images\Astronaut_Res\astronaut_2_R.png" />
+    <Resource Include="Images\Astronaut_Res\astronaut_3_R.png" />
+    <Resource Include="Images\Astronaut_Res\astronaut_4_R.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\Astronaut\astronaut_O.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
