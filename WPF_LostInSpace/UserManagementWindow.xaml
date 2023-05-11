@@ -34,12 +34,8 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label x:Name="lb_selectUserProfile" Grid.Row="0" Grid.Column="1" Content="Select Profile" FontSize="24" Background="LightBlue" Foreground="White" Opacity="0.75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
-            <ComboBox x:Name="cb_userProfiles" Grid.Row="1" Grid.Column="1" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                <ComboBoxItem Content="user0"></ComboBoxItem>
-                <ComboBoxItem Content="user1"></ComboBoxItem>
-                <ComboBoxItem Content="user2"></ComboBoxItem>
-            </ComboBox>
-            <TextBox x:Name="tb_usernameEditor" Grid.Row="2" Grid.Column="1" FontSize="24" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            <ComboBox x:Name="cb_userProfiles" Grid.Row="1" Grid.Column="1" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectionChanged="cb_userProfiles_SelectionChanged"/>
+            <TextBox x:Name="tb_username" Grid.Row="2" Grid.Column="1" FontSize="24" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></TextBox>
             <Grid Grid.Row="3" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <!--<RowDefinition Height="1*"></RowDefinition>-->
@@ -52,13 +48,13 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <!--<Label x:Name="lbt_username" Grid.Row="0" Grid.Column="0" Content="Username:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>-->
-                <Label x:Name="lbt_money" Grid.Row="0" Grid.Column="0" Content="Money:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
-                <Label x:Name="lbt_bestScore" Grid.Row="1" Grid.Column="0" Content="Best score:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
-                <Label x:Name="lbt_totalDistance" Grid.Row="2" Grid.Column="0" Content="Total distance:" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
+                <Label x:Name="lbt_money" Grid.Row="0" Grid.Column="0" Content="Money" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
+                <Label x:Name="lbt_bestDistance" Grid.Row="1" Grid.Column="0" Content="Best Distance" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
+                <Label x:Name="lbt_totalDistance" Grid.Row="2" Grid.Column="0" Content="Total Distance" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left"></Label>
                 <!--<Label x:Name="lb_username" Grid.Row="0" Grid.Column="1" Content="User0" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>-->
-                <Label x:Name="lb_money" Grid.Row="0" Grid.Column="1" Content="100" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
-                <Label x:Name="lb_bestScore" Grid.Row="1" Grid.Column="1" Content="500" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
-                <Label x:Name="lb_totalDistance" Grid.Row="2" Grid.Column="1" Content="1000" FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
+                <Label x:Name="lb_money" Grid.Row="0" Grid.Column="1"  FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
+                <Label x:Name="lb_bestDistance" Grid.Row="1" Grid.Column="1"  FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
+                <Label x:Name="lb_totalDistance" Grid.Row="2" Grid.Column="1"  FontSize="18" Background="Transparent" Foreground="White" HorizontalContentAlignment="Right"></Label>
                 
             </Grid>
         </Grid>
@@ -77,7 +73,7 @@
             </Grid.ColumnDefinitions>
 
             <!--<Button Grid.Row="5" Grid.Column="0" Content="Close" FontSize="24" Foreground="White" Background="Black" Opacity="0.3">-->
-            <Button x:Name="bt_Close0" Grid.Row="0" Grid.Column="0" Content="Create" Click="bt_Close_Click">
+            <Button x:Name="bt_Create" Grid.Row="0" Grid.Column="0" Content="Create" Click="bt_Create_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
@@ -101,7 +97,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="bt_Close1" Grid.Row="1" Grid.Column="0" Content="Edit" Click="bt_Close_Click">
+            <Button x:Name="bt_EditName" Grid.Row="1" Grid.Column="0" Content="Edit Name" Click="bt_EditName_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
@@ -125,7 +121,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="bt_Close2" Grid.Row="2" Grid.Column="0" Content="Delete" Click="bt_Close_Click">
+            <Button x:Name="bt_Delete" Grid.Row="2" Grid.Column="0" Content="Delete" Click="bt_Delete_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
@@ -149,30 +145,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="bt_Close3" Grid.Row="3" Grid.Column="0" Content="Main Menu" Click="bt_Close_Click">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="FontSize" Value="24"/>
-                        <Setter Property="Background" Value="LightBlue"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Opacity" Value="0.75"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+          
             
             <Button x:Name="bt_Close" Grid.Row="5" Grid.Column="0" Content="Main Menu" Click="bt_Close_Click">
                 <Button.Style>
