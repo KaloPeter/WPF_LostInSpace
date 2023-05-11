@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -19,19 +18,39 @@ namespace WPF_LostInSpace.Store
 
         public int Price { get; set; }
 
+        public string SpaceSuitBrushPath_R { get; set; }
+        public string SpaceSuitBrushPath_L { get; set; }
+
+        [JsonIgnore]
         public Brush SpaceSuitBrush_R { get; set; }
+
+        [JsonIgnore]
         public Brush SpaceSuitBrush_L { get; set; }
+
+        public string SuitImgName { get; set; }
 
         public SpaceSuit(int id, int speed, int health, string suitImgName, int price)
         {
             ID = id;
             Speed = speed;
             Health = health;
-            SpaceSuitResPath = Path.Combine("Images", "Astronaut_Res", $"{suitImgName}_R.png");
-            SpaceSuitBrush_R = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", $"{suitImgName}_R.png"), UriKind.RelativeOrAbsolute)));
-            SpaceSuitBrush_L = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", $"{suitImgName}_L.png"), UriKind.RelativeOrAbsolute)));
+            SuitImgName = suitImgName;
+            SpaceSuitResPath = Path.Combine("Images", "Astronaut_Res", $"{SuitImgName}_R.png");
+
+            SpaceSuitBrushPath_R = Path.Combine("Images", "Astronaut", $"{SuitImgName}_R.png");
+            SpaceSuitBrushPath_L = Path.Combine("Images", "Astronaut", $"{SuitImgName}_L.png");
+
+            SpaceSuitBrush_R = new ImageBrush(new BitmapImage(new Uri(SpaceSuitBrushPath_R, UriKind.RelativeOrAbsolute)));
+            SpaceSuitBrush_L = new ImageBrush(new BitmapImage(new Uri(SpaceSuitBrushPath_L, UriKind.RelativeOrAbsolute)));
             Price = price;
         }
+        
+
+        public SpaceSuit DeppCopy()
+        {
+            return new SpaceSuit(ID,Speed,Health, SuitImgName,Price);
+        }
+
 
         public override string? ToString()
         {
