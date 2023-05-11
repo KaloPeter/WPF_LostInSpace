@@ -13,9 +13,10 @@ namespace WPF_LostInSpace.Userdata
         public double BestDistance { get; set; }
         public double TotalDistance { get; set; }
         public DateTime LastLogin { get; set; }
+
+        public List<int> PurchasedSpaceSuitIDX { get; set; }
+
         public double MusicVolume { get; set; }
         public double EffectVolume { get; set; }
-
-
     }
 }
