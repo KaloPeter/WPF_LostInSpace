@@ -38,7 +38,6 @@ namespace WPF_LostInSpace
         }
         private void bt_OK_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
             this.Close();
         }
 
