@@ -69,13 +69,16 @@ namespace WPF_LostInSpace
 
                 user.Username = tb_username.Text;
                 user.LastLogin = DateTime.Now;
+                user.PurchasedSpaceSuitIDX = new List<int>() { 1 };
 
-                //logic.CreateUser(user);
                 logic.Users.Add(user);
                 logic.SelectLastLoggedUser();
                 LoadUsersFromUsersList();
                 logic.SaveUsersToJson();
             }
+
+
+
 
         }
 
@@ -129,6 +132,7 @@ namespace WPF_LostInSpace
                 lb_money.Content = selectedUser.Money;
                 lb_bestDistance.Content = selectedUser.BestDistance;
                 lb_totalDistance.Content = selectedUser.TotalDistance;
+                logic.SpaceSuitsByUserInventory();
 
             }
         }
