@@ -36,7 +36,6 @@
             <Label x:Name="lbActiveSpaceSuitImgRes" Grid.Column="0" Grid.Row="1"/>
             <Label x:Name="lbActiveSpaceSuitHealth" Content="Health:"  HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2"/>
             <Label x:Name="lbActiveSpaceSuitSpeed" Content="Speed: m/s"  HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="3"/>
-
             <Button x:Name="btBack" Content="Close" Grid.Row="4" Grid.Column="0" Click="btBack_Click" FontSize="30"/>
 
         </Grid>
@@ -58,7 +57,6 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Black" BorderThickness="1">
-
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
