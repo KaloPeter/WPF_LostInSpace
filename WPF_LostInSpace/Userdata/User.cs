@@ -10,12 +10,12 @@ namespace WPF_LostInSpace.Userdata
     {
         public string Username { get; set; }
         public int Money { get; set; }
-        public int BestDistance { get; set; }
-        public int TotalDistance { get; set; }
+        public double BestDistance { get; set; }
+        public double TotalDistance { get; set; }
         public DateTime LastLogin { get; set; }
-
         public double MusicVolume { get; set; }
         public double EffectVolume { get; set; }
+
 
     }
 }
