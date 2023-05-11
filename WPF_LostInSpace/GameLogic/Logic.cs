@@ -195,8 +195,17 @@ namespace WPF_LostInSpace.GameLogic
 
         public void SetUpPlayer()
         {
+            GO_Player.PlayerBrush = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().SpaceSuitBrush_R;
+            GO_Player.PlayerBrushLeft = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().SpaceSuitBrush_L;
+            GO_Player.PlayerBrushRight = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().SpaceSuitBrush_R;
+
+            GO_Player.Health = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().Health;
+            GO_Player.Speed = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().Speed;
+
             GO_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));//50-25 ___ 100-50__GO_Player.PlayerSize = new Size((PlayArea.Width / 8), (PlayArea.Height / 16));
             GO_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
+            EventUpdateRender?.Invoke(this, null);
+
         }
 
         private void SetUpColorsForLaser()
