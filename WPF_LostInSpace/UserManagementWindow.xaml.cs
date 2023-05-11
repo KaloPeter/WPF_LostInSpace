@@ -61,7 +61,8 @@ namespace WPF_LostInSpace
 
             if (logic.Users.Any(u => u.Username == tb_username.Text))
             {
-                MessageBox.Show("existing user!!!");
+                WarningWindow ww = new WarningWindow("Username already exists!", "Username exists");
+                ww.Show();
             }
             else
             {
@@ -117,8 +118,6 @@ namespace WPF_LostInSpace
             mw.EnableDisableMainMenuButtons(true);
         }
 
-
-        //TEST WHEN USERS LIST EMPTY
         private void cb_userProfiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedUser = logic.Users.Where(u => u.Username == (sender as ComboBox).SelectedItem).FirstOrDefault();//((sender as ComboBox).SelectedItem) as User;
@@ -133,6 +132,9 @@ namespace WPF_LostInSpace
                 lb_bestDistance.Content = selectedUser.BestDistance;
                 lb_totalDistance.Content = selectedUser.TotalDistance;
                 logic.SpaceSuitsByUserInventory();
+                logic.SetUpPlayer();
+
+                logic.SaveUsersToJson();
 
             }
         }
