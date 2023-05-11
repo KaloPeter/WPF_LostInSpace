@@ -46,6 +46,8 @@ namespace WPF_LostInSpace.GameLogic
         private bool isCooldown = false;
 
         public List<User> Users;
+        public User CurrentUser { get; set; }
+
 
         //***********************************************************************************
         //***********************************************************************************
@@ -60,7 +62,7 @@ namespace WPF_LostInSpace.GameLogic
             colors = new List<byte[]>();
             Cooldown_RGB = new List<byte[]>();
 
-
+            Users = new List<User>();
 
             GO_Item_Crystals.Add(new GO_Item_Crystal(10));
             GO_Item_Crystals.Add(new GO_Item_Crystal(20));
@@ -90,7 +92,25 @@ namespace WPF_LostInSpace.GameLogic
             SetUpColorsForLaser();
             Cooldown_RGB.Add(colors[0]);
 
+
+
+
+            //LoadUsersFromJson();
+            LoadUsersFromJson();
+
+            SelectLastLoggedUser();
+
             GO_Player = new GO_Player();
+
+        }
+
+        public void SelectLastLoggedUser()
+        {
+
+            // CurrentUser = Users.OrderByDescending(u => u.LastLogin).First();
+            CurrentUser = Users.Count() > 0 ? Users.OrderByDescending(u => u.LastLogin).First() : null;
+
+
         }
 
         ///////////////////////////setUp methods
@@ -173,6 +193,7 @@ namespace WPF_LostInSpace.GameLogic
         }
 
         ///////////////////////////setUp methods
+
 
 
 
@@ -510,7 +531,6 @@ namespace WPF_LostInSpace.GameLogic
         }
         ///////////////////////////Methods for Cooldown
 
-
         public void ResetGame()
         {
             //Lasers/Items
@@ -564,7 +584,6 @@ namespace WPF_LostInSpace.GameLogic
             EventUpdateRender?.Invoke(this, null);
         }
 
-
         public void LOG_OBJ_PROP_VALS()
         {
             Trace.WriteLine("GO_Backgrounds: " + GO_Backgrounds.Count());
@@ -573,30 +592,91 @@ namespace WPF_LostInSpace.GameLogic
             Trace.WriteLine("GO_Cooldown: " + Cooldown_RGB.Count());
         }
 
+        //UserManagement
         public void SaveUsersToJson()
         {
             File.WriteAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString(), JsonConvert.SerializeObject(Users, Formatting.Indented));
         }
+
         public void LoadUsersFromJson()
         {
-            Users = new List<User>();
+
             Users = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString()));
+
+
         }
-        public GO_Player SetUpPlayerFromJson()
+
+        public void SetUpPlayerFromJson()
         {
-            GO_Player go_Player = new GO_Player();
-            User user = Users.FirstOrDefault();
-            go_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));
-            go_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
-            go_Player.Name = user.Username;
-            go_Player.Money = user.Money;
-            return go_Player;
+            //GO_Player = new GO_Player();
+            //User user = Users.FirstOrDefault();
+            //go_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));
+            //go_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
+            //go_Player.Name = user.Username;
+            //go_Player.Money = user.Money;
+            //return go_Player;
         }
+
+        public void OpenUsers(MainWindow mainWindow)
+        {
+            UserManagementWindow umw = new UserManagementWindow(mainWindow, this);
+            umw.Show();
+        }
+
+        //UserManagement
 
         public void OpenStore(MainWindow mw)
         {
-            StoreWindow sw = new StoreWindow(GO_Player,mw);
+            StoreWindow sw = new StoreWindow(GO_Player, mw);
             sw.Show();
+        }
+
+        public void CreateUser(User user)
+        {
+            /** 3 users manual
+              User u1 = new User()
+            {
+                Username = "BillyHuntter",
+                Money = 500,
+                BestDistance = 984.4,
+                TotalDistance = 12365.7,
+                LastLogin = new DateTime(2023,4,2),
+                MusicVolume = 0.5,
+                EffectVolume = 0.5
+            };
+
+            User u2 = new User()
+            {
+                Username = "Jonathan",
+                Money = 0,
+                BestDistance = 362.1,
+                TotalDistance = 200.9,
+                LastLogin = new DateTime(2023, 5, 10),
+                MusicVolume = 0.1,
+                EffectVolume = 0.1
+            };
+
+            User u3 = new User()
+            {
+                Username = "Bob",
+                Money = 16,
+                BestDistance = 395.5,
+                TotalDistance = 419.6,
+                LastLogin = new DateTime(2020, 2, 25),
+                MusicVolume = 0.5,
+                EffectVolume = 0.5
+            };
+
+            Users.Add(u1);
+            Users.Add(u2);
+            Users.Add(u3);
+            */
+
+            
+
+            // SaveUsersToJson();
+
+
         }
     }
 }
