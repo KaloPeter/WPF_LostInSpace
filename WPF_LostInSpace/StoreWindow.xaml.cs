@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using WPF_LostInSpace.GameObjects;
+using WPF_LostInSpace.GameLogic;
 using WPF_LostInSpace.Store;
+
 
 namespace WPF_LostInSpace
 {
@@ -21,25 +15,26 @@ namespace WPF_LostInSpace
     /// </summary>
     public partial class StoreWindow : Window
     {
-        private GO_Player goPlayer;
+        private Logic logic;
         private MainWindow mw;
 
-        public List<SpaceSuit> SpaceSuits { get; set; }
-
-        public StoreWindow(GO_Player goPlayer, MainWindow mw)
+        public StoreWindow(Logic logic, MainWindow mw)
         {
-            this.goPlayer = goPlayer;
+            this.logic = logic;
             this.mw = mw;
-
-            SpaceSuits = new List<SpaceSuit>();
-            SpaceSuits.Add(new SpaceSuit(1, 2, 100, "astronaut_1", 0));
-            SpaceSuits.Add(new SpaceSuit(2, 3, 150, "astronaut_2", 50000));
-            SpaceSuits.Add(new SpaceSuit(3, 3, 500, "astronaut_3", 100000));
-            SpaceSuits.Add(new SpaceSuit(4, 5, 170, "astronaut_4", 300000));
+            //List<SpaceSuit> SpaceSuits = new List<SpaceSuit>();
+            //SpaceSuits.Add(new SpaceSuit(1, 2, 100, "astronaut_1", 0));
+            //SpaceSuits.Add(new SpaceSuit(2, 3, 150, "astronaut_2", 50000));
+            //SpaceSuits.Add(new SpaceSuit(3, 3, 500, "astronaut_3", 100000));
+            //SpaceSuits.Add(new SpaceSuit(4, 5, 170, "astronaut_4", 300000));
+            //File.WriteAllText(new Uri(Path.Combine("Store", "SpaceSuits.json"), UriKind.RelativeOrAbsolute).ToString(), JsonConvert.SerializeObject(SpaceSuits, Formatting.Indented));
+            //SpaceSuits = JsonConvert.DeserializeObject<List<SpaceSuit>>(File.ReadAllText(new Uri(Path.Combine("Store", "SpaceSuits.json"), UriKind.RelativeOrAbsolute).ToString()));
 
             InitializeComponent();
 
-            lbPurchaseableItems.ItemsSource = SpaceSuits;
+
+
+            lbPurchaseableItems.ItemsSource = logic.SpaceSuits;
         }
 
         private SpaceSuit selectedSuit;
@@ -67,7 +62,7 @@ namespace WPF_LostInSpace
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //Active space suit load
-            lbMoney.Content = goPlayer.Money;
+            lbMoney.Content = logic.GO_Player.Money;
 
         }
 
@@ -89,8 +84,6 @@ namespace WPF_LostInSpace
 
                 if (qw.ShowDialog() == true)
                 {
-
-                    goPlayer.OwnedSpaceSuits.Add(selectedSuit);
 
 
                     //minus player money
