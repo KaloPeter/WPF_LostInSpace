@@ -42,6 +42,7 @@ namespace WPF_LostInSpace
 
         public MainWindow()
         {
+
             InitializeComponent();
 
             Icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
@@ -69,9 +70,9 @@ namespace WPF_LostInSpace
                 };
 
             //We will have 3 buttons: play, instructions,exit
-            const int NUMBER_OF_BUTTONS = 4;
-            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button() };
-            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Store", "Exit" };
+            const int NUMBER_OF_BUTTONS = 5;
+            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button(), new Button() };
+            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Store", "Users", "Exit" };
 
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -125,6 +126,8 @@ namespace WPF_LostInSpace
                 bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;//if player presses resume button, it is not gonna be removed, that's why we have to call this here too.
 
                 bs_MainMenu[2].IsEnabled = false;
+                bs_MainMenu[3].IsEnabled = false;
+
 
                 RemoveButtonsFromGrid();
 
@@ -138,7 +141,9 @@ namespace WPF_LostInSpace
 
             bs_MainMenu[2].Click += (sender, e) => { logic.OpenStore(this); EnableDisableMainMenuButtons(false); };
 
-            bs_MainMenu[3].Click += (sender, e) => { Application.Current.Shutdown(); };
+            bs_MainMenu[3].Click += (sender, e) => { logic.OpenUsers(this); EnableDisableMainMenuButtons(false); };
+
+            bs_MainMenu[4].Click += (sender, e) => { Application.Current.Shutdown(); };
 
             //******
             // timer_LOGGER.Start();
@@ -186,6 +191,7 @@ namespace WPF_LostInSpace
                 bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;
                 bs_MainMenu[1].Click += OpenInstructionWindow;
                 bs_MainMenu[2].IsEnabled = true;
+                bs_MainMenu[3].IsEnabled = true;
                 GenerateButtonsOnGrid();
                 logic.ResetGame();
             }
