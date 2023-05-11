@@ -50,6 +50,7 @@
     <None Remove="Images\Panels\controlPanel_Empty_L.png" />
     <None Remove="Images\Panels\controlPanel_Empty_R.png" />
     <None Remove="Images\Panels\controlPanel_Health.png" />
+    <None Remove="Store\SpaceSuits.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -153,6 +154,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Panels\controlPanel_Health.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Store\SpaceSuits.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

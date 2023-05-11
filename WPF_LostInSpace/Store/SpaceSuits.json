@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 1,
+    "Speed": 2,
+    "Health": 100,
+    "SpaceSuitResPath": "Images\\Astronaut_Res\\astronaut_1_R.png",
+    "Price": 0,
+    "SpaceSuitBrushPath_R": "Images\\Astronaut\\astronaut_1_R.png",
+    "SpaceSuitBrushPath_L": "Images\\Astronaut\\astronaut_1_L.png",
+    "SuitImgName": "astronaut_1"
+  },
+  {
+    "ID": 2,
+    "Speed": 3,
+    "Health": 150,
+    "SpaceSuitResPath": "Images\\Astronaut_Res\\astronaut_2_R.png",
+    "Price": 50000,
+    "SpaceSuitBrushPath_R": "Images\\Astronaut\\astronaut_2_R.png",
+    "SpaceSuitBrushPath_L": "Images\\Astronaut\\astronaut_2_L.png",
+    "SuitImgName": "astronaut_2"
+  },
+  {
+    "ID": 3,
+    "Speed": 3,
+    "Health": 500,
+    "SpaceSuitResPath": "Images\\Astronaut_Res\\astronaut_3_R.png",
+    "Price": 100000,
+    "SpaceSuitBrushPath_R": "Images\\Astronaut\\astronaut_3_R.png",
+    "SpaceSuitBrushPath_L": "Images\\Astronaut\\astronaut_3_L.png",
+    "SuitImgName": "astronaut_3"
+  },
+  {
+    "ID": 4,
+    "Speed": 5,
+    "Health": 170,
+    "SpaceSuitResPath": "Images\\Astronaut_Res\\astronaut_4_R.png",
+    "Price": 300000,
+    "SpaceSuitBrushPath_R": "Images\\Astronaut\\astronaut_4_R.png",
+    "SpaceSuitBrushPath_L": "Images\\Astronaut\\astronaut_4_L.png",
+    "SuitImgName": "astronaut_4"
+  }
+]
