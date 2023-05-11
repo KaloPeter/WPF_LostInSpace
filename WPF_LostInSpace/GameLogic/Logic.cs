@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.HelperClasses;
 using WPF_LostInSpace.Interfaces;
+using WPF_LostInSpace.Store;
 using WPF_LostInSpace.Userdata;
 
 namespace WPF_LostInSpace.GameLogic
@@ -48,6 +49,8 @@ namespace WPF_LostInSpace.GameLogic
         public List<User> Users;
         public User CurrentUser { get; set; }
 
+        public List<SpaceSuit> SpaceSuitsSource { get; set; }
+        public List<SpaceSuit> SpaceSuits { get; set; }
 
         //***********************************************************************************
         //***********************************************************************************
@@ -63,6 +66,8 @@ namespace WPF_LostInSpace.GameLogic
             Cooldown_RGB = new List<byte[]>();
 
             Users = new List<User>();
+            SpaceSuitsSource = new List<SpaceSuit>();
+            SpaceSuits = new List<SpaceSuit>();
 
             GO_Item_Crystals.Add(new GO_Item_Crystal(10));
             GO_Item_Crystals.Add(new GO_Item_Crystal(20));
@@ -95,12 +100,36 @@ namespace WPF_LostInSpace.GameLogic
 
 
 
-            //LoadUsersFromJson();
+
             LoadUsersFromJson();
+            LoadSpaceSuitsFromJson();
 
             SelectLastLoggedUser();
 
+
+            SpaceSuitsByUserInventory();
+
+
             GO_Player = new GO_Player();
+
+        }
+
+        public void SpaceSuitsByUserInventory()
+        {
+            SpaceSuits.Clear();
+            var owned = SpaceSuitsSource.Where(t => CurrentUser.PurchasedSpaceSuitIDX.Contains(t.ID)).ToList();
+            var notOwned = SpaceSuitsSource.Where(t => !CurrentUser.PurchasedSpaceSuitIDX.Contains(t.ID)).ToList();
+
+            owned.ForEach(t =>
+            {
+                var copySpaceSuit = t.DeppCopy();
+                SpaceSuits.Add(copySpaceSuit);
+                copySpaceSuit.Price = 0;
+            });
+
+            notOwned.ForEach(t => SpaceSuits.Add(t.DeppCopy()));
+
+            SpaceSuits = SpaceSuits.OrderBy(ss => ss.ID).ToList();
 
         }
 
@@ -625,12 +654,23 @@ namespace WPF_LostInSpace.GameLogic
 
         //UserManagement
 
+        //Store
+
+        public void LoadSpaceSuitsFromJson()
+        {
+            SpaceSuitsSource = JsonConvert.DeserializeObject<List<SpaceSuit>>(File.ReadAllText(new Uri(Path.Combine("Store", "SpaceSuits.json"), UriKind.RelativeOrAbsolute).ToString()));
+        }
+
         public void OpenStore(MainWindow mw)
         {
-            StoreWindow sw = new StoreWindow(GO_Player, mw);
+            StoreWindow sw = new StoreWindow(this, mw);
             sw.Show();
         }
 
+        //Store
+
+        //********************************************************
+        //********************************************************
         public void CreateUser(User user)
         {
             /** 3 users manual
@@ -672,11 +712,9 @@ namespace WPF_LostInSpace.GameLogic
             Users.Add(u3);
             */
 
-            
-
-            // SaveUsersToJson();
 
 
-        }
+
+        }//UNUSED--FOR TESTING
     }
 }
