@@ -45,13 +45,13 @@ namespace WPF_LostInSpace
 
         }
 
-        private void LoadUsersFromUsersList()
+        private void LoadUsersFromUsersList()//Set usernames in combo box, and choose last logged User's name when this window opened
         {
             cb_userProfiles.Items.Clear();
             logic.Users.ForEach(u => cb_userProfiles.Items.Add(u.Username));
-            string cun = logic.Users.Select(u => u.Username).Where(u => u == logic.CurrentUser.Username).FirstOrDefault();
+            string currentUserName = logic.Users.Select(u => u.Username).Where(u => u == logic.CurrentUser.Username).First();
 
-            cb_userProfiles.SelectedItem = cun;
+            cb_userProfiles.SelectedItem = currentUserName;
 
 
         }
@@ -85,11 +85,23 @@ namespace WPF_LostInSpace
 
         private void bt_EditName_Click(object sender, RoutedEventArgs e)
         {
-            selectedUser.Username = tb_username.Text;
-            LoadUsersFromUsersList();
-            logic.SaveUsersToJson();
+            if (logic.Users.Any(u => u.Username == tb_username.Text))
+            {
+                WarningWindow ww = new WarningWindow("Username already exists, modifications cannot be done", "Username Modification problem!");
+                ww.Show();
+            }
+            else
+            {
+                selectedUser.Username = tb_username.Text;
+                LoadUsersFromUsersList();
+                logic.SaveUsersToJson();
+            }
+
+
+
 
         }
+
         private User selectedUser;
         private void bt_Delete_Click(object sender, RoutedEventArgs e)
         {
@@ -98,10 +110,28 @@ namespace WPF_LostInSpace
             {
                 if (logic.Users.Count > 1)
                 {
+                    if (cb_userProfiles.SelectedIndex == 0)
+                    {
+                        logic.CurrentUser = logic.Users[1];
+                        
+                    }
+                    else if (cb_userProfiles.SelectedIndex == logic.Users.Count - 1)
+                    {
+                        logic.CurrentUser = logic.Users[0];
+                    }
+                    else
+                    {
+                        logic.CurrentUser = logic.Users[cb_userProfiles.SelectedIndex+1];
+                    }
+                    
                     logic.Users.Remove(selectedUser);
-                    logic.CurrentUser = logic.Users[0];
                     LoadUsersFromUsersList();
                     logic.SaveUsersToJson();
+                }
+                else
+                {
+                    WarningWindow ww = new WarningWindow("The last user cannot be removed!", "Remove process boundary!");
+                    ww.Show();
                 }
             }
 
