@@ -176,7 +176,7 @@ namespace WPF_LostInSpace
             }
         }
 
-        private void BackToMainMenu_ResetPropValues(object sender, RoutedEventArgs e)
+        private void BackToMainMenu_ResetPropValues(object sender, RoutedEventArgs e)//!!!!!!!!!!!!!!!!!!
         {
 
             QuestionWindow qw = new QuestionWindow("Are you sure you want to go back to the MainMenu?", "Back to MainMenu");
@@ -193,6 +193,8 @@ namespace WPF_LostInSpace
                 bs_MainMenu[2].IsEnabled = true;
                 bs_MainMenu[3].IsEnabled = true;
                 GenerateButtonsOnGrid();
+                //!!!!!!!!!!!!
+                //when player dies, or goes back to main menu(if keeps money, then sync it with players money=wetie to jason, when manimenu button pressed, or player dies)
                 logic.ResetGame();
             }
 
