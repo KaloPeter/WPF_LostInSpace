@@ -5,8 +5,9 @@
     "BestDistance": 984.4,
     "TotalDistance": 12365.7,
     "LastLogin": "2023-04-02T00:00:00",
+    "LastSuitID":2,
     "PurchasedSpaceSuitIDX": [
-      0,
+      1,
       2
     ],
     "MusicVolume": 0.5,
@@ -18,8 +19,8 @@
     "BestDistance": 362.1,
     "TotalDistance": 200.9,
     "LastLogin": "2023-05-10T00:00:00",
+    "LastSuitID": 1,
     "PurchasedSpaceSuitIDX": [
-      0,
       1
     ],
     "MusicVolume": 0.1,
@@ -31,8 +32,10 @@
     "BestDistance": 395.5,
     "TotalDistance": 419.6,
     "LastLogin": "2020-02-25T00:00:00",
+    "LastSuitID":4,
     "PurchasedSpaceSuitIDX": [
-      0
+      2,
+      4
     ],
     "MusicVolume": 0.5,
     "EffectVolume": 0.5
