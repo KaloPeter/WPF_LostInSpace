@@ -46,6 +46,8 @@ namespace WPF_LostInSpace.GameLogic
 
         private bool isCooldown = false;
 
+        //*********************************************
+        //*********************************************
         public List<User> Users;
         public User CurrentUser { get; set; }
 
@@ -97,17 +99,10 @@ namespace WPF_LostInSpace.GameLogic
             SetUpColorsForLaser();
             Cooldown_RGB.Add(colors[0]);
 
-
-
-
-
             LoadUsersFromJson();
             LoadSpaceSuitsFromJson();
-
             SelectLastLoggedUser();
-
-
-            SpaceSuitsByUserInventory();
+            SpaceSuitsByUserInventory();//SpaceSuits list is made by knowing CurrentUser(Calling order important)
 
 
             GO_Player = new GO_Player();
@@ -137,7 +132,7 @@ namespace WPF_LostInSpace.GameLogic
         {
 
             // CurrentUser = Users.OrderByDescending(u => u.LastLogin).First();
-            CurrentUser = Users.Count() > 0 ? Users.OrderByDescending(u => u.LastLogin).First() : null;
+            CurrentUser = Users.OrderByDescending(u => u.LastLogin).First();//theres always be at least one user in json
 
 
         }
@@ -195,12 +190,12 @@ namespace WPF_LostInSpace.GameLogic
 
         public void SetUpPlayer()
         {
-            GO_Player.PlayerBrush = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().SpaceSuitBrush_R;
-            GO_Player.PlayerBrushLeft = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().SpaceSuitBrush_L;
-            GO_Player.PlayerBrushRight = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().SpaceSuitBrush_R;
+            GO_Player.PlayerBrush = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_R;
+            GO_Player.PlayerBrushLeft = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_L;
+            GO_Player.PlayerBrushRight = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_R;
 
-            GO_Player.Health = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().Health;
-            GO_Player.Speed = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).FirstOrDefault().Speed;
+            GO_Player.Health = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Health;
+            GO_Player.Speed = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Speed;
 
             GO_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));//50-25 ___ 100-50__GO_Player.PlayerSize = new Size((PlayArea.Width / 8), (PlayArea.Height / 16));
             GO_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
