@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_LostInSpace.GameObjects;
+using WPF_LostInSpace.Userdata;
 
 namespace WPF_LostInSpace.Interfaces
 {
@@ -21,5 +22,8 @@ namespace WPF_LostInSpace.Interfaces
         public GO_Player GO_Player { get; set; }
 
         public List<byte[]> Cooldown_RGB { get; set; }
+
+        public User CurrentUser { get; set; }
+
     }
 }
