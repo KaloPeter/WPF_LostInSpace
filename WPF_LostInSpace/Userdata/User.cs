@@ -14,7 +14,7 @@ namespace WPF_LostInSpace.Userdata
         public double TotalDistance { get; set; }
         public DateTime LastLogin { get; set; }
 
-        public int LastSuitID { get; set; }
+        public int LastSuitID { get; set; } = 1;
 
         public List<int> PurchasedSpaceSuitIDX { get; set; }
 
