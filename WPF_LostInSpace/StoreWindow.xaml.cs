@@ -71,10 +71,21 @@ namespace WPF_LostInSpace
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            selectedSuit = logic.SpaceSuits.Where(ss => ss.ID == logic.CurrentUser.LastSuitID).FirstOrDefault();
+            selectedSuit = logic.SpaceSuits.Where(ss => ss.ID == logic.CurrentUser.LastSuitID).First();
+
             lbActiveSpaceSuitHealth.Content = selectedSuit.Health;
             lbActiveSpaceSuitSpeed.Content = selectedSuit.Speed;
+            lbMoney.Content = logic.CurrentUser.Money;
 
+            SetSelectedSuitImage();
+
+
+          
+
+        }
+
+        private void SetSelectedSuitImage()
+        {
             Image myImage = new Image();
             BitmapImage myImageSource = new BitmapImage();
             myImageSource.BeginInit();
@@ -84,11 +95,6 @@ namespace WPF_LostInSpace
             lbActiveSpaceSuitImgRes.Content = myImage;
             lbActiveSpaceSuitHealth.Content = "Health: " + selectedSuit.Health;
             lbActiveSpaceSuitSpeed.Content = "Speed: " + selectedSuit.Speed;
-
-
-
-            lbMoney.Content = logic.CurrentUser.Money;
-
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -113,26 +119,17 @@ namespace WPF_LostInSpace
 
                     if (qw.ShowDialog() == true)
                     {
-                        Image myImage = new Image();
-                        BitmapImage myImageSource = new BitmapImage();
-                        myImageSource.BeginInit();
-                        myImageSource.UriSource = new Uri(selectedSuit.SpaceSuitResPath, UriKind.RelativeOrAbsolute);
-                        myImageSource.EndInit();
-                        myImage.Source = myImageSource;
-                        lbActiveSpaceSuitImgRes.Content = myImage;
-                        lbActiveSpaceSuitHealth.Content = "Health: " + selectedSuit.Health;
-                        lbActiveSpaceSuitSpeed.Content = "Speed: " + selectedSuit.Speed;
+                        SetSelectedSuitImage();
 
-                        logic.GO_Player.Health = selectedSuit.Health;
-                        logic.GO_Player.Speed = selectedSuit.Speed;
-
-                        logic.GO_Player.PlayerBrushLeft = selectedSuit.SpaceSuitBrush_L;
-                        logic.GO_Player.PlayerBrushRight = selectedSuit.SpaceSuitBrush_R;
-                        logic.GO_Player.PlayerBrush = selectedSuit.SpaceSuitBrush_R;
-
-                        logic.CurrentUser.LastSuitID = selectedSuit.ID;
-
-                        logic.SetUpPlayer();
+                        logic.CurrentUser.LastSuitID = selectedSuit.ID;//we first set lastUitId->here user alredy confirmed it
+                        logic.SetUpPlayer();//we call setup player in logic which usese current user, and current user's object's lastsuitid prop
+                        //above 2 replaces below 6 rows 
+                        //logic.GO_Player.Health = selectedSuit.Health;
+                        //logic.GO_Player.Speed = selectedSuit.Speed;
+                        //logic.GO_Player.PlayerBrushLeft = selectedSuit.SpaceSuitBrush_L;
+                        //logic.GO_Player.PlayerBrushRight = selectedSuit.SpaceSuitBrush_R;
+                        //logic.GO_Player.PlayerBrush = selectedSuit.SpaceSuitBrush_R;
+                        //logic.CurrentUser.LastSuitID = selectedSuit.ID;
 
                         logic.SaveUsersToJson();
                     }
@@ -140,12 +137,11 @@ namespace WPF_LostInSpace
                 }
                 else
                 {
-                    btPurchChoose.Content = "Purchase";
                     qw = new QuestionWindow("Are you sure you want to purchase the choosen suit?", "Purchase confirm");
 
                     if (qw.ShowDialog() == true)
                     {
-
+                        //GO_PLayer__Current user money
                         if (logic.GO_Player.Money >= selectedSuit.Price)
                         {
                             logic.CurrentUser.Money -= selectedSuit.Price;
