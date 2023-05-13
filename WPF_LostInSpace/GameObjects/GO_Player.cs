@@ -20,7 +20,13 @@ namespace WPF_LostInSpace.GameObjects
         public int Money { get; set; }
         public int Speed { get; set; }
         public int Health { get; set; }
+
+        public int HealthConstant { get; set; }
         public double Distance { get; set; }
+
+        public double BestDistance { get; set; }
+        public double TotalDistance { get; set; }
+
 
         public Brush PlayerBrush { get { return playerBrush; } set { playerBrush = value; } }
         public Brush PlayerBrushLeft { get; set; }
