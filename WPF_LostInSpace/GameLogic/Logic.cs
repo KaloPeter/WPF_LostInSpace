@@ -106,7 +106,7 @@ namespace WPF_LostInSpace.GameLogic
 
 
             GO_Player = new GO_Player();
-            
+
 
         }
 
@@ -195,12 +195,17 @@ namespace WPF_LostInSpace.GameLogic
             GO_Player.PlayerBrushLeft = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_L;
             GO_Player.PlayerBrushRight = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_R;
 
-            GO_Player.Health = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Health;
+            GO_Player.Name = CurrentUser.Username;
+            GO_Player.BestDistance = CurrentUser.BestDistance;
+            GO_Player.TotalDistance = CurrentUser.TotalDistance;
+
+            GO_Player.Health = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Health;//Health we change
+            GO_Player.HealthConstant = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Health;//Health we use for logic
             GO_Player.Speed = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Speed;
 
             GO_Player.Money = CurrentUser.Money;
-            //distance props, volume data!!!!!!!!!!!!!!!
-           
+            //volume data!!!!!!!!!!!!!!!
+
             GO_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));//50-25 ___ 100-50__GO_Player.PlayerSize = new Size((PlayArea.Width / 8), (PlayArea.Height / 16));
             GO_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
             EventUpdateRender?.Invoke(this, null);
@@ -434,16 +439,16 @@ namespace WPF_LostInSpace.GameLogic
                                 break;
                             case GO_Item_Health:
 
-                                if (GO_Player.Health < 100)
+                                if (GO_Player.Health < GO_Player.HealthConstant)
                                 {
 
-                                    if (GO_Player.Health + HEALTH < 100)
+                                    if (GO_Player.Health + HEALTH < GO_Player.HealthConstant)
                                     {
                                         GO_Player.Health += HEALTH;
                                     }
                                     else
                                     {
-                                        GO_Player.Health = 100;
+                                        GO_Player.Health = GO_Player.HealthConstant;
                                     }
                                 }
                                 break;
@@ -568,7 +573,7 @@ namespace WPF_LostInSpace.GameLogic
         }
         ///////////////////////////Methods for Cooldown
 
-        public void ResetGame()
+        public void ResetGame()//GoingBack Main menu___Player dies
         {
             //Lasers/Items
             GO_Lasers.Clear();
@@ -580,6 +585,15 @@ namespace WPF_LostInSpace.GameLogic
             Cooldown_RGB.Clear();
             Cooldown_RGB.Add(colors[0]);
             //Cooldown
+
+            //Sace distance/Money
+            CurrentUser.Money = GO_Player.Money;
+            CurrentUser.TotalDistance += GO_Player.Distance;
+            CurrentUser.TotalDistance = Math.Round(CurrentUser.TotalDistance, 3);
+            CurrentUser.BestDistance = GO_Player.Distance > GO_Player.BestDistance ? GO_Player.Distance : GO_Player.BestDistance;
+            CurrentUser.BestDistance = Math.Round(CurrentUser.BestDistance, 3);
+            //if current ditance better than bestdistance, override bestdistance with distance,
+            //on the contrary override it with the same bestdistance cause it hasn't been changed
 
             //Player
             SetUpPlayer();
@@ -595,6 +609,8 @@ namespace WPF_LostInSpace.GameLogic
             //Background
 
             EventUpdateRender?.Invoke(this, null);
+
+            SaveUsersToJson();
 
         }
 
