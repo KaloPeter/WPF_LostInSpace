@@ -23,7 +23,5 @@ namespace WPF_LostInSpace.Interfaces
 
         public List<byte[]> Cooldown_RGB { get; set; }
 
-        public User CurrentUser { get; set; }
-
     }
 }
