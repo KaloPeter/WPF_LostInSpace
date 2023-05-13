@@ -22,6 +22,11 @@ namespace WPF_LostInSpace.GameController
             this.logic = logic;
         }
 
+        public void setAllKeyUp()
+        {
+            goLeft = false;
+            goRight = false;
+        }
 
         public void KeyDown(Key key)
         {
