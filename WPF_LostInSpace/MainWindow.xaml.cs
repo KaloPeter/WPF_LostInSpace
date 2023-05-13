@@ -212,10 +212,13 @@ namespace WPF_LostInSpace
                 {
                     isPaused = !isPaused;
                     firstTimeStart = !firstTimeStart;
+                    controller.setAllKeyUp();
                 }
 
                 if (isPaused)
                 {
+                   
+
                     StartStopDispatcherTimer(false);
 
                     bs_MainMenuText[0] = "Resume";
