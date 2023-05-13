@@ -143,7 +143,16 @@ namespace WPF_LostInSpace
 
             bs_MainMenu[3].Click += (sender, e) => { logic.OpenUsers(this); EnableDisableMainMenuButtons(false); };
 
-            bs_MainMenu[4].Click += (sender, e) => { Application.Current.Shutdown(); };
+            bs_MainMenu[4].Click += (sender, e) =>
+            {
+
+                QuestionWindow qw = new QuestionWindow("Are you sure you want to close the application?", "Exit Application");
+
+                if (qw.ShowDialog() == true)
+                {
+                    Application.Current.Shutdown();
+                }
+            };
 
             //******
             // timer_LOGGER.Start();
@@ -217,7 +226,7 @@ namespace WPF_LostInSpace
 
                 if (isPaused)
                 {
-                   
+
 
                     StartStopDispatcherTimer(false);
 
@@ -318,7 +327,10 @@ namespace WPF_LostInSpace
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Application.Current.Shutdown();
+
+
+           // Application.Current.Shutdown();
+
         }
     }
 }
