@@ -67,9 +67,6 @@ namespace WPF_LostInSpace.Renderer
             }
 
 
-
-
-
             //GO_Panels
             for (int i = 0; i < logic.GO_ControlPanels.Count; i++)
             {
@@ -116,28 +113,40 @@ namespace WPF_LostInSpace.Renderer
             drawingContext.DrawText(ft_health, new Point(logic.GO_ControlPanels[0].ControlPanelPoint.X + 35, 30));
 
 
+
+            //Name
+            FormattedText ft_name = new FormattedText($"Name: {logic.GO_Player.Name}", System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
+                FontWeights.Normal, FontStretches.Normal
+                ), 25, Brushes.White, 10);
+            drawingContext.DrawText(ft_name, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 25));
+
+
+
+
             //Money
             FormattedText ft_money = new FormattedText($"Money: {logic.GO_Player.Money}$", System.Globalization.CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
                 FontWeights.Normal, FontStretches.Normal
                 ), 25, Brushes.LightGreen, 10);
-            drawingContext.DrawText(ft_money, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 25));
+            drawingContext.DrawText(ft_money, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 75));
+
 
 
             //Best distance
-            FormattedText ft_bestDistance = new FormattedText($"Best Distance: {logic.CurrentUser.BestDistance} km", System.Globalization.CultureInfo.CurrentCulture,
+            FormattedText ft_bestDistance = new FormattedText($"Best Distance: {logic.GO_Player.BestDistance} km", System.Globalization.CultureInfo.CurrentCulture,
              FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
              FontWeights.Normal, FontStretches.Normal
              ),15, Brushes.White, 10);
-            drawingContext.DrawText(ft_bestDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 75));
+            drawingContext.DrawText(ft_bestDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 125));
 
 
             //Total distance
-            FormattedText ft_totalDistance = new FormattedText($"TotalDistance: {logic.CurrentUser.TotalDistance} km", System.Globalization.CultureInfo.CurrentCulture,
+            FormattedText ft_totalDistance = new FormattedText($"TotalDistance: {logic.GO_Player.TotalDistance} km", System.Globalization.CultureInfo.CurrentCulture,
              FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
              FontWeights.Normal, FontStretches.Normal
              ), 15, Brushes.White, 10);
-            drawingContext.DrawText(ft_totalDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 125));
+            drawingContext.DrawText(ft_totalDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 175));
 
 
             //drawingContext.DrawRectangle(
