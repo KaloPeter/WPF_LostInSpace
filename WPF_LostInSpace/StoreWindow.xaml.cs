@@ -121,6 +121,7 @@ namespace WPF_LostInSpace
                         logic.SetUpPlayer();//we call setup player in logic which usese current user, and current user's object's lastsuitid prop
 
                         //above 2 replaces below 6 rows 
+
                         //logic.GO_Player.Health = selectedSuit.Health;
                         //logic.GO_Player.Speed = selectedSuit.Speed;
                         //logic.GO_Player.PlayerBrushLeft = selectedSuit.SpaceSuitBrush_L;
@@ -146,18 +147,6 @@ namespace WPF_LostInSpace
                             var selectedSuitFromSpaceSuitsList = logic.SpaceSuits.Where(ss => ss.ID == selectedSuit.ID).First();
                             selectedSuitFromSpaceSuitsList.Price = 0;
 
-
-                            //Image myImage = new Image();
-                            //BitmapImage myImageSource = new BitmapImage();
-                            //myImageSource.BeginInit();
-                            //myImageSource.UriSource = new Uri(selectedSuit.SpaceSuitResPath, UriKind.RelativeOrAbsolute);
-                            //myImageSource.EndInit();
-                            //myImage.Source = myImageSource;
-                            //lbActiveSpaceSuitImgRes.Content = myImage;
-                            //lbActiveSpaceSuitHealth.Content = "Health: " + selectedSuit.Health;
-                            //lbActiveSpaceSuitSpeed.Content = "Speed: " + selectedSuit.Speed;
-
-
                             logic.GO_Player.Money = logic.CurrentUser.Money;
                             logic.GO_Player.Health = selectedSuit.Health;
                             logic.GO_Player.Speed = selectedSuit.Speed;
@@ -168,7 +157,7 @@ namespace WPF_LostInSpace
 
                             logic.SetUpPlayer();
 
-                            UpdateListBoxSpaceSuits();
+                            lbPurchaseableItems.Items.Refresh();
 
                             logic.SaveUsersToJson();
 
@@ -179,20 +168,10 @@ namespace WPF_LostInSpace
                             WarningWindow ww = new WarningWindow("Not enough money!", "Money problem");
                             ww.Show();
                         }
-                        // lbActiveSpaceSuitImgRes.Content = selectedSuit.SpaceSuitResPath;
                     }
                 }
             }
         }
 
-        private void UpdateListBoxSpaceSuits()
-        {
-            //clear listbox and reaload spacesuits when purchase happend
-            //lbPurchaseableItems.ItemsSource = logic.SpaceSuits;
-
-
-
-
-        }
     }
 }
