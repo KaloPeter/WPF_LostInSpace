@@ -143,7 +143,8 @@ namespace WPF_LostInSpace
                         {
                             logic.CurrentUser.Money -= selectedSuit.Price;
                             logic.CurrentUser.PurchasedSpaceSuitIDX.Add(selectedSuit.ID);
-                            selectedSuit.Price = 0;
+                            var selectedSuitFromSpaceSuitsList = logic.SpaceSuits.Where(ss => ss.ID == selectedSuit.ID).First();
+                            selectedSuitFromSpaceSuitsList.Price = 0;
 
 
                             //Image myImage = new Image();
@@ -186,8 +187,12 @@ namespace WPF_LostInSpace
 
         private void UpdateListBoxSpaceSuits()
         {
-         //clear listbox and reaload spacesuits when purchase happend
+            //clear listbox and reaload spacesuits when purchase happend
             //lbPurchaseableItems.ItemsSource = logic.SpaceSuits;
+
+
+
+
         }
     }
 }
