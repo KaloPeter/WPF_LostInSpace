@@ -32,7 +32,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="Active Spacesuit:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0"/>
+            <Label x:Name="lbActiveSpaceSuitTitle" Content="Active Spacesuit:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0"/>
             <Label x:Name="lbActiveSpaceSuitImgRes" Grid.Column="0" Grid.Row="1"/>
             <Label x:Name="lbActiveSpaceSuitHealth" Content="Health:"  HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2"/>
             <Label x:Name="lbActiveSpaceSuitSpeed" Content="Speed: m/s"  HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="3"/>
@@ -50,41 +50,51 @@
             <StackPanel Grid.Row="0">
                 <ListBox x:Name="lbPurchaseableItems"  HorizontalContentAlignment="Stretch"
                      SelectionChanged="lbPurchaseableItems_SelectionChanged" 
-                     Height="200"
+                     Height="280"
                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                    ScrollViewer.CanContentScroll="False">
+                    ScrollViewer.CanContentScroll="False"
+                    Background="Transparent" BorderBrush="Transparent"
+                         >
+
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="Margin" Value="1" />
+
+                        </Style>
+                    </ListBox.Resources>
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="Black" BorderThickness="1">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
 
-                                    </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
-                                    </Grid.RowDefinitions>
+                                </Grid.ColumnDefinitions>
 
-                                    <Image Source="{Binding SpaceSuitResPath}" Width="50" Height="100" Grid.Column="0" Grid.RowSpan="2"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
 
-                                    <Label Content="{Binding Speed}"  ContentStringFormat="Speed: {0}" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                    <ProgressBar x:Name="pbSpeed" Foreground="{Binding Speed,Converter={StaticResource speedToColor}}" Minimum="1" Maximum="5" Value="{Binding Speed}" Grid.Column="1" Grid.Row="1"  Width="90" Height="10"/>
+                                <Image Source="{Binding SpaceSuitResPath}" Width="50" Height="100" Grid.Column="0" Grid.RowSpan="2"/>
 
-                                    <Label Content="{Binding Health}" ContentStringFormat="Health: {0}" Grid.Column="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-                                    <ProgressBar x:Name="pbHealth" Foreground="{Binding Health,Converter={StaticResource healthToColor}}" Minimum="50" Maximum="300" Value="{Binding Health}" Grid.Column="2" Grid.Row="1"  Width="90" Height="10"/>
+                                <Label Content="{Binding Speed}"  ContentStringFormat="Speed: {0} m/s" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White"/>
+                                <ProgressBar x:Name="pbSpeed" Foreground="{Binding Speed,Converter={StaticResource speedToColor}}" Minimum="1" Maximum="5" Value="{Binding Speed}" Grid.Column="1" Grid.Row="1"  Width="90" Height="10"/>
 
-                                    <Label Content="{Binding Price}" ContentStringFormat="Price: {0}" Grid.Column="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                                <Label Content="{Binding Health}" ContentStringFormat="Health: {0}+" Grid.Column="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"  Foreground="White"/>
+                                <ProgressBar x:Name="pbHealth" Foreground="{Binding Health,Converter={StaticResource healthToColor}}" Minimum="50" Maximum="300" Value="{Binding Health}" Grid.Column="2" Grid.Row="1"  Width="90" Height="10"/>
+
+                                <Label Content="{Binding Price}" ContentStringFormat="Price: {0} Ł" Grid.Column="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"  Foreground="White"/>
 
 
-                                </Grid>
-                            </Border>
+                            </Grid>
+
                         </DataTemplate>
 
 
@@ -100,7 +110,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Money:" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="40" Grid.Column="0"/>
+                <Label x:Name="lbMoneyTitle" Content="Money:" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="40" Grid.Column="0"/>
                 <Label x:Name="lbMoney" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="40"/>
             </Grid>
         </Grid>
