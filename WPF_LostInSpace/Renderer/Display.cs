@@ -125,7 +125,7 @@ namespace WPF_LostInSpace.Renderer
 
 
             //Money
-            FormattedText ft_money = new FormattedText($"Money: {logic.GO_Player.Money}$", System.Globalization.CultureInfo.CurrentCulture,
+            FormattedText ft_money = new FormattedText($"Money: {logic.GO_Player.Money}Ł", System.Globalization.CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
                 FontWeights.Normal, FontStretches.Normal
                 ), 25, Brushes.LightGreen, 10);
