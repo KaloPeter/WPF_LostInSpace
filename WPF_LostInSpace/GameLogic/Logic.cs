@@ -57,6 +57,11 @@ namespace WPF_LostInSpace.GameLogic
         //***********************************************************************************
         //***********************************************************************************
 
+        private List<MediaPlayer> soundtracks = null;
+
+        //***********************************************************************************
+        //***********************************************************************************
+
         public Logic()
         {
             GO_Backgrounds = new List<GO_Background>();
@@ -90,11 +95,28 @@ namespace WPF_LostInSpace.GameLogic
 
 
 
-            GO_ControlPanels = new List<GO_ControlPanel>();
-            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Health.png"));
-            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Distance.png"));
-            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_L.png"));
-            GO_ControlPanels.Add(new GO_ControlPanel("controlPanel_Empty_R.png"));
+            GO_ControlPanels = new List<GO_ControlPanel>()
+            {
+            new GO_ControlPanel("controlPanel_Health.png"),
+            new GO_ControlPanel("controlPanel_Distance.png"),
+            new GO_ControlPanel("controlPanel_Empty_L.png"),
+            new GO_ControlPanel("controlPanel_Empty_R.png")
+            };
+
+            soundtracks = new List<MediaPlayer>();
+
+
+
+            var soundtrackNames = Directory.GetFiles("Soundtracks", "*.mp3").Select(Path.GetFileName).ToArray();
+
+            for (int i = 0; i < soundtrackNames.Length; i++)
+            {
+                soundtracks.Add(new MediaPlayer());
+                soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));
+
+            }
+
+            //   soundtracks[0].Open(new Uri(Path.Combine("Soundtracks", "laser0.mp3"), UriKind.RelativeOrAbsolute));
 
             SetUpColorsForLaser();
             Cooldown_RGB.Add(colors[0]);
@@ -237,8 +259,6 @@ namespace WPF_LostInSpace.GameLogic
         ///////////////////////////setUp methods
 
 
-
-
         ///////////////////////////GENERATE GO_Items
 
         public void GenerateAsteroid()
@@ -336,9 +356,22 @@ namespace WPF_LostInSpace.GameLogic
                 gol.LaserPoint = new Point(GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width / 2, GO_Player.PlayerPoint.Y + 50);//CHANGE IT
                 gol.LaserSize = new Size(10, 50);
                 GO_Lasers.Add(gol);
+
+                PlaySoundtrackById(Utils.rnd.Next(8, 11));
+
                 EnlargeLaserCooldown();
                 EventUpdateRender?.Invoke(this, null);//refresh display
             }
+            else
+            {
+                PlaySoundtrackById(0);
+            }
+        }
+
+        private void PlaySoundtrackById(int id)
+        {
+            soundtracks[id].Play();
+            soundtracks[id].Position = TimeSpan.Zero;
         }
 
         public void MoveLaser()
@@ -542,6 +575,7 @@ namespace WPF_LostInSpace.GameLogic
                     //media_cooldown[0].IsMuted = false;
                     //media_cooldown[0].Stop();
                     //media_cooldown[0].Play();
+                    PlaySoundtrackById(1);
                 }
                 isCooldown = false;
 
@@ -567,6 +601,7 @@ namespace WPF_LostInSpace.GameLogic
                 //media_cooldown[1].Stop();
                 //media_cooldown[1].Play();
                 isCooldown = true;
+                PlaySoundtrackById(2);
             }
 
 
@@ -695,50 +730,5 @@ namespace WPF_LostInSpace.GameLogic
 
         //********************************************************
         //********************************************************
-        public void CreateUser(User user)
-        {
-            /** 3 users manual
-              User u1 = new User()
-            {
-                Username = "BillyHuntter",
-                Money = 500,
-                BestDistance = 984.4,
-                TotalDistance = 12365.7,
-                LastLogin = new DateTime(2023,4,2),
-                MusicVolume = 0.5,
-                EffectVolume = 0.5
-            };
-
-            User u2 = new User()
-            {
-                Username = "Jonathan",
-                Money = 0,
-                BestDistance = 362.1,
-                TotalDistance = 200.9,
-                LastLogin = new DateTime(2023, 5, 10),
-                MusicVolume = 0.1,
-                EffectVolume = 0.1
-            };
-
-            User u3 = new User()
-            {
-                Username = "Bob",
-                Money = 16,
-                BestDistance = 395.5,
-                TotalDistance = 419.6,
-                LastLogin = new DateTime(2020, 2, 25),
-                MusicVolume = 0.5,
-                EffectVolume = 0.5
-            };
-
-            Users.Add(u1);
-            Users.Add(u2);
-            Users.Add(u3);
-            */
-
-
-
-
-        }//UNUSED--FOR TESTING
     }
 }
