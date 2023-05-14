@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_LostInSpace.GameLogic;
 using WPF_LostInSpace.Store;
@@ -19,6 +20,9 @@ namespace WPF_LostInSpace
     {
         private Logic logic;
         private MainWindow mw;
+        private static ImageBrush storeBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "store_BG.jpg"), UriKind.RelativeOrAbsolute)));
+        private static Image myImage = new Image();
+        private static BitmapImage myImageSource = new BitmapImage();
 
         public StoreWindow(Logic logic, MainWindow mw)
         {
@@ -70,27 +74,36 @@ namespace WPF_LostInSpace
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Background = storeBackground;
+            this.Background.Opacity = 0.5;
+
+
+            lbActiveSpaceSuitTitle.Foreground = Brushes.White;
+            lbActiveSpaceSuitHealth.Foreground = Brushes.Red;
+            lbActiveSpaceSuitSpeed.Foreground = Brushes.White;//Blue
+
+            lbMoneyTitle.Foreground = Brushes.Green;
+            lbMoney.Foreground = Brushes.Green;
+
 
             selectedSuit = logic.SpaceSuits.Where(ss => ss.ID == logic.CurrentUser.LastSuitID).First();
 
-            lbActiveSpaceSuitHealth.Content = selectedSuit.Health;
-            lbActiveSpaceSuitSpeed.Content = selectedSuit.Speed;
-            lbMoney.Content = logic.CurrentUser.Money;
+            lbMoney.Content = logic.CurrentUser.Money + " Ł";//setting current player's money
 
             SetSelectedSuitImage();
         }
 
         private void SetSelectedSuitImage()
         {
-            Image myImage = new Image();
-            BitmapImage myImageSource = new BitmapImage();
             myImageSource.BeginInit();
             myImageSource.UriSource = new Uri(selectedSuit.SpaceSuitResPath, UriKind.RelativeOrAbsolute);
             myImageSource.EndInit();
+
             myImage.Source = myImageSource;
+
             lbActiveSpaceSuitImgRes.Content = myImage;
-            lbActiveSpaceSuitHealth.Content = "Health: " + selectedSuit.Health;
-            lbActiveSpaceSuitSpeed.Content = "Speed: " + selectedSuit.Speed;
+            lbActiveSpaceSuitHealth.Content = "Health: " + selectedSuit.Health + "+";
+            lbActiveSpaceSuitSpeed.Content = "Speed: " + selectedSuit.Speed + " m/s";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -142,6 +155,7 @@ namespace WPF_LostInSpace
                         //GO_PLayer__Current user money
                         if (logic.GO_Player.Money >= selectedSuit.Price)
                         {
+                            //User can buy space suits, not GO_Player, that is why we do modifications User's data, then we modify GO_Player data by the User's data(Sync)
                             logic.CurrentUser.Money -= selectedSuit.Price;
                             logic.CurrentUser.PurchasedSpaceSuitIDX.Add(selectedSuit.ID);
                             var selectedSuitFromSpaceSuitsList = logic.SpaceSuits.Where(ss => ss.ID == selectedSuit.ID).First();
