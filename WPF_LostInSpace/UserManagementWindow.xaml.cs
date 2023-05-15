@@ -70,6 +70,8 @@ namespace WPF_LostInSpace
 
                 user.Username = tb_username.Text;
                 user.LastLogin = DateTime.Now;
+                user.MusicVolume = 0.2;//Default volume is 0.2
+                user.EffectVolume = 0.2;
                 user.PurchasedSpaceSuitIDX = new List<int>() { 1 };
 
                 logic.Users.Add(user);
@@ -113,7 +115,7 @@ namespace WPF_LostInSpace
                     if (cb_userProfiles.SelectedIndex == 0)
                     {
                         logic.CurrentUser = logic.Users[1];
-                        
+
                     }
                     else if (cb_userProfiles.SelectedIndex == logic.Users.Count - 1)
                     {
@@ -121,9 +123,9 @@ namespace WPF_LostInSpace
                     }
                     else
                     {
-                        logic.CurrentUser = logic.Users[cb_userProfiles.SelectedIndex+1];
+                        logic.CurrentUser = logic.Users[cb_userProfiles.SelectedIndex + 1];
                     }
-                    
+
                     logic.Users.Remove(selectedUser);
                     LoadUsersFromUsersList();
                     logic.SaveUsersToJson();
