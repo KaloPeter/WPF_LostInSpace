@@ -70,9 +70,9 @@ namespace WPF_LostInSpace
                 };
 
             //We will have 3 buttons: play, instructions,exit
-            const int NUMBER_OF_BUTTONS = 5;
-            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button(), new Button() };
-            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Store", "Users", "Exit" };
+            const int NUMBER_OF_BUTTONS = 6;
+            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button(), new Button(), new Button() };
+            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions","Settings", "Store", "Users", "Exit" };
 
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -139,11 +139,13 @@ namespace WPF_LostInSpace
 
             bs_MainMenu[1].Click += OpenInstructionWindow;
 
-            bs_MainMenu[2].Click += (sender, e) => { logic.OpenStore(this); EnableDisableMainMenuButtons(false); };
+            bs_MainMenu[3].Click += (sender, e) => { logic.OpenStore(this); EnableDisableMainMenuButtons(false); };
 
-            bs_MainMenu[3].Click += (sender, e) => { logic.OpenUsers(this); EnableDisableMainMenuButtons(false); };
+            bs_MainMenu[2].Click += (sender, e) => { logic.OpenSettings(this); EnableDisableMainMenuButtons(false); };
 
-            bs_MainMenu[4].Click += (sender, e) =>
+            bs_MainMenu[4].Click += (sender, e) => { logic.OpenUsers(this); EnableDisableMainMenuButtons(false); };
+
+            bs_MainMenu[5].Click += (sender, e) =>
             {
 
                 QuestionWindow qw = new QuestionWindow("Are you sure you want to close the application?", "Exit Application");
@@ -270,10 +272,10 @@ namespace WPF_LostInSpace
         {
 
             List<RowDefinition> rds = new List<RowDefinition>();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
                 rds.Add(new RowDefinition());
-                if (i == 0 || i == 5)
+                if (i == 0 || i == 6)
                 {
                     rds[i].Height = new GridLength(3, GridUnitType.Star);//1*;
                 }
