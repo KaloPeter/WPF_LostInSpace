@@ -106,16 +106,15 @@ namespace WPF_LostInSpace.GameLogic
             soundtracks = new List<MediaPlayer>();
 
 
-
             var soundtrackNames = Directory.GetFiles("Soundtracks", "*.mp3").Select(Path.GetFileName).ToArray();
+
 
             for (int i = 0; i < soundtrackNames.Length; i++)
             {
                 soundtracks.Add(new MediaPlayer());
-                soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));
-
+               // soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
             }
-
+    
             //   soundtracks[0].Open(new Uri(Path.Combine("Soundtracks", "laser0.mp3"), UriKind.RelativeOrAbsolute));
 
             SetUpColorsForLaser();
@@ -413,7 +412,7 @@ namespace WPF_LostInSpace.GameLogic
                         {
                             GO_Items.RemoveAt(i);
                             GO_Lasers.RemoveAt(j);
-
+                            PlaySoundtrackById(Utils.rnd.Next(4, 6));
                             //media_asteroidDest.IsMuted = false;
                             //media_asteroidDest.Stop();
                             //media_asteroidDest.Play();
@@ -483,6 +482,7 @@ namespace WPF_LostInSpace.GameLogic
                                     {
                                         GO_Player.Health = GO_Player.HealthConstant;
                                     }
+                                    PlaySoundtrackById(6);
                                 }
                                 break;
                             case GO_Item_Satellite:
@@ -537,18 +537,18 @@ namespace WPF_LostInSpace.GameLogic
                 if (GO_Player.Health - (amount - 19) <= 0)
                 {
                     GO_Player.Health = 0;
+                    PlaySoundtrackById(7);
                 }
                 else
                 {
                     GO_Player.Health -= (amount - 19);
+                    PlaySoundtrackById(3);
                 }
 
-                //if (GO_Player.Health <= 10 && GO_Player.Health > 0)
-                //{
-                //    media_lowHealth.IsMuted = false;
-                //    media_lowHealth.Stop();
-                //    media_lowHealth.Play();
-                //}
+                if (GO_Player.Health <= 10 && GO_Player.Health > 0)
+                {
+                    PlaySoundtrackById(11);
+                }
             }
         }
         ///////////////////////////Methods for Player
@@ -728,6 +728,12 @@ namespace WPF_LostInSpace.GameLogic
 
         //Store
 
+        public void OpenSettings(MainWindow mainWindow)
+        {
+            SettingsWindow sw = new SettingsWindow(mainWindow, this);
+            sw.Show();
+
+        }
         //********************************************************
         //********************************************************
     }
