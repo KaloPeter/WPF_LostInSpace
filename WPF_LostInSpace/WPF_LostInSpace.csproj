@@ -51,6 +51,28 @@
     <None Remove="Images\Panels\controlPanel_Empty_L.png" />
     <None Remove="Images\Panels\controlPanel_Empty_R.png" />
     <None Remove="Images\Panels\controlPanel_Health.png" />
+    <None Remove="Soundtracks\00_cooldown_cantshoot.mp3" />
+    <None Remove="Soundtracks\01_cooldown_startshoot.mp3" />
+    <None Remove="Soundtracks\02_cooldown_stopshoot.mp3" />
+    <None Remove="Soundtracks\03_damage.mp3" />
+    <None Remove="Soundtracks\04_explosion_1.mp3" />
+    <None Remove="Soundtracks\05_explosion_2.mp3" />
+    <None Remove="Soundtracks\06_health.mp3" />
+    <None Remove="Soundtracks\07_health_zero.mp3" />
+    <None Remove="Soundtracks\08_laser_0.mp3" />
+    <None Remove="Soundtracks\09_laser_1.mp3" />
+    <None Remove="Soundtracks\0_cooldown_cantshoot.mp3" />
+    <None Remove="Soundtracks\10_laser_2.mp3" />
+    <None Remove="Soundtracks\11_lowhealth.mp3" />
+    <None Remove="Soundtracks\1_cooldown_startshoot.mp3" />
+    <None Remove="Soundtracks\2_cooldown_stopshoot.mp3" />
+    <None Remove="Soundtracks\3_damage.mp3" />
+    <None Remove="Soundtracks\4_explosion_1.mp3" />
+    <None Remove="Soundtracks\5_explosion_2.mp3" />
+    <None Remove="Soundtracks\6_health.mp3" />
+    <None Remove="Soundtracks\7_health_zero.mp3" />
+    <None Remove="Soundtracks\8_laser_0.mp3" />
+    <None Remove="Soundtracks\9_laser_1.mp3" />
     <None Remove="Soundtracks\cooldown_cantshoot.mp3" />
     <None Remove="Soundtracks\cooldown_startshoot.mp3" />
     <None Remove="Soundtracks\cooldown_stopshoot.mp3" />
@@ -63,11 +85,6 @@
     <None Remove="Soundtracks\laser1.mp3" />
     <None Remove="Soundtracks\laser2.mp3" />
     <None Remove="Soundtracks\lowhealth.mp3" />
-    <None Remove="Soundtracks\sfx_sounds_button11.mp3" />
-    <None Remove="Soundtracks\sfx_sounds_impact1.mp3" />
-    <None Remove="Soundtracks\sfx_sounds_impact8.mp3" />
-    <None Remove="Soundtracks\sfx_sounds_negative1.mp3" />
-    <None Remove="Soundtracks\sfx_wpn_reload.mp3" />
     <None Remove="Store\SpaceSuits.json" />
   </ItemGroup>
 
@@ -177,55 +194,40 @@
     <Content Include="Images\Panels\controlPanel_Health.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\cooldown_cantshoot.mp3">
+    <Content Include="Soundtracks\00_cooldown_cantshoot.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\cooldown_startshoot.mp3">
+    <Content Include="Soundtracks\01_cooldown_startshoot.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\cooldown_stopshoot.mp3">
+    <Content Include="Soundtracks\02_cooldown_stopshoot.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\damage.mp3">
+    <Content Include="Soundtracks\03_damage.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\explosion0.mp3">
+    <Content Include="Soundtracks\04_explosion_1.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\explosion6.mp3">
+    <Content Include="Soundtracks\05_explosion_2.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\health.mp3">
+    <Content Include="Soundtracks\06_health.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\health_zero.mp3">
+    <Content Include="Soundtracks\07_health_zero.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\laser0.mp3">
+    <Content Include="Soundtracks\08_laser_0.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\laser1.mp3">
+    <Content Include="Soundtracks\09_laser_1.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\laser2.mp3">
+    <Content Include="Soundtracks\10_laser_2.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Soundtracks\lowhealth.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Soundtracks\sfx_sounds_button11.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Soundtracks\sfx_sounds_impact1.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Soundtracks\sfx_sounds_impact8.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Soundtracks\sfx_sounds_negative1.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Soundtracks\sfx_wpn_reload.mp3">
+    <Content Include="Soundtracks\11_lowhealth.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -244,6 +246,21 @@
   <ItemGroup>
     <None Update="Images\Astronaut\astronaut_O.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
+    </None>
+    <None Update="Soundtracks\sfx_sounds_button11.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Soundtracks\sfx_sounds_impact1.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Soundtracks\sfx_sounds_impact8.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Soundtracks\sfx_sounds_negative1.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Soundtracks\sfx_wpn_reload.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Userdata\Userdata.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
