@@ -1,0 +1,15 @@
+[
+  {
+    "Username": "FirstUser",
+    "Money": 500000,
+    "BestDistance": 1000,
+    "TotalDistance": 1000,
+    "LastLogin": "2012-12-12T00:00:00",
+    "LastSuitID":1,
+    "PurchasedSpaceSuitIDX": [
+      1
+    ],
+    "MusicVolume": 0.2,
+    "EffectVolume": 0.2
+  }
+]
