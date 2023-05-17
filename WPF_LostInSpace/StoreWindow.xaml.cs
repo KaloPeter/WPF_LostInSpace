@@ -21,8 +21,6 @@ namespace WPF_LostInSpace
         private Logic logic;
         private MainWindow mw;
         private static ImageBrush storeBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "store_BG.jpg"), UriKind.RelativeOrAbsolute)));
-        private static Image myImage = new Image();
-        private static BitmapImage myImageSource = new BitmapImage();
 
         public StoreWindow(Logic logic, MainWindow mw)
         {
@@ -95,6 +93,8 @@ namespace WPF_LostInSpace
 
         private void SetSelectedSuitImage()
         {
+            Image myImage = new Image();
+            BitmapImage myImageSource = new BitmapImage();
             myImageSource.BeginInit();
             myImageSource.UriSource = new Uri(selectedSuit.SpaceSuitResPath, UriKind.RelativeOrAbsolute);
             myImageSource.EndInit();
