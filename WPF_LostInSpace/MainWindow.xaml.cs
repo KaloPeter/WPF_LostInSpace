@@ -127,6 +127,7 @@ namespace WPF_LostInSpace
 
                 bs_MainMenu[2].IsEnabled = false;
                 bs_MainMenu[3].IsEnabled = false;
+                bs_MainMenu[4].IsEnabled = false;
 
 
                 RemoveButtonsFromGrid();
@@ -203,6 +204,7 @@ namespace WPF_LostInSpace
                 bs_MainMenu[1].Click += OpenInstructionWindow;
                 bs_MainMenu[2].IsEnabled = true;
                 bs_MainMenu[3].IsEnabled = true;
+                bs_MainMenu[4].IsEnabled = true;
                 GenerateButtonsOnGrid();
                 //!!!!!!!!!!!!
                 //when player dies, or goes back to main menu(if keeps money, then sync it with players money=wetie to jason, when manimenu button pressed, or player dies)
