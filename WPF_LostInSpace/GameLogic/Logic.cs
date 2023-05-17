@@ -24,6 +24,8 @@ namespace WPF_LostInSpace.GameLogic
 
         public event EventHandler EventUpdateRender;
 
+        public event EventHandler EventStopApplication;
+
         public List<GO_Background> GO_Backgrounds { get; set; }
         public List<GO_ControlPanel> GO_ControlPanels { get; set; }
         public List<GO_Item> GO_Items { get; set; }
@@ -57,7 +59,8 @@ namespace WPF_LostInSpace.GameLogic
         //***********************************************************************************
         //***********************************************************************************
 
-        private List<MediaPlayer> soundtracks = null;
+        private List<MediaPlayer> effect_soundtracks = null;
+        private MediaPlayer music_soundtrack = null;
 
         //***********************************************************************************
         //***********************************************************************************
@@ -103,7 +106,7 @@ namespace WPF_LostInSpace.GameLogic
             new GO_ControlPanel("controlPanel_Empty_R.png")
             };
 
-            soundtracks = new List<MediaPlayer>();
+            effect_soundtracks = new List<MediaPlayer>();
 
 
             var soundtrackNames = Directory.GetFiles("Soundtracks", "*.mp3").Select(Path.GetFileName).ToArray();
@@ -111,11 +114,11 @@ namespace WPF_LostInSpace.GameLogic
 
             for (int i = 0; i < soundtrackNames.Length; i++)
             {
-                soundtracks.Add(new MediaPlayer());
-               // soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
+                effect_soundtracks.Add(new MediaPlayer());
+                 effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
             }
-    
-            //   soundtracks[0].Open(new Uri(Path.Combine("Soundtracks", "laser0.mp3"), UriKind.RelativeOrAbsolute));
+
+
 
             SetUpColorsForLaser();
             Cooldown_RGB.Add(colors[0]);
@@ -127,9 +130,20 @@ namespace WPF_LostInSpace.GameLogic
 
 
             GO_Player = new GO_Player();
-
+            SetEffectVolume();//Only when we have current user
+            SetMusicVolume();//Only when we have current user
 
         }
+
+        public void SetEffectVolume()
+        {
+            effect_soundtracks.ForEach(s => s.Volume = CurrentUser.EffectVolume);
+        }
+
+        public void SetMusicVolume()
+        {
+            // music_soundtrack.Volume = CurrentUser.MusicVolume;
+        }//NOT IMPLEMENTED
 
         public void SpaceSuitsByUserInventory()
         {
@@ -369,8 +383,8 @@ namespace WPF_LostInSpace.GameLogic
 
         private void PlaySoundtrackById(int id)
         {
-            soundtracks[id].Play();
-            soundtracks[id].Position = TimeSpan.Zero;
+            effect_soundtracks[id].Play();
+            effect_soundtracks[id].Position = TimeSpan.Zero;
         }
 
         public void MoveLaser()
@@ -462,11 +476,15 @@ namespace WPF_LostInSpace.GameLogic
                         switch (GO_Items[i])
                         {
                             case GO_Item_Asteroid:
-                                ReduceHealth((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width);
-                                if (GO_Player.Money > 0)
+                                if (GO_Player.Money - (int)((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width - 30) > 0)
                                 {
                                     GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width - 30);
                                 }
+                                else
+                                {
+                                    GO_Player.Money = 0;
+                                }
+                                ReduceHealth((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width);
 
                                 break;
                             case GO_Item_Health:
@@ -486,11 +504,16 @@ namespace WPF_LostInSpace.GameLogic
                                 }
                                 break;
                             case GO_Item_Satellite:
-                                ReduceHealth((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 19);
-                                if (GO_Player.Money > 0)
+
+                                if (GO_Player.Money - (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30) > 0)
                                 {
                                     GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30);//legjobb esetben:20, legrosszabb esetben 35-öt veszit
                                 }
+                                else
+                                {
+                                    GO_Player.Money = 0;
+                                }
+                                ReduceHealth((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 19);
 
                                 break;
                             case GO_Item_Crystal:
@@ -538,6 +561,7 @@ namespace WPF_LostInSpace.GameLogic
                 {
                     GO_Player.Health = 0;
                     PlaySoundtrackById(7);
+                    EventStopApplication.Invoke(this, null);
                 }
                 else
                 {
