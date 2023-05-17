@@ -23,21 +23,75 @@ namespace WPF_LostInSpace
         private MainWindow mw = null;
         private Logic logic = null;
 
-        public SettingsWindow(MainWindow mw,Logic logic)
+        public SettingsWindow(MainWindow mw, Logic logic)
         {
             this.mw = mw;
             this.logic = logic;
             InitializeComponent();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            slEffects.Value = (int)(logic.CurrentUser.EffectVolume * 100);
+            slMusic.Value = (int)(logic.CurrentUser.MusicVolume * 100);
+        }
+
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             mw.EnableDisableMainMenuButtons(true);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_MainMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+
+            if (logic.CurrentUser.MusicVolume != slMusic.Value / 100 || logic.CurrentUser.EffectVolume != slEffects.Value / 100)
+            {
+                QuestionWindow qw = new QuestionWindow("You have unsaved modifications! Would you like to save them?", "Unsaved modifications");
+
+                if (qw.ShowDialog() == true)
+                {
+                    SetNewVolumeValues();
+                    this.Close();
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                this.Close();
+            }
+
+        }
+
+        private void Button_Click_Apply(object sender, RoutedEventArgs e)
+        {
+            SetNewVolumeValues();
+        }
+
+
+
+        private void btWindowMode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btFullScreenMode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SetNewVolumeValues()
+        {
+            logic.CurrentUser.EffectVolume = slEffects.Value / 100;
+            logic.CurrentUser.MusicVolume = slMusic.Value / 100;
+
+            logic.SetEffectVolume();
+            logic.SetMusicVolume();
+
+            logic.SaveUsersToJson();
         }
     }
 }
