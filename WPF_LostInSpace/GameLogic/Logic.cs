@@ -66,9 +66,6 @@ namespace WPF_LostInSpace.GameLogic
         private List<MediaPlayer> effect_soundtracks = null;
         private MediaPlayer music_soundtrack = null;
 
-        private MediaPlayer TEST_MEDIA = null;
-
-
         //***********************************************************************************
         //***********************************************************************************
 
@@ -115,7 +112,6 @@ namespace WPF_LostInSpace.GameLogic
 
             effect_soundtracks = new List<MediaPlayer>();
             music_soundtrack = new MediaPlayer();
-            TEST_MEDIA = new MediaPlayer();
 
             var soundtrackNames = Directory.GetFiles("Soundtracks", "*.mp3").Select(Path.GetFileName).ToArray();
 
@@ -449,7 +445,7 @@ namespace WPF_LostInSpace.GameLogic
                                 laserItemDectionDelaySec = 0;
                                 isLaserHitHappend = false;
                             }
-                           
+
                         }
                     }
                     else
