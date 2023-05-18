@@ -42,6 +42,7 @@
     <None Remove="Images\Items\crystal_4.png" />
     <None Remove="Images\Items\crystal_5.png" />
     <None Remove="Images\Items\crystal_6.png" />
+    <None Remove="Images\Items\explosion.png" />
     <None Remove="Images\Items\oxygen_1_T.png" />
     <None Remove="Images\Items\oxygen_2_T.png" />
     <None Remove="Images\Items\sat_1_T.png" />
@@ -64,6 +65,8 @@
     <None Remove="Soundtracks\0_cooldown_cantshoot.mp3" />
     <None Remove="Soundtracks\10_laser_2.mp3" />
     <None Remove="Soundtracks\11_lowhealth.mp3" />
+    <None Remove="Soundtracks\12_lost_in_space_bg.mp3" />
+    <None Remove="Soundtracks\13_10sec.mp3" />
     <None Remove="Soundtracks\1_cooldown_startshoot.mp3" />
     <None Remove="Soundtracks\2_cooldown_stopshoot.mp3" />
     <None Remove="Soundtracks\3_damage.mp3" />
@@ -86,6 +89,15 @@
     <None Remove="Soundtracks\laser2.mp3" />
     <None Remove="Soundtracks\lowhealth.mp3" />
     <None Remove="Store\SpaceSuits.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Items\explosion.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Soundtracks\13_10sec.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -228,6 +240,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Soundtracks\11_lowhealth.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Soundtracks\12_lost_in_space_bg.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
