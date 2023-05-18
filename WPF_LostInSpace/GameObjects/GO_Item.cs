@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace WPF_LostInSpace.GameObjects
 {
@@ -12,6 +14,8 @@ namespace WPF_LostInSpace.GameObjects
     {
         public Size ItemSize { get; set; }
         public Point ItemPoint { get; set; }
+
+        private static Brush explosionBrush = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "explosion.png"), UriKind.RelativeOrAbsolute)));
 
         public Brush ItemBrush { get; set; }
 
@@ -41,5 +45,11 @@ namespace WPF_LostInSpace.GameObjects
         {
             return $"Size:{ItemSize}-Point:{ItemPoint}-Brush:{ItemBrush}";
         }
+
+        public void SetExplosionBrush()
+        {
+            ItemBrush = explosionBrush;
+        }
+
     }
 }
