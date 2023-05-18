@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -37,10 +38,13 @@ namespace WPF_LostInSpace.GameLogic
         private List<GO_Item_Crystal> GO_Item_Crystals;
 
 
-        private int sec = 0;
+        private int playerItemDecetionDelaySec = 0;
+
+        private int laserItemDectionDelaySec = 0;
 
         private bool isHitHappend = false;
 
+        private bool isLaserHitHappend = false;
 
         private List<byte[]> colors;
 
@@ -61,6 +65,9 @@ namespace WPF_LostInSpace.GameLogic
 
         private List<MediaPlayer> effect_soundtracks = null;
         private MediaPlayer music_soundtrack = null;
+
+        private MediaPlayer TEST_MEDIA = null;
+
 
         //***********************************************************************************
         //***********************************************************************************
@@ -107,17 +114,21 @@ namespace WPF_LostInSpace.GameLogic
             };
 
             effect_soundtracks = new List<MediaPlayer>();
-
+            music_soundtrack = new MediaPlayer();
+            TEST_MEDIA = new MediaPlayer();
 
             var soundtrackNames = Directory.GetFiles("Soundtracks", "*.mp3").Select(Path.GetFileName).ToArray();
 
-
+            ;
             for (int i = 0; i < soundtrackNames.Length; i++)
             {
                 effect_soundtracks.Add(new MediaPlayer());
-                 effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
+                effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
             }
 
+            music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
+
+            music_soundtrack.Play();
 
 
             SetUpColorsForLaser();
@@ -133,6 +144,8 @@ namespace WPF_LostInSpace.GameLogic
             SetEffectVolume();//Only when we have current user
             SetMusicVolume();//Only when we have current user
 
+            music_soundtrack.MediaEnded += (sender, eventArgs) => { music_soundtrack.Position = TimeSpan.Zero; music_soundtrack.Play(); };
+            //When backgroundmenu ended, this evet called which sets the duration of music zero, and starts play it again.
         }
 
         public void SetEffectVolume()
@@ -142,8 +155,8 @@ namespace WPF_LostInSpace.GameLogic
 
         public void SetMusicVolume()
         {
-            // music_soundtrack.Volume = CurrentUser.MusicVolume;
-        }//NOT IMPLEMENTED
+            music_soundtrack.Volume = CurrentUser.MusicVolume;
+        }
 
         public void SpaceSuitsByUserInventory()
         {
@@ -424,15 +437,19 @@ namespace WPF_LostInSpace.GameLogic
 
                         if (isLaserItemDet)
                         {
-                            GO_Items.RemoveAt(i);
-                            GO_Lasers.RemoveAt(j);
-                            PlaySoundtrackById(Utils.rnd.Next(4, 6));
-                            //media_asteroidDest.IsMuted = false;
-                            //media_asteroidDest.Stop();
-                            //media_asteroidDest.Play();
-                            //different sounds for asteroid, satellite, then check items list element here
+                            isLaserHitHappend = true;
+                            GO_Items[i].SetExplosionBrush();
+                            if (laserItemDectionDelaySec == 1)
+                            {
+                                GO_Lasers.RemoveAt(j);
+                                GO_Items.RemoveAt(i);
 
+                                PlaySoundtrackById(Utils.rnd.Next(4, 6));
 
+                                laserItemDectionDelaySec = 0;
+                                isLaserHitHappend = false;
+                            }
+                           
                         }
                     }
                     else
@@ -471,7 +488,7 @@ namespace WPF_LostInSpace.GameLogic
                 if (hit)
                 {
                     isHitHappend = true;
-                    if (sec >= 1)
+                    if (playerItemDecetionDelaySec >= 1)
                     {
                         switch (GO_Items[i])
                         {
@@ -524,7 +541,7 @@ namespace WPF_LostInSpace.GameLogic
                         }
                         isHitHappend = false;
                         GO_Items.RemoveAt(i);
-                        sec = 0;
+                        playerItemDecetionDelaySec = 0;
 
                     }
 
@@ -547,7 +564,15 @@ namespace WPF_LostInSpace.GameLogic
         {
             if (isHitHappend)
             {
-                sec++;
+                playerItemDecetionDelaySec++;
+            }
+        }
+
+        public void LaserItemDetectionDelay()
+        {
+            if (isLaserHitHappend)
+            {
+                laserItemDectionDelaySec++;
             }
         }
 
@@ -696,14 +721,6 @@ namespace WPF_LostInSpace.GameLogic
             EventUpdateRender?.Invoke(this, null);
         }
 
-        public void LOG_OBJ_PROP_VALS()
-        {
-            Trace.WriteLine("GO_Backgrounds: " + GO_Backgrounds.Count());
-            Trace.WriteLine("GO_Items: " + GO_Items.Count());
-            Trace.WriteLine("GO_Lasers: " + GO_Lasers.Count());
-            Trace.WriteLine("GO_Cooldown: " + Cooldown_RGB.Count());
-        }
-
         //UserManagement
         public void SaveUsersToJson()
         {
@@ -760,5 +777,29 @@ namespace WPF_LostInSpace.GameLogic
         }
         //********************************************************
         //********************************************************
+
+
+        public void LOG_OBJ_PROP_VALS()
+        {
+            //Trace.WriteLine("GO_Backgrounds: " + GO_Backgrounds.Count());
+            //Trace.WriteLine("GO_Items: " + GO_Items.Count());
+            //Trace.WriteLine("GO_Lasers: " + GO_Lasers.Count());
+            //Trace.WriteLine("GO_Cooldown: " + Cooldown_RGB.Count());
+
+
+            // Trace.WriteLine(music_soundtrack.Position.TotalMilliseconds);
+
+            //  var current = music_soundtrack.Position.Duration().TotalMilliseconds;
+            //  var full = music_soundtrack.NaturalDuration.TimeSpan.TotalMilliseconds;
+
+            //  Trace.WriteLine(current);
+            // Trace.WriteLine(full);
+            //  Trace.WriteLine(full - current);
+
+            //            var calc = TEST_MEDIA.NaturalDuration.TimeSpan.TotalMilliseconds - TEST_MEDIA.Position.TotalMilliseconds;
+
+            //          Trace.WriteLine(calc);
+
+        }
     }
 }
