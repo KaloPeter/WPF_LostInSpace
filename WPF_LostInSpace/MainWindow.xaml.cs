@@ -67,12 +67,13 @@ namespace WPF_LostInSpace
                     10,//9 timer_playerItemDetection
                     200,//10 timer_playerItemDetectionDelay
                     250,//11 timer_cooldownReduce
+                    1,//12 timer_LaserItemDetectionDelay
                 };
 
             //We will have 3 buttons: play, instructions,exit
             const int NUMBER_OF_BUTTONS = 6;
             bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button(), new Button(), new Button() };
-            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions","Settings", "Store", "Users", "Exit" };
+            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Settings", "Store", "Users", "Exit" };
 
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
@@ -80,6 +81,31 @@ namespace WPF_LostInSpace
                 dispatcherTimers.Add(new DispatcherTimer());
                 dispatcherTimers[i].Interval = TimeSpan.FromMilliseconds(timerMilliseconds[i]);
             }
+
+            logic.EventStopApplication += (sender, eventargs) =>
+            {
+                StartStopDispatcherTimer(false);
+                bs_MainMenuText[0] = "Resume";
+                bs_MainMenuText[1] = "MainMenu";
+
+                bs_MainMenu[0].IsEnabled = false;
+                isPaused = !isPaused;
+
+                firstTimeStart = !firstTimeStart;
+                controller.setAllKeyUp();
+
+
+                bs_MainMenu[1].Click += BackToMainMenu_ResetPropValues;
+
+
+                GenerateButtonsOnGrid();
+
+
+
+
+            };
+
+
 
 
             dispatcherTimers[0].Tick += (sender, args) => { logic.BackgroundMove(); };
@@ -94,11 +120,12 @@ namespace WPF_LostInSpace
             dispatcherTimers[9].Tick += (sender, args) => { logic.CheckPlayerItemDetection(); };
             dispatcherTimers[10].Tick += (sender, args) => { logic.PlayerItemDetectionDelay(); };
             dispatcherTimers[11].Tick += (sender, args) => { logic.ReduceLaserCooldown(); };
+            dispatcherTimers[12].Tick += (sender, args) => { logic.LaserItemDetectionDelay(); };
 
 
             //*******
             timer_LOGGER = new DispatcherTimer();
-            timer_LOGGER.Interval = TimeSpan.FromSeconds(100);
+            timer_LOGGER.Interval = TimeSpan.FromMilliseconds(0);
             timer_LOGGER.Tick += (sender, args) => { logic.LOG_OBJ_PROP_VALS(); };
             //*******
         }
@@ -158,7 +185,7 @@ namespace WPF_LostInSpace
             };
 
             //******
-            // timer_LOGGER.Start();
+         //    timer_LOGGER.Start();
             //******
 
             //UserManagementWindow userManagementWindow = new UserManagementWindow();
@@ -202,12 +229,9 @@ namespace WPF_LostInSpace
                 bs_MainMenuText[1] = "Instructions";
                 bs_MainMenu[1].Click -= BackToMainMenu_ResetPropValues;
                 bs_MainMenu[1].Click += OpenInstructionWindow;
-                bs_MainMenu[2].IsEnabled = true;
-                bs_MainMenu[3].IsEnabled = true;
-                bs_MainMenu[4].IsEnabled = true;
+
+                EnableDisableMainMenuButtons(true);
                 GenerateButtonsOnGrid();
-                //!!!!!!!!!!!!
-                //when player dies, or goes back to main menu(if keeps money, then sync it with players money=wetie to jason, when manimenu button pressed, or player dies)
                 logic.ResetGame();
             }
 
@@ -333,7 +357,7 @@ namespace WPF_LostInSpace
         {
 
 
-           // Application.Current.Shutdown();
+            // Application.Current.Shutdown();
 
         }
     }
