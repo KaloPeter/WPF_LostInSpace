@@ -80,9 +80,6 @@ namespace WPF_LostInSpace
                 logic.SaveUsersToJson();
             }
 
-
-
-
         }
 
         private void bt_EditName_Click(object sender, RoutedEventArgs e)
@@ -165,6 +162,8 @@ namespace WPF_LostInSpace
                 lb_totalDistance.Content = selectedUser.TotalDistance;
                 logic.SpaceSuitsByUserInventory();
                 logic.SetUpPlayer();
+                logic.SetEffectVolume();
+                logic.SetMusicVolume();
 
                 logic.SaveUsersToJson();
 
