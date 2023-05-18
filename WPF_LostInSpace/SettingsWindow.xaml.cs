@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPF_LostInSpace.GameLogic;
 
 namespace WPF_LostInSpace
@@ -23,6 +23,8 @@ namespace WPF_LostInSpace
         private MainWindow mw = null;
         private Logic logic = null;
 
+        private static ImageBrush settingsBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "settings_BG.jpg"), UriKind.RelativeOrAbsolute)));
+
         public SettingsWindow(MainWindow mw, Logic logic)
         {
             this.mw = mw;
@@ -34,6 +36,8 @@ namespace WPF_LostInSpace
         {
             slEffects.Value = (int)(logic.CurrentUser.EffectVolume * 100);
             slMusic.Value = (int)(logic.CurrentUser.MusicVolume * 100);
+            this.Background = settingsBackground;
+            this.Background.Opacity = 0.3;
         }
 
 
