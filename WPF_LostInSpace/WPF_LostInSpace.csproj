@@ -24,6 +24,7 @@
     <None Remove="Images\Astronaut_Res\astronaut_3_R.png" />
     <None Remove="Images\Astronaut_Res\astronaut_4_R.png" />
     <None Remove="Images\Backgrounds\InstructionsWindowBackground.jpg" />
+    <None Remove="Images\Backgrounds\settings_bg.jpg" />
     <None Remove="Images\Backgrounds\space_1.png" />
     <None Remove="Images\Backgrounds\space_2.png" />
     <None Remove="Images\Backgrounds\space_3.png" />
@@ -92,6 +93,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\Backgrounds\settings_BG.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Items\explosion.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
