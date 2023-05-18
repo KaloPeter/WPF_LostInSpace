@@ -36,7 +36,30 @@
             <Label x:Name="lbActiveSpaceSuitImgRes" Grid.Column="0" Grid.Row="1"/>
             <Label x:Name="lbActiveSpaceSuitHealth" Content="Health:"  HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2"/>
             <Label x:Name="lbActiveSpaceSuitSpeed" Content="Speed: m/s"  HorizontalContentAlignment="Center" FontSize="30" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="3"/>
-            <Button x:Name="btBack" Content="Close" Grid.Row="4" Grid.Column="0" Click="btBack_Click" FontSize="30"/>
+            <Button x:Name="btBack" Content="Close" Grid.Row="4" Grid.Column="0" Click="btBack_Click" FontSize="30">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
         </Grid>
 
@@ -102,7 +125,31 @@
                 </ListBox>
             </StackPanel>
 
-            <Button x:Name="btPurchChoose" Content="Purchase" Grid.Row="1" Width="200" Height="50" FontSize="25" Click="Button_Click"/>
+            <Button x:Name="btPurchChoose" Content="Purchase" Grid.Row="1" Width="200" Height="50" FontSize="25" Click="Button_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Opacity" Value="0.75"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--<Setter Property="Background" Value="Transparent"/>-->
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>

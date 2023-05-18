@@ -78,7 +78,7 @@
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
                         <Setter Property="Background" Value="LightBlue"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Opacity" Value="0.75"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -91,7 +91,7 @@
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -102,7 +102,7 @@
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
                         <Setter Property="Background" Value="LightBlue"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Opacity" Value="0.75"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -115,7 +115,7 @@
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -126,7 +126,7 @@
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
                         <Setter Property="Background" Value="LightBlue"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Opacity" Value="0.75"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -139,7 +139,7 @@
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -165,7 +165,7 @@
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
