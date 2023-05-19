@@ -119,10 +119,10 @@ namespace WPF_LostInSpace.GameLogic
             for (int i = 0; i < soundtrackNames.Length; i++)
             {
                 effect_soundtracks.Add(new MediaPlayer());
-                effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
+                //      effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
             }
 
-            music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
+            // music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
 
             music_soundtrack.Play();
 
@@ -674,7 +674,7 @@ namespace WPF_LostInSpace.GameLogic
             CurrentUser.BestDistance = Math.Round(CurrentUser.BestDistance, 3);
             //if current ditance better than bestdistance, override bestdistance with distance,
             //on the contrary override it with the same bestdistance cause it hasn't been changed
-
+        
             //Player
             SetUpPlayer();
             GO_Player.Distance = 0;
