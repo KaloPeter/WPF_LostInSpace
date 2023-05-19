@@ -23,12 +23,17 @@ namespace WPF_LostInSpace
         private MainWindow mw = null;
         private Logic logic = null;
 
+        private static bool isFullscreen = false;
+
         private static ImageBrush settingsBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "settings_BG.jpg"), UriKind.RelativeOrAbsolute)));
+
+        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
 
         public SettingsWindow(MainWindow mw, Logic logic)
         {
             this.mw = mw;
             this.logic = logic;
+            Icon = icon;
             InitializeComponent();
         }
 
@@ -38,6 +43,19 @@ namespace WPF_LostInSpace
             slMusic.Value = (int)(logic.CurrentUser.MusicVolume * 100);
             this.Background = settingsBackground;
             this.Background.Opacity = 0.3;
+
+            if (isFullscreen)
+            {
+                btFullScreenMode.Opacity = 0.2;
+                btFullScreenMode.IsEnabled = false;
+            }
+            else
+            {
+                btWindowMode.Opacity = 0.2;
+                btWindowMode.IsEnabled = false;
+            }
+
+
         }
 
 
@@ -76,15 +94,53 @@ namespace WPF_LostInSpace
         }
 
 
+        private static WindowState oldState;
+        private static WindowStyle oldStyle;
 
         private void btWindowMode_Click(object sender, RoutedEventArgs e)
         {
+            isFullscreen = false;
+            //1200x720
+            mw.WindowState = oldState;
+            mw.WindowStyle = oldStyle;
 
+            ReArrangeView();
+
+            btWindowMode.IsEnabled = false;
+            btFullScreenMode.IsEnabled = true;
+            btWindowMode.Opacity = 0.2;
+            btFullScreenMode.Opacity = 0.75;
+        }
+
+        private void ReArrangeView()
+        {
+
+            logic.SetUpPlayArea(new Size(mw.grid.ActualWidth, mw.grid.ActualHeight));
+            logic.SetUpBackground();
+            logic.SetUpPanels();
+
+            logic.SetUpPlayer();
+            this.Focus();
         }
 
         private void btFullScreenMode_Click(object sender, RoutedEventArgs e)
         {
+            //    mw.Width = 1500;
+            //    mw.Height = 800;
 
+            isFullscreen = true;
+
+            oldState = mw.WindowState;
+            oldStyle = mw.WindowStyle;
+
+            mw.WindowState = WindowState.Maximized;
+            mw.WindowStyle = WindowStyle.None;
+
+            ReArrangeView();
+            btWindowMode.IsEnabled = true;
+            btFullScreenMode.IsEnabled = false;
+            btWindowMode.Opacity = 0.75;
+            btFullScreenMode.Opacity = 0.2;
         }
 
         private void SetNewVolumeValues()
