@@ -150,7 +150,7 @@
                 </Button.Style>
             </Button>
 
-            <Label Foreground="White" Content="720x1200" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
+            <Label Foreground="White" Content="1200x720" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
 
         </Grid>
 
