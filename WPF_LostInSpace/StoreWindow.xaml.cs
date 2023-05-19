@@ -21,11 +21,13 @@ namespace WPF_LostInSpace
         private Logic logic;
         private MainWindow mw;
         private static ImageBrush storeBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "store_BG.jpg"), UriKind.RelativeOrAbsolute)));
+        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
 
         public StoreWindow(Logic logic, MainWindow mw)
         {
             this.logic = logic;
             this.mw = mw;
+            Icon = icon;
             //List<SpaceSuit> SpaceSuits = new List<SpaceSuit>();
             //SpaceSuits.Add(new SpaceSuit(1, 2, 100, "astronaut_1", 0));
             //SpaceSuits.Add(new SpaceSuit(2, 3, 150, "astronaut_2", 50000));
