@@ -40,11 +40,7 @@ namespace WPF_LostInSpace.GameLogic
 
         private int playerItemDecetionDelaySec = 0;
 
-        private int laserItemDectionDelaySec = 0;
-
         private bool isHitHappend = false;
-
-        private bool isLaserHitHappend = false;
 
         private List<byte[]> colors;
 
@@ -119,10 +115,10 @@ namespace WPF_LostInSpace.GameLogic
             for (int i = 0; i < soundtrackNames.Length; i++)
             {
                 effect_soundtracks.Add(new MediaPlayer());
-                //      effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
+                effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
             }
 
-            // music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
+            music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
 
             music_soundtrack.Play();
 
@@ -172,6 +168,17 @@ namespace WPF_LostInSpace.GameLogic
             SpaceSuits = SpaceSuits.OrderBy(ss => ss.ID).ToList();
 
         }
+
+        public void PlayPurchaseSound()
+        {
+            PlaySoundtrackById(13);
+        }
+
+        public void PlayPickUpSuit()
+        {
+            PlaySoundtrackById(14);
+        }
+
 
         public void SelectLastLoggedUser()
         {
@@ -433,19 +440,25 @@ namespace WPF_LostInSpace.GameLogic
 
                         if (isLaserItemDet)
                         {
-                            isLaserHitHappend = true;
+                            GO_Lasers.RemoveAt(j);
                             GO_Items[i].SetExplosionBrush();
-                            if (laserItemDectionDelaySec == 1)
-                            {
-                                GO_Lasers.RemoveAt(j);
-                                GO_Items.RemoveAt(i);
+                            GO_Items[i].IsExplode = true;
 
-                                PlaySoundtrackById(Utils.rnd.Next(4, 6));
 
-                                laserItemDectionDelaySec = 0;
-                                isLaserHitHappend = false;
-                            }
+                            //isLaserHitHappend = true;
+                            //
+                            //if (laserItemDectionDelaySec > 0)
+                            //{
 
+                            //    //remove laser and object if item's is explod true!!
+
+                            //  //  GO_Items.RemoveAt(i);
+
+                            //    PlaySoundtrackById(Utils.rnd.Next(4, 6));
+
+                            //    laserItemDectionDelaySec = 0;
+                            //    isLaserHitHappend = false;
+                            //}
                         }
                     }
                     else
@@ -469,7 +482,20 @@ namespace WPF_LostInSpace.GameLogic
             */
         }
 
-        const int HEALTH = 5;
+        public void RemoveExplodedItem()
+        {
+            for (int i = 0; i < GO_Items.Count; i++)
+            {
+                if (GO_Items[i].IsExplode)
+                {
+                    GO_Items.RemoveAt(i);
+
+                    PlaySoundtrackById(Utils.rnd.Next(4, 6));
+                }
+            }
+        }
+
+        const int HEALTH_FOR_PLAYER = 5;
 
         public void CheckPlayerItemDetection()
         {
@@ -498,16 +524,16 @@ namespace WPF_LostInSpace.GameLogic
                                     GO_Player.Money = 0;
                                 }
                                 ReduceHealth((GO_Items[i] as GO_Item_Asteroid).ItemSize.Width);
-
+                                GO_Items.RemoveAt(i);
                                 break;
                             case GO_Item_Health:
 
                                 if (GO_Player.Health < GO_Player.HealthConstant)
                                 {
-
-                                    if (GO_Player.Health + HEALTH < GO_Player.HealthConstant)
+                                    GO_Items.RemoveAt(i);
+                                    if (GO_Player.Health + HEALTH_FOR_PLAYER < GO_Player.HealthConstant)
                                     {
-                                        GO_Player.Health += HEALTH;
+                                        GO_Player.Health += HEALTH_FOR_PLAYER;
                                     }
                                     else
                                     {
@@ -527,16 +553,18 @@ namespace WPF_LostInSpace.GameLogic
                                     GO_Player.Money = 0;
                                 }
                                 ReduceHealth((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 19);
-
+                                GO_Items.RemoveAt(i);
                                 break;
                             case GO_Item_Crystal:
                                 GO_Player.Money += (GO_Items[i] as GO_Item_Crystal).Value;
+                                PlaySoundtrackById(15);
+                                GO_Items.RemoveAt(i);
                                 break;
                             default:
                                 break;
                         }
                         isHitHappend = false;
-                        GO_Items.RemoveAt(i);
+                        
                         playerItemDecetionDelaySec = 0;
 
                     }
@@ -561,14 +589,6 @@ namespace WPF_LostInSpace.GameLogic
             if (isHitHappend)
             {
                 playerItemDecetionDelaySec++;
-            }
-        }
-
-        public void LaserItemDetectionDelay()
-        {
-            if (isLaserHitHappend)
-            {
-                laserItemDectionDelaySec++;
             }
         }
 
@@ -674,7 +694,7 @@ namespace WPF_LostInSpace.GameLogic
             CurrentUser.BestDistance = Math.Round(CurrentUser.BestDistance, 3);
             //if current ditance better than bestdistance, override bestdistance with distance,
             //on the contrary override it with the same bestdistance cause it hasn't been changed
-        
+
             //Player
             SetUpPlayer();
             GO_Player.Distance = 0;
