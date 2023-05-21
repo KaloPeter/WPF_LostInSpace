@@ -29,7 +29,7 @@ namespace WPF_LostInSpace.Renderer
             {
                 drawingContext.DrawRectangle(
                     logic.GO_Backgrounds[i].BackgroundBrush,
-                    new Pen(Brushes.Red, 2),
+                    null,//new Pen(Brushes.Red, 2),
                     new Rect(logic.GO_Backgrounds[i].BackgroundPoint.X, logic.GO_Backgrounds[i].BackgroundPoint.Y,
                     logic.GO_Backgrounds[i].BackgroundSize.Width, logic.GO_Backgrounds[i].BackgroundSize.Height)
                     );
@@ -39,7 +39,7 @@ namespace WPF_LostInSpace.Renderer
             //Player
             drawingContext.DrawRectangle(
                 logic.GO_Player.PlayerBrush,
-                new Pen(Brushes.Red, 2),
+                null,// new Pen(Brushes.Red, 2),
                 new Rect(logic.GO_Player.PlayerPoint.X, logic.GO_Player.PlayerPoint.Y, logic.GO_Player.PlayerSize.Width, logic.GO_Player.PlayerSize.Height)
                 );
 
@@ -49,7 +49,7 @@ namespace WPF_LostInSpace.Renderer
             {
                 drawingContext.DrawRectangle(
                 logic.GO_Items[i].ItemBrush,
-                new Pen(Brushes.Red, 2),
+                 null,//new Pen(Brushes.Red, 2),
                 new Rect(logic.GO_Items[i].ItemPoint.X, logic.GO_Items[i].ItemPoint.Y,
                 logic.GO_Items[i].ItemSize.Width, logic.GO_Items[i].ItemSize.Height)
                 );
@@ -60,7 +60,7 @@ namespace WPF_LostInSpace.Renderer
             {
                 drawingContext.DrawRectangle(
                     logic.GO_Lasers[i].LaserBrush,
-                    new Pen(Brushes.Yellow, 2),
+                     null,//new Pen(Brushes.Yellow, 2),
                     new Rect(logic.GO_Lasers[i].LaserPoint.X, logic.GO_Lasers[i].LaserPoint.Y,
                     logic.GO_Lasers[i].LaserSize.Width, logic.GO_Lasers[i].LaserSize.Height)
                     );
@@ -72,7 +72,7 @@ namespace WPF_LostInSpace.Renderer
             {
                 drawingContext.DrawRectangle(
                     logic.GO_ControlPanels[i].ControlPanelBrush,
-                    new Pen(Brushes.Red, 2),
+                    null,// new Pen(Brushes.Red, 2),
                     new Rect(logic.GO_ControlPanels[i].ControlPanelPoint.X, logic.GO_ControlPanels[i].ControlPanelPoint.Y,
                     logic.GO_ControlPanels[i].ControlPanelSize.Width, logic.GO_ControlPanels[i].ControlPanelSize.Height)
                     );
@@ -119,7 +119,7 @@ namespace WPF_LostInSpace.Renderer
                 FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
                 FontWeights.Normal, FontStretches.Normal
                 ), 25, Brushes.White, 10);
-            drawingContext.DrawText(ft_name, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 25));
+            drawingContext.DrawText(ft_name, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 50));
 
 
 
@@ -129,7 +129,7 @@ namespace WPF_LostInSpace.Renderer
                 FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
                 FontWeights.Normal, FontStretches.Normal
                 ), 25, Brushes.LightGreen, 10);
-            drawingContext.DrawText(ft_money, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 75));
+            drawingContext.DrawText(ft_money, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 100));
 
 
 
@@ -138,7 +138,7 @@ namespace WPF_LostInSpace.Renderer
              FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
              FontWeights.Normal, FontStretches.Normal
              ),15, Brushes.White, 10);
-            drawingContext.DrawText(ft_bestDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 125));
+            drawingContext.DrawText(ft_bestDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 150));
 
 
             //Total distance
@@ -146,17 +146,7 @@ namespace WPF_LostInSpace.Renderer
              FlowDirection.LeftToRight, new Typeface(new FontFamily("Arial"), FontStyles.Normal,
              FontWeights.Normal, FontStretches.Normal
              ), 15, Brushes.White, 10);
-            drawingContext.DrawText(ft_totalDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 175));
-
-
-            //drawingContext.DrawRectangle(
-            //    Brushes.Red,
-            //    new Pen(Brushes.Yellow, 2),
-            //    new Rect(logic.GO_ControlPanels[0].ControlPanelPoint.X, logic.GO_ControlPanels[0].ControlPanelPoint.Y,
-            //    50,50)
-            //    );
-
-
+            drawingContext.DrawText(ft_totalDistance, new Point(logic.GO_ControlPanels[3].ControlPanelPoint.X + 20, logic.GO_ControlPanels[3].ControlPanelPoint.Y + 200));
         }
     }
 }
