@@ -125,7 +125,7 @@
                 </ListBox>
             </StackPanel>
 
-            <Button x:Name="btPurchChoose" Content="Purchase" Grid.Row="1" Width="200" Height="50" FontSize="25" Click="Button_Click">
+            <Button x:Name="btPurchChoose" Content="Purchase" Grid.Row="1" Width="200" Height="50" FontSize="25" Click="bt_Purchase_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="FontSize" Value="24"/>
