@@ -14,6 +14,7 @@ namespace WPF_LostInSpace.GameObjects
     {
         public Size ItemSize { get; set; }
         public Point ItemPoint { get; set; }
+        public bool IsExplode { get; set; }
 
         private static Brush explosionBrush = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Items", "explosion.png"), UriKind.RelativeOrAbsolute)));
 
