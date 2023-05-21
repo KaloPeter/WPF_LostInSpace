@@ -63,11 +63,11 @@ namespace WPF_LostInSpace
                     4000,//5 timer_generateHealth
                     10,//6 timer_playerMovement
                     0,//7 timer_moveLaser
-                    10,//8 timer_laserItemDetection
+                    1,//8 timer_laserItemDetection
                     10,//9 timer_playerItemDetection
                     200,//10 timer_playerItemDetectionDelay
                     250,//11 timer_cooldownReduce
-                    1,//12 timer_LaserItemDetectionDelay
+                    100,//13 timer_removeExplodedItems               
                 };
 
             //We will have 3 buttons: play, instructions,exit
@@ -120,7 +120,7 @@ namespace WPF_LostInSpace
             dispatcherTimers[9].Tick += (sender, args) => { logic.CheckPlayerItemDetection(); };
             dispatcherTimers[10].Tick += (sender, args) => { logic.PlayerItemDetectionDelay(); };
             dispatcherTimers[11].Tick += (sender, args) => { logic.ReduceLaserCooldown(); };
-            dispatcherTimers[12].Tick += (sender, args) => { logic.LaserItemDetectionDelay(); };
+            dispatcherTimers[12].Tick += (sender, args) => { logic.RemoveExplodedItem(); };
 
 
             //*******
@@ -185,7 +185,7 @@ namespace WPF_LostInSpace
             };
 
             //******
-         //    timer_LOGGER.Start();
+            //    timer_LOGGER.Start();
             //******
 
             //UserManagementWindow userManagementWindow = new UserManagementWindow();
