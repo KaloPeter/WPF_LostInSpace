@@ -118,7 +118,7 @@ namespace WPF_LostInSpace
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void bt_Purchase_Click(object sender, RoutedEventArgs e)
         {
             if (selectedSuit != null)
             {
@@ -135,14 +135,7 @@ namespace WPF_LostInSpace
                         logic.CurrentUser.LastSuitID = selectedSuit.ID;//we first set lastUitId->here user alredy confirmed it
                         logic.SetUpPlayer();//we call setup player in logic which usese current user, and current user's object's lastsuitid prop
 
-                        //above 2 replaces below 6 rows 
-
-                        //logic.GO_Player.Health = selectedSuit.Health;
-                        //logic.GO_Player.Speed = selectedSuit.Speed;
-                        //logic.GO_Player.PlayerBrushLeft = selectedSuit.SpaceSuitBrush_L;
-                        //logic.GO_Player.PlayerBrushRight = selectedSuit.SpaceSuitBrush_R;
-                        //logic.GO_Player.PlayerBrush = selectedSuit.SpaceSuitBrush_R;
-                        //logic.CurrentUser.LastSuitID = selectedSuit.ID;
+                        logic.PlayPickUpSuit();
 
                         logic.SaveUsersToJson();
                     }
@@ -157,6 +150,9 @@ namespace WPF_LostInSpace
                         //GO_PLayer__Current user money
                         if (logic.GO_Player.Money >= selectedSuit.Price)
                         {
+
+                            logic.PlayPurchaseSound();
+
                             //User can buy space suits, not GO_Player, that is why we do modifications User's data, then we modify GO_Player data by the User's data(Sync)
                             logic.CurrentUser.Money -= selectedSuit.Price;
                             logic.CurrentUser.PurchasedSpaceSuitIDX.Add(selectedSuit.ID);
@@ -172,6 +168,8 @@ namespace WPF_LostInSpace
                             SetSelectedSuitImage();
 
                             logic.SetUpPlayer();
+
+                            logic.PlayPickUpSuit();
 
                             lbPurchaseableItems.Items.Refresh();
 
