@@ -29,16 +29,10 @@ namespace WPF_LostInSpace
         private List<DispatcherTimer> dispatcherTimers;
 
         private bool firstTimeStart = false;
-
         private bool isPaused = false;
 
-        private Button[] bs_MainMenu;//Actual buttons
-        private string[] bs_MainMenuText;//text of buttons
-
-        //**************
-
-        private DispatcherTimer timer_LOGGER;
-        //**************
+        private List<Button> bs_MainMenu;//Actual buttons
+        private List<string> bs_MainMenuText;//text of buttons
 
         public MainWindow()
         {
@@ -70,11 +64,13 @@ namespace WPF_LostInSpace
                     100,//13 timer_removeExplodedItems               
                 };
 
-            //We will have 3 buttons: play, instructions,exit
-            const int NUMBER_OF_BUTTONS = 6;
-            bs_MainMenu = new Button[NUMBER_OF_BUTTONS] { new Button(), new Button(), new Button(), new Button(), new Button(), new Button() };
-            bs_MainMenuText = new string[NUMBER_OF_BUTTONS] { "Start", "Instructions", "Settings", "Store", "Users", "Exit" };
-
+            bs_MainMenu = new List<Button>();
+            bs_MainMenuText = new List<string>() { "Start", "Instructions", "Settings", "Store", "Users", "Exit" };
+            for (int i = 0; i < 6; i++)
+            {
+                bs_MainMenu.Add(new Button());
+                bs_MainMenu[i].Content = bs_MainMenuText[i];
+            }
 
             for (int i = 0; i < timerMilliseconds.Length; i++)
             {
@@ -105,9 +101,6 @@ namespace WPF_LostInSpace
 
             };
 
-
-
-
             dispatcherTimers[0].Tick += (sender, args) => { logic.BackgroundMove(); };
             dispatcherTimers[1].Tick += (sender, args) => { logic.ItemMove(); };
             dispatcherTimers[2].Tick += (sender, args) => { logic.GenerateAsteroid(); };
@@ -122,12 +115,6 @@ namespace WPF_LostInSpace
             dispatcherTimers[11].Tick += (sender, args) => { logic.ReduceLaserCooldown(); };
             dispatcherTimers[12].Tick += (sender, args) => { logic.RemoveExplodedItem(); };
 
-
-            //*******
-            timer_LOGGER = new DispatcherTimer();
-            timer_LOGGER.Interval = TimeSpan.FromMilliseconds(0);
-            timer_LOGGER.Tick += (sender, args) => { logic.LOG_OBJ_PROP_VALS(); };
-            //*******
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -202,7 +189,7 @@ namespace WPF_LostInSpace
 
         public void EnableDisableMainMenuButtons(bool isEnable)//true:enable___false:disable
         {
-            for (int i = 0; i < bs_MainMenu.Length; i++)
+            for (int i = 0; i < bs_MainMenu.Count; i++)
             {
                 if (isEnable)
                 {
@@ -325,7 +312,7 @@ namespace WPF_LostInSpace
 
         private void GenerateButtonsOnGrid()
         {
-            for (int i = 0; i < bs_MainMenu.Length; i++)
+            for (int i = 0; i < bs_MainMenu.Count; i++)
             {
                 bs_MainMenu[i].Content = bs_MainMenuText[i];
                 bs_MainMenu[i].Width = 150;
