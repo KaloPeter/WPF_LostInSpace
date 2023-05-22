@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPF_LostInSpace.GameLogic;
-using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.Userdata;
 
 namespace WPF_LostInSpace
 {
-    /// <summary>
-    /// Interaction logic for UserManagementWindow.xaml
-    /// </summary>
     public partial class UserManagementWindow : Window
     {
         private static ImageBrush background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));

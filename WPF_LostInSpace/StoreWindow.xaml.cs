@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -13,28 +11,18 @@ using WPF_LostInSpace.Store;
 
 namespace WPF_LostInSpace
 {
-    /// <summary>
-    /// Interaction logic for StoreWindow.xaml
-    /// </summary>
     public partial class StoreWindow : Window
     {
         private Logic logic;
         private MainWindow mw;
         private static ImageBrush storeBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "store_BG.jpg"), UriKind.RelativeOrAbsolute)));
-        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
+        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
 
         public StoreWindow(Logic logic, MainWindow mw)
         {
             this.logic = logic;
             this.mw = mw;
             Icon = icon;
-            //List<SpaceSuit> SpaceSuits = new List<SpaceSuit>();
-            //SpaceSuits.Add(new SpaceSuit(1, 2, 100, "astronaut_1", 0));
-            //SpaceSuits.Add(new SpaceSuit(2, 3, 150, "astronaut_2", 50000));
-            //SpaceSuits.Add(new SpaceSuit(3, 3, 500, "astronaut_3", 100000));
-            //SpaceSuits.Add(new SpaceSuit(4, 5, 170, "astronaut_4", 300000));
-            //File.WriteAllText(new Uri(Path.Combine("Store", "SpaceSuits.json"), UriKind.RelativeOrAbsolute).ToString(), JsonConvert.SerializeObject(SpaceSuits, Formatting.Indented));
-            //SpaceSuits = JsonConvert.DeserializeObject<List<SpaceSuit>>(File.ReadAllText(new Uri(Path.Combine("Store", "SpaceSuits.json"), UriKind.RelativeOrAbsolute).ToString()));
 
             InitializeComponent();
 
@@ -179,7 +167,7 @@ namespace WPF_LostInSpace
                         }
                         else
                         {
-                            WarningWindow ww = new WarningWindow("Not enough money!", "Money problem");
+                            WarningWindow ww = new WarningWindow("You don't have enough money to purchase this suit!", "Not enough money!");
                             ww.Show();
                         }
                     }

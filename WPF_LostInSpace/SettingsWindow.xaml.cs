@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_LostInSpace.GameLogic;
 
 namespace WPF_LostInSpace
 {
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
     public partial class SettingsWindow : Window
     {
         private MainWindow mw = null;
@@ -27,7 +16,7 @@ namespace WPF_LostInSpace
 
         private static ImageBrush settingsBackground = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "settings_BG.jpg"), UriKind.RelativeOrAbsolute)));
 
-        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
+        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
 
         public SettingsWindow(MainWindow mw, Logic logic)
         {
