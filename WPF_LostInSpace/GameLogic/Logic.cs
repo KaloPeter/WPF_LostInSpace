@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
 using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.HelperClasses;
 using WPF_LostInSpace.Interfaces;
@@ -21,49 +16,33 @@ namespace WPF_LostInSpace.GameLogic
     public class Logic : IGameLogic, IGameController
     {
 
-        private Size playArea;
-
-        public event EventHandler EventUpdateRender;
-
-        public event EventHandler EventStopApplication;
-
+        //GameLogic Interface
         public List<GO_Background> GO_Backgrounds { get; set; }
         public List<GO_ControlPanel> GO_ControlPanels { get; set; }
+        public event EventHandler EventUpdateRender;
         public List<GO_Item> GO_Items { get; set; }
-
         public List<GO_Laser> GO_Lasers { get; set; }
-
         public GO_Player GO_Player { get; set; }
-
-        private List<GO_Item_Crystal> GO_Item_Crystals;
-
-
-        private int playerItemDecetionDelaySec = 0;
-
-        private bool isHitHappend = false;
-
-        private List<byte[]> colors;
-
         public List<byte[]> Cooldown_RGB { get; set; }
+        //GameLogic Interface
 
-        private bool isCooldown = false;
-
-        //*********************************************
-        //*********************************************
+        //Collections
+        private List<byte[]> colors;
+        private List<GO_Item_Crystal> GO_Item_Crystals;
         public List<User> Users;
-        public User CurrentUser { get; set; }
-
         public List<SpaceSuit> SpaceSuitsSource { get; set; }
         public List<SpaceSuit> SpaceSuits { get; set; }
-
-        //***********************************************************************************
-        //***********************************************************************************
-
         private List<MediaPlayer> effect_soundtracks = null;
-        private MediaPlayer music_soundtrack = null;
+        //Collections
 
-        //***********************************************************************************
-        //***********************************************************************************
+
+        private bool isHitHappend = false;
+        private bool isCooldown = false;
+        private Size playArea;
+        private int playerItemDecetionDelaySec = 0;
+        public event EventHandler EventStopApplication;
+        public User CurrentUser { get; set; }
+        private MediaPlayer music_soundtrack = null;
 
         public Logic()
         {
@@ -120,7 +99,7 @@ namespace WPF_LostInSpace.GameLogic
 
             music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
 
-            music_soundtrack.Play();
+
 
 
             SetUpColorsForLaser();
@@ -138,8 +117,11 @@ namespace WPF_LostInSpace.GameLogic
 
             music_soundtrack.MediaEnded += (sender, eventArgs) => { music_soundtrack.Position = TimeSpan.Zero; music_soundtrack.Play(); };
             //When backgroundmenu ended, this evet called which sets the duration of music zero, and starts play it again.
+
+            music_soundtrack.Play();
         }
 
+        ///********************************************************************Soundtracks methods
         public void SetEffectVolume()
         {
             effect_soundtracks.ForEach(s => s.Volume = CurrentUser.EffectVolume);
@@ -149,7 +131,23 @@ namespace WPF_LostInSpace.GameLogic
         {
             music_soundtrack.Volume = CurrentUser.MusicVolume;
         }
+        public void PlayPurchaseSound()
+        {
+            PlaySoundtrackById(13);
+        }
 
+        private void PlaySoundtrackById(int id)
+        {
+            effect_soundtracks[id].Play();
+            effect_soundtracks[id].Position = TimeSpan.Zero;
+        }
+        public void PlayPickUpSuit()
+        {
+            PlaySoundtrackById(14);
+        }
+        ///********************************************************************Soundtracks methods
+
+        ///********************************************************************Current User related methods
         public void SpaceSuitsByUserInventory()
         {
             SpaceSuits.Clear();
@@ -169,28 +167,13 @@ namespace WPF_LostInSpace.GameLogic
 
         }
 
-        public void PlayPurchaseSound()
-        {
-            PlaySoundtrackById(13);
-        }
-
-        public void PlayPickUpSuit()
-        {
-            PlaySoundtrackById(14);
-        }
-
-
         public void SelectLastLoggedUser()
         {
-
-            // CurrentUser = Users.OrderByDescending(u => u.LastLogin).First();
             CurrentUser = Users.OrderByDescending(u => u.LastLogin).First();//theres always be at least one user in json
-
-
         }
+        ///********************************************************************Current User related methods
 
-        ///////////////////////////setUp methods
-
+        ///********************************************************************SetUpMethods
         public void SetUpPlayArea(Size playArea)
         {
             this.playArea = playArea;
@@ -285,10 +268,33 @@ namespace WPF_LostInSpace.GameLogic
 
         }
 
-        ///////////////////////////setUp methods
+        ///********************************************************************SetUpMethods
 
 
-        ///////////////////////////GENERATE GO_Items
+        ///********************************************************************Generate/Move GameObject Items, Move background
+
+        public void BackgroundMove()
+        {
+
+            for (int i = 0; i < GO_Backgrounds.Count; i++)
+            {
+                bool isBackgroundIn = GO_Backgrounds[i].Move(playArea);
+
+                if (!isBackgroundIn)
+                {
+                    GO_Backgrounds.RemoveAt(i);
+                    GO_Backgrounds.Add(new GO_Background());
+
+                    GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
+                    GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height - 1);
+                }
+            }
+            //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
+
+            GO_Player.Distance += 0.001;
+            GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
+            EventUpdateRender?.Invoke(this, null);
+        }
 
         public void GenerateAsteroid()
         {
@@ -345,12 +351,9 @@ namespace WPF_LostInSpace.GameLogic
 
             EventUpdateRender?.Invoke(this, null);
         }
+        ///********************************************************************Generate/Move GameObject Items, Move background
 
-
-        ///////////////////////////GENERATE GO_Items
-
-
-        ///////////////////////////Methods for Player/Laser
+        ///********************************************************************Methods for Player
         public void MovePlayer(PlayerController pc)
         {
             ////Player cant leave background
@@ -395,12 +398,6 @@ namespace WPF_LostInSpace.GameLogic
             {
                 PlaySoundtrackById(0);
             }
-        }
-
-        private void PlaySoundtrackById(int id)
-        {
-            effect_soundtracks[id].Play();
-            effect_soundtracks[id].Position = TimeSpan.Zero;
         }
 
         public void MoveLaser()
@@ -564,19 +561,10 @@ namespace WPF_LostInSpace.GameLogic
                                 break;
                         }
                         isHitHappend = false;
-                        
+
                         playerItemDecetionDelaySec = 0;
 
                     }
-
-
-
-                    //if (GO_Player.Health <= 0)
-                    //{
-                    //    stopDisp?.Invoke(null, null);
-                    //}
-
-
                 }
             }
 
@@ -592,7 +580,7 @@ namespace WPF_LostInSpace.GameLogic
             }
         }
 
-        private void ReduceHealth(double value)//goi=game object item
+        private void ReduceHealth(double value)
         {
             int amount = (int)value;
 
@@ -616,11 +604,11 @@ namespace WPF_LostInSpace.GameLogic
                 }
             }
         }
-        ///////////////////////////Methods for Player
+        ///********************************************************************Methods for Player
 
 
-        ///////////////////////////Methods for Cooldown
-        public void ReduceLaserCooldown()//public, because Dispatcher will call this.
+        ///********************************************************************Methods for Cooldown
+        public void ReduceLaserCooldown()
         {
             if (Cooldown_RGB.Count > 1)
             {
@@ -649,8 +637,7 @@ namespace WPF_LostInSpace.GameLogic
 
 
         }
-
-        private void EnlargeLaserCooldown()//private, because in logic every time we shoot, according to current alg. 3 squares being added to crgbs list.
+        private void EnlargeLaserCooldown()//every time we shoot, 3 squares added to crgbs list.
         {
             for (int i = 1; i <= 3; i++)
             {
@@ -662,18 +649,17 @@ namespace WPF_LostInSpace.GameLogic
 
             if (Cooldown_RGB.Count >= 18)
             {
-                //media_cooldown[1].IsMuted = false;
-                //media_cooldown[1].Stop();
-                //media_cooldown[1].Play();
                 isCooldown = true;
                 PlaySoundtrackById(2);
             }
 
 
         }
-        ///////////////////////////Methods for Cooldown
+        ///********************************************************************Methods for Cooldown
 
-        public void ResetGame()//GoingBack Main menu___Player dies
+
+        ///********************************************************************Reset game
+        public void ResetGame()//GoingBack Main menu when Player dies/ Main Menu button pressed
         {
             //Lasers/Items
             GO_Lasers.Clear();
@@ -686,7 +672,7 @@ namespace WPF_LostInSpace.GameLogic
             Cooldown_RGB.Add(colors[0]);
             //Cooldown
 
-            //Sace distance/Money
+            //Sace distance/Player Money
             CurrentUser.Money = GO_Player.Money;
             CurrentUser.TotalDistance += GO_Player.Distance;
             CurrentUser.TotalDistance = Math.Round(CurrentUser.TotalDistance, 3);
@@ -713,36 +699,13 @@ namespace WPF_LostInSpace.GameLogic
             SaveUsersToJson();
 
         }
+        ///********************************************************************Reset game
 
-        public void BackgroundMove()
-        {
-
-            for (int i = 0; i < GO_Backgrounds.Count; i++)
-            {
-                bool isBackgroundIn = GO_Backgrounds[i].Move(playArea);
-
-                if (!isBackgroundIn)
-                {
-                    GO_Backgrounds.RemoveAt(i);
-                    GO_Backgrounds.Add(new GO_Background());
-
-                    GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
-                    GO_Backgrounds[1].BackgroundPoint = new Point((int)(playArea.Width / 2) - (int)(GO_Backgrounds[0].BackgroundSize.Width / 2), GO_Backgrounds[0].BackgroundSize.Height - 1);
-                }
-            }
-            //    Trace.WriteLine(GO_Backgrounds[1]  != null? GO_Backgrounds[1].BackgroundPoint:"GONE");
-
-            GO_Player.Distance += 0.001;
-            GO_Player.Distance = Math.Round(GO_Player.Distance, 3);
-            EventUpdateRender?.Invoke(this, null);
-        }
-
-        //UserManagement
+        ///********************************************************************Load from/Saveto Json 
         public void SaveUsersToJson()
         {
             File.WriteAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString(), JsonConvert.SerializeObject(Users, Formatting.Indented));
         }
-
         public void LoadUsersFromJson()
         {
 
@@ -750,72 +713,30 @@ namespace WPF_LostInSpace.GameLogic
 
 
         }
-
-        public void SetUpPlayerFromJson()
-        {
-            //GO_Player = new GO_Player();
-            //User user = Users.FirstOrDefault();
-            //go_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));
-            //go_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
-            //go_Player.Name = user.Username;
-            //go_Player.Money = user.Money;
-            //return go_Player;
-        }
-
-        public void OpenUsers(MainWindow mainWindow)
-        {
-            UserManagementWindow umw = new UserManagementWindow(mainWindow, this);
-            umw.Show();
-        }
-
-        //UserManagement
-
-        //Store
-
         public void LoadSpaceSuitsFromJson()
         {
             SpaceSuitsSource = JsonConvert.DeserializeObject<List<SpaceSuit>>(File.ReadAllText(new Uri(Path.Combine("Store", "SpaceSuits.json"), UriKind.RelativeOrAbsolute).ToString()));
         }
+        ///********************************************************************Load from/Saveto Json 
 
-        public void OpenStore(MainWindow mw)
-        {
-            StoreWindow sw = new StoreWindow(this, mw);
-            sw.Show();
-        }
 
-        //Store
-
+        ///********************************************************************Open Settings/UserManagement/Store
         public void OpenSettings(MainWindow mainWindow)
         {
             SettingsWindow sw = new SettingsWindow(mainWindow, this);
             sw.Show();
 
         }
-        //********************************************************
-        //********************************************************
-
-
-        public void LOG_OBJ_PROP_VALS()
+        public void OpenStore(MainWindow mw)
         {
-            //Trace.WriteLine("GO_Backgrounds: " + GO_Backgrounds.Count());
-            //Trace.WriteLine("GO_Items: " + GO_Items.Count());
-            //Trace.WriteLine("GO_Lasers: " + GO_Lasers.Count());
-            //Trace.WriteLine("GO_Cooldown: " + Cooldown_RGB.Count());
-
-
-            // Trace.WriteLine(music_soundtrack.Position.TotalMilliseconds);
-
-            //  var current = music_soundtrack.Position.Duration().TotalMilliseconds;
-            //  var full = music_soundtrack.NaturalDuration.TimeSpan.TotalMilliseconds;
-
-            //  Trace.WriteLine(current);
-            // Trace.WriteLine(full);
-            //  Trace.WriteLine(full - current);
-
-            //            var calc = TEST_MEDIA.NaturalDuration.TimeSpan.TotalMilliseconds - TEST_MEDIA.Position.TotalMilliseconds;
-
-            //          Trace.WriteLine(calc);
-
+            StoreWindow sw = new StoreWindow(this, mw);
+            sw.Show();
         }
+        public void OpenUsers(MainWindow mainWindow)
+        {
+            UserManagementWindow umw = new UserManagementWindow(mainWindow, this);
+            umw.Show();
+        }
+        ///********************************************************************Open Settings/UserManagement/Store
     }
 }
