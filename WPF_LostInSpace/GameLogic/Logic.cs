@@ -709,9 +709,25 @@ namespace WPF_LostInSpace.GameLogic
         public void LoadUsersFromJson()
         {
 
-            Users = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString()));
-
-
+            if (!File.Exists(Path.Combine("Userdata", "Userdata.json")))
+            {
+                User u = new User();
+                u.Username = "FirstUser";
+                u.Money = 5000000;
+                u.BestDistance = 0;
+                u.TotalDistance = 0;
+                u.LastLogin = DateTime.Now;
+                u.LastSuitID = 1;
+                u.PurchasedSpaceSuitIDX = new List<int> { 1 };
+                u.MusicVolume = 0.2;
+                u.EffectVolume = 0.2;
+                Users.Add(u);
+                SaveUsersToJson();
+            }
+            else
+            {
+                Users = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(new Uri(Path.Combine("Userdata", "Userdata.json"), UriKind.RelativeOrAbsolute).ToString()));
+            }
         }
         public void LoadSpaceSuitsFromJson()
         {
