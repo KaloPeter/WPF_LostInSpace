@@ -18,7 +18,12 @@
             <ColumnDefinition Width="3*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label x:Name="lb_instructionsText" Grid.Row="0" Grid.Column="0" Content="" FontSize="24" Foreground="White" Margin="50"></Label>
+        <TextBox x:Name="tx_instructionsText" Grid.Row="0" Grid.Column="0"  
+                     FontSize="24" Foreground="White"                  
+                     Background="Transparent"
+                 Margin="10"
+                   IsEnabled="False"
+                     TextWrapping="Wrap"/>
 
         <Grid Grid.Row="0" Grid.Column="1" x:Name="ButtonsGrid">
             <Grid.RowDefinitions>
