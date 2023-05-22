@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WPF_LostInSpace
 {
@@ -22,18 +11,19 @@ namespace WPF_LostInSpace
     /// </summary>
     public partial class InstructionWindow : Window
     {
-        private static ImageBrush instruction_background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
-        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
-        private static string instructions = "Player movement:left and right arrow keys.\r\nAvoid asteroids and satellites.\r\nOxigen gives you health.\r\nTraver as far as you can.\r\nHave fun.";
+        private static ImageBrush instruction_background = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
+        private static BitmapFrame icon = BitmapFrame.Create(new BitmapImage(new Uri(Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
+        private static string instructions = File.ReadAllText(Path.Combine("Instruction", "Instruction.txt"));
+
         private MainWindow mainWindow;
 
         public InstructionWindow(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
+
             InitializeComponent();
 
             Icon = icon;
-            //Icon = BitmapFrame.Create(new BitmapImage(new Uri(System.IO.Path.Combine("Images", "Icons", "MainWindowIcon.ico"), UriKind.RelativeOrAbsolute)));
         }
         private void bt_Close_Click(object sender, RoutedEventArgs e)
         {
@@ -43,10 +33,7 @@ namespace WPF_LostInSpace
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //lb_instructionsText.Content = File.ReadAllText(System.IO.Path.Combine("Others", "Instruction.txt"));//If we read from file, static variable to read from it only once
-
-
-            lb_instructionsText.Content = instructions;
+            tx_instructionsText.Text = instructions;
             GameInstructionsGrid.Background = instruction_background;
         }
 
