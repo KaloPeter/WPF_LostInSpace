@@ -11,7 +11,6 @@
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" 
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
-        Closing="Window_Closing"
         > 
     <Grid x:Name="grid">
         <renderer:Display x:Name="display"/>
