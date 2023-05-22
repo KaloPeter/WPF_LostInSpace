@@ -1,14 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace WPF_LostInSpace
 {
-    /// <summary>
-    /// Interaction logic for InstructionWindow.xaml
-    /// </summary>
     public partial class InstructionWindow : Window
     {
         private static ImageBrush instruction_background = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Backgrounds", "InstructionsWindowBackground.jpg"), UriKind.RelativeOrAbsolute)));
@@ -41,5 +39,20 @@ namespace WPF_LostInSpace
         {
             mainWindow.EnableDisableMainMenuButtons(true);
         }
+
+
+        //We handle the right Mouse button, so user cant use it on the window
+        protected override void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseRightButtonDown(e);
+            e.Handled = true;
+        }
+
+        protected override void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseRightButtonUp(e);
+            e.Handled = true;
+        }
+
     }
 }
