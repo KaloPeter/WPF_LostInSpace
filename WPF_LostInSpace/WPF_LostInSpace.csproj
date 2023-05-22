@@ -53,6 +53,7 @@
     <None Remove="Images\Panels\controlPanel_Empty_L.png" />
     <None Remove="Images\Panels\controlPanel_Empty_R.png" />
     <None Remove="Images\Panels\controlPanel_Health.png" />
+    <None Remove="Instruction\Instruction.txt" />
     <None Remove="Soundtracks\00_cooldown_cantshoot.mp3" />
     <None Remove="Soundtracks\01_cooldown_startshoot.mp3" />
     <None Remove="Soundtracks\02_cooldown_stopshoot.mp3" />
@@ -207,6 +208,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Panels\controlPanel_Health.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Instruction\Instruction.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Soundtracks\00_cooldown_cantshoot.mp3">
