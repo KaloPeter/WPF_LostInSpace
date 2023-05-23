@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WPF_LostInSpace.GameObjects;
 using WPF_LostInSpace.HelperClasses;
 using WPF_LostInSpace.Interfaces;
@@ -41,8 +42,11 @@ namespace WPF_LostInSpace.GameLogic
         private Size playArea;
         private int playerItemDecetionDelaySec = 0;
         public event EventHandler EventStopApplication;
+
         public User CurrentUser { get; set; }
         private MediaPlayer music_soundtrack = null;
+
+        public ImageBrush LaserPistol { get; set; }
 
         public Logic()
         {
@@ -85,6 +89,9 @@ namespace WPF_LostInSpace.GameLogic
             new GO_ControlPanel("controlPanel_Empty_R.png")
             };
 
+            LaserPistol = new ImageBrush(new BitmapImage(new Uri(Path.Combine("Images", "Astronaut", "laser_pistol.png"), UriKind.RelativeOrAbsolute)));
+
+
             effect_soundtracks = new List<MediaPlayer>();
             music_soundtrack = new MediaPlayer();
 
@@ -94,13 +101,10 @@ namespace WPF_LostInSpace.GameLogic
             for (int i = 0; i < soundtrackNames.Length; i++)
             {
                 effect_soundtracks.Add(new MediaPlayer());
-                effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));   //makes cracks sound when opens soundtracks ???         
+                effect_soundtracks[i].Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[i]), UriKind.RelativeOrAbsolute));//Cracks 
             }
 
             music_soundtrack.Open(new Uri(Path.Combine("Soundtracks", soundtrackNames[12]), UriKind.RelativeOrAbsolute));
-
-
-
 
             SetUpColorsForLaser();
             Cooldown_RGB.Add(colors[0]);
@@ -116,7 +120,7 @@ namespace WPF_LostInSpace.GameLogic
             SetMusicVolume();//Only when we have current user
 
             music_soundtrack.MediaEnded += (sender, eventArgs) => { music_soundtrack.Position = TimeSpan.Zero; music_soundtrack.Play(); };
-            //When backgroundmenu ended, this evet called which sets the duration of music zero, and starts play it again.
+            //When background music ended, this event called which sets the duration of music zero, and starts play it again.
 
             music_soundtrack.Play();
         }
@@ -186,7 +190,7 @@ namespace WPF_LostInSpace.GameLogic
 
             GO_Backgrounds[1].BackgroundSize = GO_Backgrounds[0].BackgroundSize;
             GO_Backgrounds[1].BackgroundPoint = new Point(GO_Backgrounds[0].BackgroundPoint.X, GO_Backgrounds[0].BackgroundSize.Height - 1);
-            //-1=> két background közöti fehér vonal
+            //-1=> white line between two backgrounds
 
             /*(int)((PlayArea.Width / 2) - (GO_Background.BackgroundSize.Width / 2)),/*(int)(playArea.Height / 2)*/
             EventUpdateRender?.Invoke(this, null);
@@ -223,7 +227,7 @@ namespace WPF_LostInSpace.GameLogic
             EventUpdateRender?.Invoke(this, null);
         }
 
-        public void SetUpPlayer()//!!!!!!!!!!!!!!!!!!!!!!!
+        public void SetUpPlayer()
         {
             GO_Player.PlayerBrush = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_R;
             GO_Player.PlayerBrushLeft = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().SpaceSuitBrush_L;
@@ -238,7 +242,7 @@ namespace WPF_LostInSpace.GameLogic
             GO_Player.Speed = SpaceSuits.Where(ss => ss.ID == CurrentUser.LastSuitID).First().Speed;
 
             GO_Player.Money = CurrentUser.Money;
-            //volume data!!!!!!!!!!!!!!!
+           
 
             GO_Player.PlayerSize = new Size((playArea.Width / 20), (playArea.Height / 8));//50-25 ___ 100-50__GO_Player.PlayerSize = new Size((PlayArea.Width / 8), (PlayArea.Height / 16));
             GO_Player.PlayerPoint = new Point((int)((playArea.Width / 2) - (GO_Player.PlayerSize.Width / 2)), 20);
@@ -385,7 +389,7 @@ namespace WPF_LostInSpace.GameLogic
             if (!isCooldown)
             {
                 GO_Laser gol = new GO_Laser();
-                gol.LaserPoint = new Point(GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width / 2, GO_Player.PlayerPoint.Y + 50);//CHANGE IT
+                gol.LaserPoint = new Point(GO_Player.PlayerPoint.X + GO_Player.PlayerSize.Width / 2, GO_Player.PlayerPoint.Y + 50);
                 gol.LaserSize = new Size(10, 50);
                 GO_Lasers.Add(gol);
 
@@ -440,43 +444,10 @@ namespace WPF_LostInSpace.GameLogic
                             GO_Lasers.RemoveAt(j);
                             GO_Items[i].SetExplosionBrush();
                             GO_Items[i].IsExplode = true;
-
-
-                            //isLaserHitHappend = true;
-                            //
-                            //if (laserItemDectionDelaySec > 0)
-                            //{
-
-                            //    //remove laser and object if item's is explod true!!
-
-                            //  //  GO_Items.RemoveAt(i);
-
-                            //    PlaySoundtrackById(Utils.rnd.Next(4, 6));
-
-                            //    laserItemDectionDelaySec = 0;
-                            //    isLaserHitHappend = false;
-                            //}
                         }
-                    }
-                    else
-                    {
-                        ;//for debugging
                     }
                 }
             }
-
-            /*
-            There is a bug which is now being avoided by using the: if(i < Items.Count){...}.
-            The bug/problem: When we shoot a laser, and a collision happens, we remove the laser and the item as well.
-            But when we remove an item in the deepest part of the loops, the outer loop(which iterates on items), is not updated, so
-            because of the  "Rect itemRect = new Rect(Items[i]...." gonna try to refer to
-            an item in the list, that does not exist. So the i can be equal to Items.Count, and if our collection's count is 10, it's gonna
-            try to refer to the Items[10], but that does not exist(we can index it only from 0 to 9)
-            There might be a connection, when an Item leaves the play area, and another one is destroyed by a laser.
-
-            It mighr depend on timing(faster asteroids, slower laser vice versa....)
-
-            */
         }
 
         public void RemoveExplodedItem()
@@ -543,7 +514,7 @@ namespace WPF_LostInSpace.GameLogic
 
                                 if (GO_Player.Money - (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30) > 0)
                                 {
-                                    GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30);//legjobb esetben:20, legrosszabb esetben 35-öt veszit
+                                    GO_Player.Money -= (int)((GO_Items[i] as GO_Item_Satellite).ItemSize.Width - 30);//in best case:20, in worst case 35
                                 }
                                 else
                                 {
@@ -625,9 +596,6 @@ namespace WPF_LostInSpace.GameLogic
             {
                 if (isCooldown == true)
                 {
-                    //media_cooldown[0].IsMuted = false;
-                    //media_cooldown[0].Stop();
-                    //media_cooldown[0].Play();
                     PlaySoundtrackById(1);
                 }
                 isCooldown = false;
