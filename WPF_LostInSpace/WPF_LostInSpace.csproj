@@ -18,6 +18,7 @@
     <None Remove="Images\Astronaut\astronaut_4_R.png" />
     <None Remove="Images\Astronaut\astronaut_L.png" />
     <None Remove="Images\Astronaut\astronaut_R.png" />
+    <None Remove="Images\Astronaut\laser_pistol.png" />
     <None Remove="Images\Astronaut\laser_Red.png" />
     <None Remove="Images\Astronaut_Res\astronaut_1_R.png" />
     <None Remove="Images\Astronaut_Res\astronaut_2_R.png" />
@@ -96,6 +97,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\Astronaut\laser_pistol.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Backgrounds\settings_BG.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
