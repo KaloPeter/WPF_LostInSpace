@@ -2,7 +2,7 @@ Movement: Left & Right arrow keys
 Shoot: space button
 About the game: 
 Traver as far as you can. Asteroids/Satellites make your travel more challenging.
-You can shoot them, but be aware, if you shoot too much lasers, your pistol need cooldown.
+You can shoot them, but be aware, if you shoot too much lasers, your pistol needs cooldown.
 You can get crystals, which later can be used to purchase new space suits
 which offers different benefits.
 You can registrate/modify/delete your user anytime.
