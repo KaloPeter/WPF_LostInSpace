@@ -114,8 +114,6 @@ namespace WPF_LostInSpace
 
         private void btFullScreenMode_Click(object sender, RoutedEventArgs e)
         {
-            //    mw.Width = 1500;
-            //    mw.Height = 800;
 
             isFullscreen = true;
 
