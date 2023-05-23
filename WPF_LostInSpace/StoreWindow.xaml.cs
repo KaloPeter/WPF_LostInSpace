@@ -46,18 +46,6 @@ namespace WPF_LostInSpace
             {
                 btPurchChoose.Content = "Purchase";
             }
-
-            //Image myImage = new Image();
-            //BitmapImage myImageSource = new BitmapImage();
-            //myImageSource.BeginInit();
-            //myImageSource.UriSource = new Uri(selectedSuit.SpaceSuitResPath, UriKind.RelativeOrAbsolute);
-            //myImageSource.EndInit();
-            //myImage.Source = myImageSource;
-            //lbActiveSpaceSuitImgRes.Content = myImage;
-
-
-            //lbActiveSpaceSuitHealth.Content = "Health: " + selectedSuit.Health;
-            //lbActiveSpaceSuitSpeed.Content = "Speed: " + selectedSuit.Speed;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -68,7 +56,7 @@ namespace WPF_LostInSpace
 
             lbActiveSpaceSuitTitle.Foreground = Brushes.White;
             lbActiveSpaceSuitHealth.Foreground = Brushes.Red;
-            lbActiveSpaceSuitSpeed.Foreground = Brushes.White;//Blue
+            lbActiveSpaceSuitSpeed.Foreground = Brushes.White;
 
             lbMoneyTitle.Foreground = Brushes.Green;
             lbMoney.Foreground = Brushes.Green;
@@ -76,7 +64,7 @@ namespace WPF_LostInSpace
 
             selectedSuit = logic.SpaceSuits.Where(ss => ss.ID == logic.CurrentUser.LastSuitID).First();
 
-            lbMoney.Content = logic.CurrentUser.Money + " Ł";//setting current player's money
+            lbMoney.Content = logic.CurrentUser.Money + " Ł";
 
             SetSelectedSuitImage();
         }
@@ -121,7 +109,7 @@ namespace WPF_LostInSpace
                         SetSelectedSuitImage();
 
                         logic.CurrentUser.LastSuitID = selectedSuit.ID;//we first set lastUitId->here user alredy confirmed it
-                        logic.SetUpPlayer();//we call setup player in logic which usese current user, and current user's object's lastsuitid prop
+                        logic.SetUpPlayer();//we call setup player in logic which uses current user, and current user's object's lastsuitid prop
 
                         logic.PlayPickUpSuit();
 
@@ -136,7 +124,7 @@ namespace WPF_LostInSpace
                     if (qw.ShowDialog() == true)
                     {
                         //GO_PLayer__Current user money
-                        if (logic.GO_Player.Money >= selectedSuit.Price)
+                        if (logic.CurrentUser.Money >= selectedSuit.Price)
                         {
 
                             logic.PlayPurchaseSound();
