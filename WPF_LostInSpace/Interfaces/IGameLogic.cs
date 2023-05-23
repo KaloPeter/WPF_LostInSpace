@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Media;
 using WPF_LostInSpace.GameObjects;
 
 
@@ -19,6 +20,8 @@ namespace WPF_LostInSpace.Interfaces
         GO_Player GO_Player { get; set; }
 
         List<byte[]> Cooldown_RGB { get; set; }
+
+        public ImageBrush LaserPistol { get; set; }
 
     }
 }
