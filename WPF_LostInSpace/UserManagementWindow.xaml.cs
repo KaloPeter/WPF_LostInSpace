@@ -119,7 +119,7 @@ namespace WPF_LostInSpace
                 }
                 else
                 {
-                    WarningWindow ww = new WarningWindow("The last user cannot be removed!", "Remove process boundary!");
+                    WarningWindow ww = new WarningWindow("The last user cannot be removed!", "Remove process failed!");
                     ww.Show();
                 }
             }
@@ -139,7 +139,7 @@ namespace WPF_LostInSpace
 
         private void cb_userProfiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedUser = logic.Users.Where(u => u.Username == (sender as ComboBox).SelectedItem).FirstOrDefault();//((sender as ComboBox).SelectedItem) as User;
+            selectedUser = logic.Users.Where(u => u.Username == (sender as ComboBox).SelectedItem).FirstOrDefault();
 
             if (selectedUser != null)
             {
