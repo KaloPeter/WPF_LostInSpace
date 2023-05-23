@@ -58,7 +58,7 @@ namespace WPF_LostInSpace
 
             bs_MainMenu = new List<Button>();
             bs_MainMenuText = new List<string>() { "Start", "Instructions", "Settings", "Store", "Users", "Exit" };
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < bs_MainMenuText.Count; i++)
             {
                 bs_MainMenu.Add(new Button());
                 bs_MainMenu[i].Content = bs_MainMenuText[i];
@@ -123,7 +123,7 @@ namespace WPF_LostInSpace
 
             //When play button pressed, we remove very event from second button(can be Instructions and MainMenu button)->bs_MainMenu[1],
             //then we remove the buttons from grid, we start the game(.start() for DisptachetTimers)
-            //IPause, is false because we started game
+            //IsPause, is false because we started game
             //firtTimeStarted is true, because we might want to pause the game, but when we want to continue, only resume button is allowed to start dispatcher timers.
             bs_MainMenu[0].Click += (sender, e) =>
             {
@@ -162,13 +162,6 @@ namespace WPF_LostInSpace
                     Application.Current.Shutdown();
                 }
             };
-
-            //******
-            //    timer_LOGGER.Start();
-            //******
-
-            //UserManagementWindow userManagementWindow = new UserManagementWindow();
-            //userManagementWindow.Show();
 
         }
 
@@ -218,7 +211,7 @@ namespace WPF_LostInSpace
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (firstTimeStart)//Game can be started only when Play/Resume button pressed___firstTimeStart name might be not the correct variable name
+            if (firstTimeStart)//Game can be started only when Play/Resume button pressed
             {
 
                 controller.KeyDown(e.Key);//Movement
@@ -242,7 +235,7 @@ namespace WPF_LostInSpace
 
                     GenerateButtonsOnGrid();
 
-                    bs_MainMenu[1].Click += BackToMainMenu_ResetPropValues;//The problem is here, when a I pause app, the instruction event added to Click
+                    bs_MainMenu[1].Click += BackToMainMenu_ResetPropValues;
 
                 }
             }
