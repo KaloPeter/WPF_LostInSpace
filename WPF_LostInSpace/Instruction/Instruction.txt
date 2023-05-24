@@ -5,4 +5,3 @@ You can shoot them, but be aware, if you shoot too much lasers, your pistol need
 You can get crystals, which later can be used to purchase new space suits
 which offers different benefits.
 You can registrate/modify/delete your user anytime from the main menu.
-Game can be paused with "P" button.
