@@ -690,6 +690,10 @@ namespace WPF_LostInSpace.GameLogic
                 u.MusicVolume = 0.2;
                 u.EffectVolume = 0.2;
                 Users.Add(u);
+                if (!Directory.Exists("Userdata"))
+                {
+                    Directory.CreateDirectory("Userdata");
+                }
                 SaveUsersToJson();
             }
             else

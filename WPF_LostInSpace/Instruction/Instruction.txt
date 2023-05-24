@@ -1,6 +1,5 @@
 Movement: Left & Right arrow keys
-Shoot: space button
-About the game: 
+Shoot: space button | Pause: P button
 Traver as far as you can. Asteroids/Satellites make your travel more challenging.
 You can shoot them, but be aware, if you shoot too much lasers, your pistol needs cooldown.
 You can get crystals, which later can be used to purchase new space suits
