@@ -19,7 +19,7 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="tx_instructionsText" Grid.Row="0" Grid.Column="0"  
-                     FontSize="24" Foreground="White"                  
+                     FontSize="18" Foreground="White"                  
                      Background="Transparent"
                  Margin="10"
                    IsEnabled="False"
